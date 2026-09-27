@@ -1,0 +1,181 @@
+{% render 'cm-section-assets', section: section %}
+<script src="{{ 'cm-delivery-map.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign pins = section.blocks | where: 'type', 'pin'
+  assign hq_popup = ''
+  if section.settings.hq_popup_title != blank
+    assign hq_popup = section.settings.hq_popup_title | escape | prepend: '<strong>' | append: '</strong>'
+  endif
+  if section.settings.hq_address != blank
+    if hq_popup != blank
+      assign hq_popup = hq_popup | append: '<br>'
+    endif
+    assign hq_address = section.settings.hq_address | escape
+    assign hq_popup = hq_popup | append: hq_address
+  endif
+-%}
+
+<div class="cm cm-delivery cm--{{ section.settings.background }}" data-cm="map">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="cm-center">
+      {%- if section.settings.label != blank -%}
+        <span class="cm-label">{{ section.settings.label | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="cm-heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="cm-body">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    <cm-delivery-map class="cm-map" style="--cm-map-height: {{ section.settings.map_height }}px;">
+      {%- if section.settings.map_title != blank or section.settings.map_subtitle != blank -%}
+        <div class="cm-map__head">
+          <span class="cm-map__title">{{ section.settings.map_title | escape }}</span>
+          <span class="cm-map__sub">{{ section.settings.map_subtitle | escape }}</span>
+        </div>
+      {%- endif -%}
+
+      <div class="cm-map__canvas" role="region" aria-label="{{ section.settings.map_title | default: 'Delivery map' | escape }}"></div>
+
+      {%- if section.settings.foot_1_title != blank or section.settings.foot_2_title != blank -%}
+        <div class="cm-map__footer">
+          {%- for i in (1..2) -%}
+            {%- liquid
+              assign title_key = 'foot_' | append: i | append: '_title'
+              assign sub_key = 'foot_' | append: i | append: '_text'
+              assign link_key = 'foot_' | append: i | append: '_link'
+            -%}
+            {%- if section.settings[title_key] != blank -%}
+              {%- if section.settings[link_key] != blank -%}
+                <a class="cm-map__foot" href="{{ section.settings[link_key] }}">
+              {%- else -%}
+                <div class="cm-map__foot">
+              {%- endif -%}
+              <strong>{{ section.settings[title_key] | escape }}</strong>
+              <span>{{ section.settings[sub_key] | escape }}</span>
+              {%- if section.settings[link_key] != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <script type="application/json">
+        {
+          "center": [{{ section.settings.center_lat | json }}, {{ section.settings.center_lng | json }}],
+          "zoom": {{ section.settings.zoom }},
+          "fit": {{ section.settings.fit_to_pins }},
+          "labels": {{ section.settings.show_labels }},
+          "hqColor": "#0d1a2e",
+          "hq": {
+            "name": {{ section.settings.hq_name | json }},
+            "lat": {{ section.settings.hq_lat | json }},
+            "lng": {{ section.settings.hq_lng | json }},
+            "popup": {{ hq_popup | json }}
+          },
+          "pins": [
+            {%- for block in pins -%}
+              { "name": {{ block.settings.name | json }}, "lat": {{ block.settings.lat | json }}, "lng": {{ block.settings.lng | json }} }{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ]
+        }
+      </script>
+    </cm-delivery-map>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CM delivery map",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 50,
+  "blocks": [
+    {
+      "type": "pin",
+      "name": "Delivery area pin",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Area name", "default": "Waukesha" },
+        { "type": "text", "id": "lat", "label": "Latitude", "default": "43.0117" },
+        { "type": "text", "id": "lng", "label": "Longitude", "default": "-88.2315" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Delivery" },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "We Deliver Across\nHartland and Nearby Areas."
+    },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "header", "content": "Map" },
+    { "type": "text", "id": "map_title", "label": "Map title", "default": "Chef Matt's Delivery Coverage" },
+    { "type": "text", "id": "map_subtitle", "label": "Map subtitle", "default": "Pins show all delivery areas" },
+    { "type": "text", "id": "center_lat", "label": "Center latitude", "default": "43.05" },
+    { "type": "text", "id": "center_lng", "label": "Center longitude", "default": "-88.25" },
+    { "type": "range", "id": "zoom", "min": 5, "max": 14, "step": 1, "label": "Zoom", "default": 9 },
+    { "type": "checkbox", "id": "fit_to_pins", "label": "Zoom to fit all pins", "default": false },
+    { "type": "checkbox", "id": "show_labels", "label": "Always show area names", "default": false },
+    { "type": "range", "id": "map_height", "min": 250, "max": 700, "step": 10, "unit": "px", "label": "Map height", "default": 400 },
+    { "type": "header", "content": "Headquarters pin" },
+    { "type": "text", "id": "hq_name", "label": "Label", "default": "Chef Matt HQ" },
+    { "type": "text", "id": "hq_lat", "label": "Latitude", "default": "43.1028" },
+    { "type": "text", "id": "hq_lng", "label": "Longitude", "default": "-88.3337" },
+    { "type": "text", "id": "hq_popup_title", "label": "Popup title", "default": "Chef Matt's Meal Prep" },
+    { "type": "text", "id": "hq_address", "label": "Popup address", "default": "N64W28381 Hawthorne Rd, Hartland, WI 53029" },
+    { "type": "header", "content": "Map footer" },
+    { "type": "text", "id": "foot_1_title", "label": "Left title", "default": "Fresh Delivery" },
+    { "type": "text", "id": "foot_1_text", "label": "Left text", "default": "Hartland and surrounding areas" },
+    { "type": "url", "id": "foot_1_link", "label": "Left link" },
+    { "type": "text", "id": "foot_2_title", "label": "Right title", "default": "Got Questions?" },
+    { "type": "text", "id": "foot_2_text", "label": "Right text", "default": "Contact us to confirm your area" },
+    { "type": "url", "id": "foot_2_link", "label": "Right link", "default": "/pages/contact" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "cream"
+    },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 64 }
+  ],
+  "presets": [
+    {
+      "name": "CM delivery map",
+      "blocks": [
+        { "type": "pin", "settings": { "name": "Waukesha", "lat": "43.0117", "lng": "-88.2315" } },
+        { "type": "pin", "settings": { "name": "Oconomowoc", "lat": "43.1039", "lng": "-88.4993" } },
+        { "type": "pin", "settings": { "name": "Delafield", "lat": "43.0606", "lng": "-88.4048" } },
+        { "type": "pin", "settings": { "name": "Menomonee Falls", "lat": "43.1786", "lng": "-88.1132" } },
+        { "type": "pin", "settings": { "name": "Pewaukee", "lat": "43.0800", "lng": "-88.2543" } },
+        { "type": "pin", "settings": { "name": "Brookfield", "lat": "43.0606", "lng": "-88.1065" } },
+        { "type": "pin", "settings": { "name": "Elm Grove", "lat": "43.0428", "lng": "-88.0848" } },
+        { "type": "pin", "settings": { "name": "New Berlin", "lat": "42.9761", "lng": "-88.1676" } },
+        { "type": "pin", "settings": { "name": "Muskego", "lat": "42.9056", "lng": "-88.1398" } },
+        { "type": "pin", "settings": { "name": "Lake Country", "lat": "43.0931", "lng": "-88.4354" } },
+        { "type": "pin", "settings": { "name": "Sussex", "lat": "43.1342", "lng": "-88.2215" } },
+        { "type": "pin", "settings": { "name": "Mukwonago", "lat": "42.8656", "lng": "-88.3376" } },
+        { "type": "pin", "settings": { "name": "Concord", "lat": "43.0200", "lng": "-88.5200" } },
+        { "type": "pin", "settings": { "name": "Milwaukee", "lat": "43.0389", "lng": "-87.9065" } },
+        { "type": "pin", "settings": { "name": "West Allis", "lat": "43.0167", "lng": "-88.0070" } },
+        { "type": "pin", "settings": { "name": "Wauwatosa", "lat": "43.0497", "lng": "-88.0076" } },
+        { "type": "pin", "settings": { "name": "Greenfield", "lat": "42.9614", "lng": "-88.0126" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

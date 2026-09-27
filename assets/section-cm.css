@@ -254,6 +254,8 @@
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
 }
 
 .cm-story__quote {
@@ -286,8 +288,18 @@
 
 @media screen and (min-width: 990px) {
   .cm-story__grid {
-    grid-template-columns: 1fr 1.1fr;
+    grid-template-columns: 1.1fr 1fr;
     gap: 6rem;
+  }
+
+  .cm-story__media {
+    width: 100%;
+    max-width: 52rem;
+    justify-self: end;
+  }
+
+  .cm-story--media-left .cm-story__media {
+    justify-self: start;
   }
 
   .cm-story--media-left .cm-story__media {
@@ -348,11 +360,11 @@
 }
 
 /* Steps */
-.cm-steps__grid {
+.cm .cm-steps__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
-  margin-top: 3rem;
+  margin: 3rem 0 0;
   overflow: hidden;
   border-radius: 1.2rem;
   background: var(--cm-border);
@@ -405,7 +417,7 @@
 }
 
 @media screen and (min-width: 990px) {
-  .cm-steps__grid {
+  .cm .cm-steps__grid {
     grid-template-columns: repeat(var(--cm-cols, 4), 1fr);
   }
 
@@ -415,13 +427,14 @@
 }
 
 @media screen and (max-width: 500px) {
-  .cm-steps__grid {
+  .cm .cm-steps__grid {
     grid-template-columns: 1fr;
   }
 }
 
 /* Delivery map */
 .cm-map {
+  display: block;
   margin-top: 3rem;
   overflow: hidden;
   border: 1.5px solid var(--cm-border);
@@ -681,7 +694,7 @@ a.cm-map__foot:hover {
     grid-template-columns: 1fr 1fr;
   }
 
-  .cm-field--half {
+  .cm-field.cm-field--half {
     grid-column: span 1;
   }
 }

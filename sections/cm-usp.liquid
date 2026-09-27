@@ -1,0 +1,233 @@
+{% render 'cm-section-assets', section: section %}
+
+<div class="cm cm-usp cm--{{ section.settings.background }}" data-cm="usp">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.label != blank or section.settings.heading != blank -%}
+      <div class="cm-usp__intro cm-center">
+        {%- if section.settings.label != blank -%}
+          <span class="cm-label">{{ section.settings.label | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="cm-heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="cm-usp__rows">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign alt = block.settings.image_alt | default: block.settings.title
+          assign asset_ext = block.settings.image_asset | split: '.' | last | downcase
+        -%}
+        <div class="cm-usp__row" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank or block.settings.image_asset != blank -%}
+            <div class="cm-usp__media">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1400
+                  | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', alt: alt
+                }}
+              {%- elsif asset_ext == 'gif' -%}
+                <img
+                  src="{{ block.settings.image_asset | asset_url }}"
+                  alt="{{ alt | escape }}"
+                  width="{{ block.settings.image_width }}"
+                  height="{{ block.settings.image_height }}"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {%- render 'asset-image',
+                  src: block.settings.image_asset,
+                  widths: '375, 550, 750, 1100, 1400',
+                  sizes: '(min-width: 750px) 50vw, 100vw',
+                  alt: alt,
+                  width: block.settings.image_width,
+                  height: block.settings.image_height
+                -%}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+          <div class="cm-usp__text">
+            {%- if block.settings.label != blank -%}
+              <span class="cm-label">{{ block.settings.label | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="cm-usp__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="cm-body">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CM why us rows",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Theme asset image",
+          "info": "Filename in the theme assets folder, used when no image is picked."
+        },
+        {
+          "type": "number",
+          "id": "image_width",
+          "label": "Asset image width",
+          "default": 1400
+        },
+        {
+          "type": "number",
+          "id": "image_height",
+          "label": "Asset image height",
+          "default": 1120
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Built for Balance"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Protein, carbs, and veggies in every container."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Every meal is built around a lean protein, a smart carb, and a serving of veggies.</p>"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Why Chef Matt"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What makes these meals different."
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "CM why us rows",
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-balance.jpg",
+            "image_width": 1400,
+            "image_height": 1120,
+            "image_alt": "Salmon with rice and carrots, annotated with macros",
+            "label": "Built for Balance",
+            "title": "Protein, carbs, and veggies in every container.",
+            "text": "<p>Every meal is built around a lean protein, a smart carb, and a serving of veggies, so your plate stays balanced without any extra thought. <strong>Macros portioned right</strong>, to help you hit your goals meal after meal.</p>"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-portions.jpg",
+            "image_width": 1400,
+            "image_height": 1213,
+            "image_alt": "BBQ chicken meal in a 24oz container",
+            "label": "Generous Portions You Can Count On",
+            "title": "24oz every time. You won't go hungry.",
+            "text": "<p>Every meal comes packed in a <strong>24oz container</strong>, giving you satisfying portions that keep you full for hours.</p>"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-eco.jpg",
+            "image_width": 1000,
+            "image_height": 1333,
+            "image_alt": "Eco-friendly meal prep containers",
+            "label": "Better for You. Better for the Planet.",
+            "title": "Eco-friendly packaging on every order.",
+            "text": "<p>Every meal is packed in <strong>environmentally friendly containers</strong> - designed to reduce waste without cutting corners on quality or freshness. Clean food in clean packaging. That is the Chef Matt standard.</p>"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-menu.gif",
+            "image_width": 900,
+            "image_height": 525,
+            "image_alt": "Rotating menu of Chef Matt meals",
+            "label": "Always Something New",
+            "title": "Over 10 meals to pick from.",
+            "text": "<p>Chef Matt adds new meals every two weeks. More choices, more variety. <strong>You will always find something you love.</strong></p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

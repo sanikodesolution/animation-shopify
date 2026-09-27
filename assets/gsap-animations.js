@@ -324,6 +324,145 @@
     reveal(all(section, '.center .button, .collection__view-all'), { y: 20, duration: 0.6 });
   }
 
+  function cmIntro(tl, container, position = 0) {
+    if (!container) return;
+    add(tl, all(container, ':scope > .cm-label'), { autoAlpha: 0, y: 14, letterSpacing: '0.5em', duration: 0.9 }, position);
+    addSplitHeading(tl, container.querySelector(':scope > .cm-heading'), position + 0.1);
+    add(
+      tl,
+      all(container, ':scope > .cm-body, :scope > .cm-form__cost, :scope > .cm-btn'),
+      { autoAlpha: 0, y: 24, duration: 0.8, stagger: 0.12 },
+      position + 0.35
+    );
+  }
+
+  function cmHero(root) {
+    const tl = timeline(root, 'top 90%');
+    add(tl, all(root, '.cm-hero__glow'), { autoAlpha: 0, scale: 1.4, duration: 1.8, ease: 'power2.out' }, 0);
+    add(tl, all(root, '.cm-hero__eyebrow'), { autoAlpha: 0, y: 12, letterSpacing: '0.6em', duration: 1 }, 0.1);
+    addSplitHeading(tl, root.querySelector('.cm-hero__heading'), 0.2);
+    add(tl, all(root, '.cm-hero__sub'), { autoAlpha: 0, y: 20, duration: 0.8 }, '-=0.5');
+    add(tl, all(root, '.cm-ticker'), { autoAlpha: 0, yPercent: 100, duration: 0.8 }, '-=0.6');
+    add(tl, all(root, '.cm-chip'), { autoAlpha: 0, y: 18, duration: 0.5, stagger: 0.04 }, '-=0.4');
+  }
+
+  function cmStory(root) {
+    const tl = timeline(root, 'top 75%');
+    cmIntro(tl, root.querySelector('.cm-story__text'), 0);
+
+    const media = root.querySelector('.cm-story__media');
+    if (!media) return;
+    tl.fromTo(
+      media,
+      { clipPath: 'inset(100% 0% 0% 0% round 12px)' },
+      { clipPath: 'inset(0% 0% 0% 0% round 12px)', duration: 1.3, ease: 'power4.inOut' },
+      0.1
+    );
+    add(tl, all(media, 'video, img'), { scale: 1.25, duration: 1.6 }, 0.1);
+    add(tl, all(media, '.cm-story__quote > *'), { autoAlpha: 0, y: 24, duration: 0.8, stagger: 0.15 }, 0.9);
+  }
+
+  function cmUsp(root) {
+    const tl = timeline(root, 'top 80%');
+    cmIntro(tl, root.querySelector('.cm-usp__intro'), 0);
+
+    all(root, '.cm-usp__row').forEach((row, index) => {
+      const rowTl = timeline(row, 'top 78%');
+      const media = row.querySelector('.cm-usp__media');
+      const fromRight = index % 2 === 1 && window.matchMedia('(min-width: 750px)').matches;
+      add(rowTl, media, { autoAlpha: 0, x: fromRight ? 80 : -80, rotate: fromRight ? 2 : -2, duration: 1.1 }, 0);
+      add(rowTl, all(row, '.cm-usp__media img'), { scale: 1.15, duration: 1.4 }, 0);
+      add(rowTl, all(row, '.cm-usp__text > *'), { autoAlpha: 0, y: 30, duration: 0.8, stagger: 0.12 }, 0.25);
+    });
+  }
+
+  function cmSteps(root) {
+    const tl = timeline(root, 'top 75%');
+    cmIntro(tl, root.querySelector('.cm-center'), 0);
+    add(tl, all(root, '.cm-step'), { autoAlpha: 0, y: 60, duration: 0.9, stagger: 0.15 }, 0.3);
+    add(
+      tl,
+      all(root, '.cm-step__num'),
+      { scale: 0, rotate: -180, duration: 0.8, stagger: 0.15, ease: 'back.out(2)' },
+      0.5
+    );
+    add(tl, all(root, '.cm-step__title, .cm-step__text'), { autoAlpha: 0, y: 14, duration: 0.6, stagger: 0.07 }, 0.7);
+  }
+
+  function cmMap(root) {
+    const tl = timeline(root, 'top 75%');
+    cmIntro(tl, root.querySelector('.cm-center'), 0);
+    add(tl, all(root, '.cm-map'), { autoAlpha: 0, y: 70, scale: 0.96, duration: 1.1 }, 0.3);
+    add(tl, all(root, '.cm-map__head > *'), { autoAlpha: 0, y: -12, duration: 0.6, stagger: 0.1 }, 0.8);
+    add(tl, all(root, '.cm-map__foot'), { autoAlpha: 0, y: 20, duration: 0.6, stagger: 0.12 }, 0.9);
+  }
+
+  function cmPlans(root) {
+    const tl = timeline(root, 'top 78%');
+    cmIntro(tl, root.querySelector('.cm-center'), 0);
+    add(tl, all(root, '.cm-plan'), { autoAlpha: 0, y: 50, duration: 0.8, stagger: 0.12 }, 0.3);
+    add(tl, all(root, '.cm-plan__cta'), { autoAlpha: 0, scale: 0.6, duration: 0.6, stagger: 0.12, ease: 'back.out(2)' }, 0.7);
+
+    all(root, '.cm-plan__num').forEach((number, index) => {
+      const text = number.textContent.trim();
+      const target = parseInt(text, 10);
+      if (!/^\d+$/.test(text) || !target) return;
+      const counter = { value: 0 };
+      number.textContent = '0';
+      tl.to(
+        counter,
+        {
+          value: target,
+          duration: 1.2,
+          ease: 'power2.out',
+          onUpdate: () => (number.textContent = Math.round(counter.value)),
+          onComplete: () => (number.textContent = text),
+        },
+        0.4 + index * 0.12
+      );
+    });
+  }
+
+  function cmCta(root) {
+    const tl = timeline(root, 'top 85%');
+    const container = root.querySelector('.cm-center');
+    if (!container) return;
+    add(tl, all(container, ':scope > .cm-label'), { autoAlpha: 0, y: 14, letterSpacing: '0.5em', duration: 0.9 }, 0);
+    addSplitHeading(tl, container.querySelector(':scope > .cm-heading'), 0.1);
+    add(tl, all(container, ':scope > .cm-body'), { autoAlpha: 0, y: 20, duration: 0.8 }, 0.35);
+    add(tl, all(container, ':scope > .cm-btn'), { autoAlpha: 0, y: 20, scale: 0.8, duration: 0.8, ease: 'back.out(2)' }, 0.5);
+  }
+
+  function cmForm(root) {
+    const tl = timeline(root, 'top 80%');
+    add(tl, all(root, '.cm-form'), { autoAlpha: 0, y: 60, duration: 1 }, 0);
+    cmIntro(tl, root.querySelector('.cm-form__header'), 0.2);
+    add(
+      tl,
+      all(root, '.cm-form__fields > *, .cm-form__submit'),
+      { autoAlpha: 0, y: 24, duration: 0.6, stagger: 0.07 },
+      0.5
+    );
+  }
+
+  const cmHandlers = {
+    hero: cmHero,
+    story: cmStory,
+    usp: cmUsp,
+    steps: cmSteps,
+    map: cmMap,
+    plans: cmPlans,
+    cta: cmCta,
+    form: cmForm,
+  };
+
+  function chefMatt(section) {
+    const root = section.querySelector('[data-cm]');
+    const run = root && cmHandlers[root.dataset.cm];
+    if (run) run(root);
+    else generic(section);
+  }
+
   function generic(section) {
     const container = section.querySelector('.page-width, .page-width--narrow');
     const items = container ? visible(Array.from(container.children)) : [];
@@ -331,6 +470,7 @@
   }
 
   const handlers = [
+    { match: '[data-cm]', run: chefMatt },
     { match: '.announcement-bar-section', run: announcementBar },
     { match: '.section-header', run: header },
     { match: '.feature-type1', run: featureGrid },

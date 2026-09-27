@@ -1,0 +1,100 @@
+{% render 'cm-section-assets', section: section %}
+
+{%- liquid
+  assign columns = section.blocks.size
+  if columns > 5
+    assign columns = 5
+  endif
+-%}
+
+<div class="cm cm-plans cm--{{ section.settings.background }}" data-cm="plans">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="cm-inner--narrow">
+      <div class="cm-center">
+        {%- if section.settings.label != blank -%}
+          <span class="cm-label">{{ section.settings.label | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="cm-heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="cm-body">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="cm-plans__grid" style="--cm-cols: {{ columns }};">
+          {%- for block in section.blocks -%}
+            <a
+              class="cm-plan"
+              href="{{ block.settings.link | default: '#' }}"
+              {{ block.shopify_attributes }}
+            >
+              <span class="cm-plan__num">{{ block.settings.number | escape }}</span>
+              <span class="cm-plan__label">{{ block.settings.label | escape }}</span>
+              {%- if block.settings.button_label != blank -%}
+                <span class="cm-plan__cta">{{ block.settings.button_label | escape }}</span>
+              {%- endif -%}
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CM meal plans",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "plan",
+      "name": "Plan",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "6" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Meal Plan" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "Meal Plans" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Want More Than 5 Meals?" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>No subscription. Pick your plan and pay once.</p>"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "cream"
+    },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 64 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 64 }
+  ],
+  "presets": [
+    {
+      "name": "CM meal plans",
+      "blocks": [
+        { "type": "plan", "settings": { "number": "6", "link": "/products/6-meal-plan" } },
+        { "type": "plan", "settings": { "number": "7", "link": "/products/7-meal-plan" } },
+        { "type": "plan", "settings": { "number": "10", "link": "/products/10-meal-plan" } },
+        { "type": "plan", "settings": { "number": "15", "link": "/products/15-meal-plan" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

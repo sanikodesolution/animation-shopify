@@ -1,0 +1,168 @@
+{% render 'cm-section-assets', section: section %}
+
+<div
+  class="cm cm-story cm--{{ section.settings.background }}{% if section.settings.media_position == 'left' %} cm-story--media-left{% endif %}"
+  data-cm="story"
+>
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="cm-story__grid">
+      <div class="cm-story__text">
+        {%- if section.settings.label != blank -%}
+          <span class="cm-label">{{ section.settings.label | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="cm-heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="cm-body">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.video != blank or section.settings.video_url != blank or section.settings.image != blank -%}
+        <div class="cm-story__media">
+          {%- if section.settings.video != blank -%}
+            {{
+              section.settings.video
+              | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, image_size: '1100x'
+            }}
+          {%- elsif section.settings.video_url != blank -%}
+            <video
+              src="{{ section.settings.video_url | escape }}"
+              {% if section.settings.image != blank %}
+                poster="{{ section.settings.image | image_url: width: 1100 }}"
+              {% endif %}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+            ></video>
+          {%- else -%}
+            {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 55vw, 100vw' }}
+          {%- endif -%}
+
+          {%- if section.settings.quote != blank -%}
+            <blockquote class="cm-story__quote">
+              <p>{{ section.settings.quote | escape }}</p>
+              {%- if section.settings.author != blank -%}
+                <cite>{{ section.settings.author | escape }}</cite>
+              {%- endif -%}
+            </blockquote>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CM chef story",
+  "tag": "section",
+  "class": "section cm-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Meet Chef Matt"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Each new line becomes a line break.",
+      "default": "40 Years in the Kitchen.\nNow Cooking for You."
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Chef Matthew brings classical French training, family-restaurant roots, and experience across multiple cuisines to every container he packs. <strong>Every meal balances clean eating with big, satisfying flavour.</strong> No shortcuts, no fillers - just food that works for your goals.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "info": "Plays muted on loop. Overrides the video URL."
+    },
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL (.mp4)",
+      "default": "https://cdn.shopify.com/videos/c/o/v/aecf7059ee5e4033962b56b84b615744.mp4"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Poster / fallback image"
+    },
+    {
+      "type": "select",
+      "id": "media_position",
+      "label": "Desktop media position",
+      "options": [
+        { "value": "right", "label": "Right" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "\"I have been a private chef for 40 years, and now my only goal is to cook flavorful, healthy meals for all of Lake Country.\""
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Quote author",
+      "default": "Matthew, Founder and Chef"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "CM chef story"
+    }
+  ]
+}
+{% endschema %}

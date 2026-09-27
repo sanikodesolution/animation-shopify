@@ -1,0 +1,248 @@
+{% render 'cm-section-assets', section: section %}
+
+{%- assign form_id = 'CmContactForm-' | append: section.id -%}
+
+<div class="cm cm-contact-form cm--{{ section.settings.background }}" data-cm="form">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="cm-form" style="--cm-form-width: {{ section.settings.max_width }}px;">
+      <div class="cm-form__header{% if section.settings.alignment == 'center' %} cm-center{% endif %}">
+        {%- if section.settings.label != blank -%}
+          <span class="cm-label">{{ section.settings.label | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="cm-heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="cm-body">{{ section.settings.text }}</div>
+        {%- endif -%}
+        {%- if section.settings.note != blank -%}
+          <span class="cm-form__cost">{{ section.settings.note | escape }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- form 'contact', id: form_id -%}
+        <div class="cm-form__fields">
+          {%- if form.posted_successfully? -%}
+            <p class="cm-form__notice cm-form__notice--success" role="status" tabindex="-1" autofocus>
+              {{ section.settings.success_message | escape }}
+            </p>
+          {%- elsif form.errors -%}
+            <div class="cm-form__notice cm-form__notice--error" role="alert" tabindex="-1" autofocus>
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'group_heading' -%}
+                <h3 class="cm-form__group-title" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h3>
+              {%- when 'field' -%}
+                {%- liquid
+                  assign field_id = form_id | append: '-' | append: block.id
+                  assign field_type = block.settings.type
+                  if field_type == 'email'
+                    assign field_name = 'contact[email]'
+                  else
+                    assign field_name = block.settings.label | escape | prepend: 'contact[' | append: ']'
+                  endif
+                -%}
+                <div
+                  class="cm-field{% if block.settings.half_width %} cm-field--half{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  <label for="{{ field_id }}">
+                    {{- block.settings.label | escape -}}
+                    {%- if block.settings.required -%}
+                      <span class="cm-field__req" aria-hidden="true">*</span>
+                    {%- endif -%}
+                  </label>
+                  {%- case field_type -%}
+                    {%- when 'textarea' -%}
+                      <textarea
+                        id="{{ field_id }}"
+                        name="{{ field_name }}"
+                        placeholder="{{ block.settings.placeholder | escape }}"
+                        {% if block.settings.required %}
+                          required aria-required="true"
+                        {% endif %}
+                      ></textarea>
+                    {%- when 'select' -%}
+                      {%- assign options = block.settings.options | newline_to_br | split: '<br />' -%}
+                      <select
+                        id="{{ field_id }}"
+                        name="{{ field_name }}"
+                        {% if block.settings.required %}
+                          required aria-required="true"
+                        {% endif %}
+                      >
+                        <option value="">{{ block.settings.placeholder | default: '—' | escape }}</option>
+                        {%- for option in options -%}
+                          {%- assign option = option | strip -%}
+                          {%- if option != blank -%}
+                            <option value="{{ option | escape }}">{{ option | escape }}</option>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </select>
+                    {%- else -%}
+                      <input
+                        type="{{ field_type }}"
+                        id="{{ field_id }}"
+                        name="{{ field_name }}"
+                        placeholder="{{ block.settings.placeholder | escape }}"
+                        {% if field_type == 'email' %}
+                          autocomplete="email" autocapitalize="off" autocorrect="off"
+                        {% elsif field_type == 'tel' %}
+                          autocomplete="tel"
+                        {% elsif field_type == 'number' %}
+                          min="1" inputmode="numeric"
+                        {% endif %}
+                        {% if block.settings.required %}
+                          required aria-required="true"
+                        {% endif %}
+                      >
+                  {%- endcase -%}
+                </div>
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+
+        <button type="submit" class="cm-btn cm-form__submit">
+          {{- section.settings.button_label | escape -}}
+        </button>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CM contact form",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 20,
+  "blocks": [
+    {
+      "type": "field",
+      "name": "Field",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Full name" },
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Type",
+          "options": [
+            { "value": "text", "label": "Text" },
+            { "value": "email", "label": "Email" },
+            { "value": "tel", "label": "Phone" },
+            { "value": "number", "label": "Number" },
+            { "value": "date", "label": "Date" },
+            { "value": "textarea", "label": "Long text" },
+            { "value": "select", "label": "Dropdown" }
+          ],
+          "default": "text"
+        },
+        { "type": "text", "id": "placeholder", "label": "Placeholder" },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "Dropdown options",
+          "info": "One option per line. Only used for the Dropdown type."
+        },
+        { "type": "checkbox", "id": "required", "label": "Required", "default": false },
+        { "type": "checkbox", "id": "half_width", "label": "Half width on desktop", "default": false }
+      ]
+    },
+    {
+      "type": "group_heading",
+      "name": "Group heading",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Dietary needs & preferences" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Get in touch" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Fill out the form below and we'll get back to you soon.</p>"
+    },
+    { "type": "text", "id": "note", "label": "Highlighted note", "info": "For example: Cost: Contact for quotes" },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Heading alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center"
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Submit" },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks for reaching out! We'll get back to you as soon as possible."
+    },
+    { "type": "range", "id": "max_width", "min": 500, "max": 1200, "step": 20, "unit": "px", "label": "Form width", "default": 800 },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "warm"
+    },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 56 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 56 }
+  ],
+  "presets": [
+    {
+      "name": "CM contact form - get in touch",
+      "blocks": [
+        { "type": "field", "settings": { "label": "Full name", "type": "text", "placeholder": "Enter your full name", "required": true } },
+        { "type": "field", "settings": { "label": "Email address", "type": "email", "placeholder": "your@email.com", "required": true, "half_width": true } },
+        { "type": "field", "settings": { "label": "Phone number", "type": "tel", "placeholder": "(555) 123-4567", "required": true, "half_width": true } },
+        { "type": "group_heading", "settings": { "heading": "Dietary needs & preferences" } },
+        { "type": "field", "settings": { "label": "Dietary needs", "type": "textarea", "placeholder": "e.g., Vegetarian, gluten-free, nut allergies..." } },
+        { "type": "field", "settings": { "label": "Food preferences", "type": "textarea", "placeholder": "Tell us about your favorite foods and flavors..." } }
+      ]
+    },
+    {
+      "name": "CM contact form - event catering",
+      "settings": {
+        "heading": "Intimate event catering",
+        "text": "<p>Exceptional, memorable, custom catered events. Birthdays, anniversaries, girls night, date night, team meeting. Why not stay at home and let me create a special menu for your event.</p>",
+        "note": "Cost: Contact for quotes",
+        "alignment": "left",
+        "button_label": "Request a quote"
+      },
+      "blocks": [
+        { "type": "field", "settings": { "label": "Name", "type": "text", "required": true } },
+        { "type": "field", "settings": { "label": "Email", "type": "email", "required": true, "half_width": true } },
+        { "type": "field", "settings": { "label": "Phone", "type": "tel", "required": true, "half_width": true } },
+        { "type": "field", "settings": { "label": "Event date", "type": "date", "required": true, "half_width": true } },
+        { "type": "field", "settings": { "label": "Number of guests", "type": "number", "required": true, "half_width": true } },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Type of event",
+            "type": "select",
+            "placeholder": "Select event type",
+            "options": "Birthday\nAnniversary\nGirls night\nDate night\nTeam meeting\nOther",
+            "required": true
+          }
+        },
+        { "type": "field", "settings": { "label": "Additional details", "type": "textarea", "placeholder": "Tell us about your event, dietary restrictions, menu preferences, etc." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

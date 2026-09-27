@@ -1,0 +1,134 @@
+{% render 'cm-section-assets', section: section %}
+
+{%- liquid
+  assign columns = section.blocks.size
+  if columns > 4
+    assign columns = 4
+  endif
+-%}
+
+<div class="cm cm-steps cm--{{ section.settings.background }}" data-cm="steps">
+  <div class="page-width section-{{ section.id }}-padding">
+    <div class="cm-center">
+      {%- if section.settings.label != blank -%}
+        <span class="cm-label">{{ section.settings.label | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="cm-heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="cm-body">{{ section.settings.text }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <ol class="cm-steps__grid list-unstyled" role="list" style="--cm-cols: {{ columns }};">
+        {%- for block in section.blocks -%}
+          <li class="cm-step" {{ block.shopify_attributes }}>
+            <span class="cm-step__num" aria-hidden="true">{{ forloop.index }}</span>
+            {%- if block.settings.title != blank -%}
+              <h3 class="cm-step__title">{{ block.settings.title | escape }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="cm-step__text">{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CM how it works",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Pick Your Meals"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Choose what you want from this week's menu."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Simple Process"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How It Works"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "cream"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "CM how it works",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Pick Your Meals", "text": "Choose what you want from this week's menu." } },
+        { "type": "step", "settings": { "title": "We Cook It Fresh", "text": "Chef Matt makes every meal from scratch. Nothing frozen." } },
+        { "type": "step", "settings": { "title": "We Deliver It", "text": "Your meals come straight to your door in Hartland." } },
+        { "type": "step", "settings": { "title": "Heat and Eat", "text": "2 minutes in the microwave and it's ready. No cooking, no mess." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
