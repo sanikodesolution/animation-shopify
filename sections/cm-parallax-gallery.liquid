@@ -1,0 +1,189 @@
+{% render 'cm-section-assets', section: section %}
+
+<div
+  class="cm cm-pg cm--{{ section.settings.background }}{% if section.settings.grayscale %} cm-pg--grayscale{% endif %}"
+  data-cm="gallery"
+  style="--cm-pg-ratio: {{ section.settings.aspect_ratio }};"
+>
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- if section.settings.label != blank or section.settings.heading != blank or section.settings.text != blank -%}
+      <div class="cm-center cm-pg__intro">
+        {%- if section.settings.label != blank -%}
+          <span class="cm-label">{{ section.settings.label | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="cm-heading">{{ section.settings.heading | escape | newline_to_br }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="cm-body">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="cm-pg__items">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign number = forloop.index | plus: section.settings.start_number | minus: 1
+          if number < 10
+            assign number = number | prepend: '0'
+          endif
+          assign alt = block.settings.image_alt | default: block.settings.title
+        -%}
+        <article class="cm-pg__item" {{ block.shopify_attributes }}>
+          <div class="cm-pg__media">
+            <span class="cm-pg__num" aria-hidden="true">{{ number }}</span>
+            <div class="cm-pg__frame">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1800
+                  | image_tag: loading: 'lazy', sizes: '(min-width: 990px) 60vw, 100vw', alt: alt
+                }}
+              {%- elsif block.settings.image_asset != blank -%}
+                {%- render 'asset-image',
+                  src: block.settings.image_asset,
+                  widths: '375, 750, 1100, 1500',
+                  sizes: '(min-width: 990px) 60vw, 100vw',
+                  alt: alt,
+                  width: block.settings.image_width,
+                  height: block.settings.image_height
+                -%}
+              {%- else -%}
+                {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- if block.settings.title != blank or block.settings.text != blank or block.settings.link_label != blank -%}
+            <div class="cm-pg__text">
+              {%- if block.settings.title != blank -%}
+                <h3 class="cm-pg__title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="cm-body">{{ block.settings.text }}</div>
+              {%- endif -%}
+              {%- if block.settings.link_label != blank -%}
+                <a class="cm-pg__link" href="{{ block.settings.link | default: '#' }}">
+                  {{- block.settings.link_label | escape }} <span aria-hidden="true">→</span>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "CM parallax gallery",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        {
+          "type": "text",
+          "id": "image_asset",
+          "label": "Theme asset image",
+          "info": "Filename in the theme assets folder, used when no image is picked."
+        },
+        { "type": "number", "id": "image_width", "label": "Asset image width", "default": 1800 },
+        { "type": "number", "id": "image_height", "label": "Asset image height", "default": 800 },
+        { "type": "text", "id": "image_alt", "label": "Image alt text" },
+        { "type": "text", "id": "title", "label": "Heading", "default": "Chef-Crafted Flavors" },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Global flavors crafted with classical French technique.</p>"
+        },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label", "default": "The Chef Matt Way" },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Crafted with purpose,\nfrom kitchen to door."
+    },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "Image shape",
+      "options": [
+        { "value": "16 / 10", "label": "Landscape" },
+        { "value": "16 / 9", "label": "Wide" },
+        { "value": "4 / 3", "label": "Classic" },
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 5", "label": "Portrait" }
+      ],
+      "default": "16 / 10"
+    },
+    { "type": "range", "id": "start_number", "min": 1, "max": 20, "step": 1, "label": "Start numbering at", "default": 1 },
+    { "type": "checkbox", "id": "grayscale", "label": "Black and white images (color on hover)", "default": false },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "beige", "label": "Beige" },
+        { "value": "cream", "label": "Cream" },
+        { "value": "warm", "label": "Warm" },
+        { "value": "white", "label": "White" }
+      ],
+      "default": "beige"
+    },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 80 }
+  ],
+  "presets": [
+    {
+      "name": "CM parallax gallery",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "image_asset": "cm-hero-banner.jpg",
+            "image_width": 1800,
+            "image_height": 800,
+            "title": "Chef-Crafted Flavors",
+            "text": "<p>Classical French training and 40 years in the kitchen go into every container.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "image_asset": "cm-usp-eco.jpg",
+            "image_width": 1000,
+            "image_height": 1333,
+            "title": "Clean Food, Clean Packaging",
+            "text": "<p>Every meal is packed in environmentally friendly containers.</p>"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "image_asset": "cm-delivery-banner.jpg",
+            "image_width": 1800,
+            "image_height": 800,
+            "title": "Delivered Fresh",
+            "text": "<p>Fresh, never frozen meals delivered across Hartland and Lake Country.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

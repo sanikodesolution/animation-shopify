@@ -467,7 +467,57 @@
     );
   }
 
+  function cmGallery(root) {
+    const tl = timeline(root, 'top 80%');
+    cmIntro(tl, root.querySelector('.cm-pg__intro'), 0);
+
+    const desktop = window.matchMedia('(min-width: 990px)').matches;
+    const overflow = () => parseFloat(getComputedStyle(root).getPropertyValue('--cm-pg-overflow')) || 60;
+    const scrubbed = (trigger) => ({
+      trigger,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.8,
+      invalidateOnRefresh: true,
+    });
+
+    all(root, '.cm-pg__item').forEach((item, index) => {
+      const frame = item.querySelector('.cm-pg__frame');
+      const image = frame && frame.querySelector('img, svg');
+      const number = item.querySelector('.cm-pg__num');
+      const fromRight = desktop && index % 2 === 1;
+
+      const itemTl = timeline(item, 'top 80%');
+      if (frame) {
+        itemTl.fromTo(
+          frame,
+          { clipPath: fromRight ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)' },
+          { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'power4.inOut' },
+          0
+        );
+      }
+      add(itemTl, all(item, '.cm-pg__text > *'), { autoAlpha: 0, y: 30, duration: 0.8, stagger: 0.12 }, 0.5);
+
+      if (image) {
+        gsap.fromTo(
+          image,
+          { y: () => -overflow() },
+          { y: () => overflow(), ease: 'none', scrollTrigger: scrubbed(frame) }
+        );
+      }
+      if (number) {
+        gsap.from(number, { autoAlpha: 0, duration: 1.2, ease: 'power2.out', scrollTrigger: onceAt(item, 'top 85%') });
+        gsap.fromTo(
+          number,
+          { yPercent: -62, y: 90 },
+          { yPercent: -62, y: -90, ease: 'none', scrollTrigger: scrubbed(item) }
+        );
+      }
+    });
+  }
+
   const cmHandlers = {
+    gallery: cmGallery,
     hero: cmHero,
     story: cmStory,
     usp: cmUsp,
