@@ -38,18 +38,22 @@
     }
 
     .section-header.scrolled-past-header .header {
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding-top: 6px;
+      padding-bottom: 6px;
     }
 
     @media screen and (min-width: 990px) {
+      .section-header.scrolled-past-header .header {
+        padding-bottom: 12px;
+      }
+
       .scrolled-past-header .header .header__inline-menu {
-        margin-top: 0;
+        margin-top: 0.4rem;
       }
 
       .scrolled-past-header .header__inline-menu .header__menu-item {
-        padding-top: 0.4rem;
-        padding-bottom: 0.4rem;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
       }
     }
   {%- endif -%}
