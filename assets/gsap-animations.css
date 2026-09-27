@@ -13,6 +13,19 @@
   visibility: hidden;
 }
 
+.banner__media.media > img.gsap-bg-parallax {
+  --gsap-bg-parallax: 70px;
+  top: calc(-1 * var(--gsap-bg-parallax));
+  height: calc(100% + 2 * var(--gsap-bg-parallax));
+  will-change: transform;
+}
+
+@media screen and (max-width: 749px) {
+  .banner__media.media > img.gsap-bg-parallax {
+    --gsap-bg-parallax: 36px;
+  }
+}
+
 .gsap-progress {
   position: fixed;
   top: 0;

@@ -81,6 +81,27 @@
     );
   }
 
+  function bgParallax(images, section) {
+    if (!images.length) return;
+    images.forEach((image) => image.classList.add('gsap-bg-parallax'));
+    const overflow = () => parseFloat(getComputedStyle(images[0]).getPropertyValue('--gsap-bg-parallax')) || 70;
+    gsap.fromTo(
+      images,
+      { y: () => -overflow() },
+      {
+        y: () => overflow(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
+  }
+
   function toLocationPins(paragraph) {
     const names = paragraph.textContent
       .split('📍')
@@ -162,10 +183,10 @@
     if (images.length && !fixedBackground) {
       gsap.fromTo(
         images,
-        { scale: 1.3 },
-        { scale: 1.12, duration: 2, ease: 'power2.out', scrollTrigger: onceAt(section, 'top 80%') }
+        { scale: 1.2 },
+        { scale: 1, duration: 2, ease: 'power2.out', scrollTrigger: onceAt(section, 'top 80%') }
       );
-      parallax(images, section);
+      bgParallax(images, section);
     }
 
     if (!box) return;
