@@ -209,6 +209,13 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "id": "animations_gsap",
+        "label": "Enable GSAP section animations",
+        "info": "Advanced scroll and entrance animations for every section. Turn off \"Reveal sections on scroll\" when this is enabled.",
+        "default": false
+      },
+      {
         "type": "select",
         "id": "animations_hover_elements",
         "options": [

@@ -1,0 +1,15 @@
+{%- if settings.animations_gsap -%}
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('gsap-pending');
+      setTimeout(function () {
+        document.documentElement.classList.remove('gsap-pending');
+      }, 2500);
+    }
+  </script>
+  {{ 'gsap-animations.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'gsap.min.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ScrollTrigger.min.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'SplitText.min.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'gsap-animations.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

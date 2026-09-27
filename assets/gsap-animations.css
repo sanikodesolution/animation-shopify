@@ -1,0 +1,58 @@
+:root {
+  --gsap-accent: var(--color-button);
+}
+
+/* Keeps above-the-fold content hidden until gsap-animations.js has set initial states. */
+.gsap-pending .announcement-bar__message,
+.gsap-pending .header__heading-link,
+.gsap-pending .header__inline-menu,
+.gsap-pending .header__icons,
+.gsap-pending .header__search,
+.gsap-pending header-drawer,
+.gsap-pending #MainContent > .shopify-section:first-child .banner__box {
+  visibility: hidden;
+}
+
+.gsap-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgb(var(--gsap-accent));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.gsap-pins {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.gsap-pin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 999px;
+  background: rgba(var(--color-foreground), 0.03);
+  line-height: 1.3;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.gsap-pin:hover {
+  background: rgb(var(--gsap-accent));
+  border-color: rgb(var(--gsap-accent));
+  color: #fff;
+}
+
+.gsap-check {
+  display: inline-block;
+  color: rgb(var(--gsap-accent));
+  font-weight: 700;
+}
