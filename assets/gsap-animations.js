@@ -257,10 +257,10 @@
     if (image) {
       gsap.fromTo(
         image,
-        { scale: 1.35 },
-        { scale: 1.12, duration: 1.6, ease: 'power3.out', scrollTrigger: onceAt(section, 'top 75%') }
+        { scale: 1.45 },
+        { scale: 1.25, duration: 1.6, ease: 'power3.out', scrollTrigger: onceAt(section, 'top 75%') }
       );
-      parallax([image], section, 5);
+      parallax([image], section, 10);
     }
     if (!content) return;
 
