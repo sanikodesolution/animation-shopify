@@ -158,14 +158,14 @@
     const images = all(section, '.banner__media img');
     const transparentBox = !!section.querySelector('.banner--desktop-transparent');
 
-    const isHero = section === document.querySelector('main .shopify-section');
-    if (images.length) {
+    const fixedBackground = !!section.querySelector('.banner__media.animate--fixed');
+    if (images.length && !fixedBackground) {
       gsap.fromTo(
         images,
-        { scale: isHero ? 1.3 : 1.45 },
-        { scale: isHero ? 1.12 : 1.34, duration: 2, ease: 'power2.out', scrollTrigger: onceAt(section, 'top 80%') }
+        { scale: 1.3 },
+        { scale: 1.12, duration: 2, ease: 'power2.out', scrollTrigger: onceAt(section, 'top 80%') }
       );
-      parallax(images, section, isHero ? 6 : 15);
+      parallax(images, section);
     }
 
     if (!box) return;
