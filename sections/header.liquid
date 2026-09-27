@@ -159,6 +159,8 @@
                   preload: true
                 }}
               </div>
+            {%- elsif settings.logo_asset != blank -%}
+              {%- render 'asset-logo', class: 'header__heading-logo motion-reduce' -%}
             {%- else -%}
               <span class="h2">{{ shop.name }}</span>
             {%- endif -%}
@@ -199,6 +201,8 @@
                   preload: true
                 }}
               </div>
+            {%- elsif settings.logo_asset != blank -%}
+              {%- render 'asset-logo', class: 'header__heading-logo' -%}
             {%- else -%}
               <span class="h2">{{ shop.name }}</span>
             {%- endif -%}

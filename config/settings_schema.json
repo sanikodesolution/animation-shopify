@@ -30,6 +30,18 @@
         "id": "favicon",
         "label": "t:settings_schema.logo.settings.favicon.label",
         "info": "t:settings_schema.logo.settings.favicon.info"
+      },
+      {
+        "type": "text",
+        "id": "logo_asset",
+        "label": "Logo from theme assets",
+        "info": "Filename in the theme assets folder. Used when no logo image is selected."
+      },
+      {
+        "type": "text",
+        "id": "favicon_asset",
+        "label": "Favicon from theme assets",
+        "info": "Filename in the theme assets folder. Used when no favicon image is selected."
       }
     ]
   },

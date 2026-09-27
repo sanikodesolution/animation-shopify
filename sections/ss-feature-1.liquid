@@ -233,6 +233,15 @@
                   <div class="box__image">
                       {%- if block.settings.feature_image != blank -%}
                         <img src="{{ block.settings.feature_image | image_url }}" alt="feature-item-{{ forloop.index }}" {% if lazy %}loading="lazy"{% endif %}>
+                      {%- elsif block.settings.feature_image_asset != blank -%}
+                        <img
+                          src="{{ block.settings.feature_image_asset | asset_img_url: '400x' }}"
+                          alt="{{ block.settings.feature_title | default: block.settings.feature_image_alt | escape }}"
+                          width="400"
+                          height="400"
+                          style="width: auto;"
+                          {% if lazy %}loading="lazy"{% endif %}
+                        >
                       {%- else -%}
                        {% case forloop.index %}
                         {% when 1 %}
@@ -681,6 +690,18 @@
                 "type":"image_picker",
                 "id":"feature_image",
                 "label":"Icon"
+             },
+             {
+                "type":"text",
+                "id":"feature_image_asset",
+                "label":"Icon from theme assets",
+                "info":"Filename in the theme assets folder. Used when no icon is selected."
+             },
+             {
+                "type":"text",
+                "id":"feature_image_alt",
+                "label":"Icon alt text",
+                "info":"Used when the item has no title."
              },
              {
                 "type":"url",

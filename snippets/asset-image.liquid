@@ -1,0 +1,39 @@
+{% comment %}
+  Renders a responsive img from a file in the theme assets folder.
+
+  Accepts:
+  - src: {String} Asset filename (required)
+  - widths: {String} Comma-separated srcset widths. Default: '375, 750, 1100, 1500, 1800'
+  - sizes: {String} img sizes attribute. Default: '100vw'
+  - width: {Number} Intrinsic width of the source file
+  - height: {Number} Intrinsic height of the source file
+  - alt: {String} Alt text
+  - class: {String} Class names
+  - style: {String} Inline styles
+  - loading: {String} 'lazy' or 'eager'. Default: 'lazy'
+  - fetchpriority: {String} Default: 'auto'
+
+  Usage:
+  {% render 'asset-image', src: 'cm-hero-banner.jpg', sizes: '100vw', loading: 'eager' %}
+{% endcomment %}
+{%- liquid
+  assign width_list = widths | default: '375, 750, 1100, 1500, 1800' | split: ','
+  assign largest = width_list | last | strip | append: 'x'
+-%}
+<img
+  src="{{ src | asset_img_url: largest }}"
+  srcset="
+    {%- for width in width_list -%}
+      {%- assign size = width | strip | append: 'x' -%}
+      {{ src | asset_img_url: size }} {{ width | strip }}w{% unless forloop.last %}, {% endunless %}
+    {%- endfor -%}
+  "
+  sizes="{{ sizes | default: '100vw' }}"
+  alt="{{ alt | escape }}"
+  width="{{ width }}"
+  height="{{ height }}"
+  {% if class != blank %}class="{{ class }}"{% endif %}
+  {% if style != blank %}style="{{ style }}"{% endif %}
+  loading="{{ loading | default: 'lazy' }}"
+  fetchpriority="{{ fetchpriority | default: 'auto' }}"
+>

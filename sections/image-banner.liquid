@@ -82,6 +82,16 @@
           fetchpriority: fetch_priority
       }}
     </div>
+  {%- elsif section.settings.image_asset != blank and section.settings.image_2 == blank -%}
+    <div class="banner__media media{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+      {%- liquid
+        assign asset_loading = 'lazy'
+        if section.index == 1
+          assign asset_loading = 'eager'
+        endif
+        render 'asset-image', src: section.settings.image_asset, widths: '375, 750, 1100, 1500, 1800', sizes: full_width, width: section.settings.image_asset_width, height: section.settings.image_asset_height, alt: section.settings.image_asset_alt, loading: asset_loading, fetchpriority: fetch_priority
+      -%}
+    </div>
   {%- elsif section.settings.image_2 == blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
       {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -184,6 +194,29 @@
       "type": "image_picker",
       "id": "image_2",
       "label": "t:sections.image-banner.settings.image_2.label"
+    },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Image from theme assets",
+      "info": "Filename in the theme assets folder. Used when no first image is selected."
+    },
+    {
+      "type": "text",
+      "id": "image_asset_alt",
+      "label": "Theme asset image alt text"
+    },
+    {
+      "type": "number",
+      "id": "image_asset_width",
+      "label": "Theme asset image width (px)",
+      "default": 1800
+    },
+    {
+      "type": "number",
+      "id": "image_asset_height",
+      "label": "Theme asset image height (px)",
+      "default": 800
     },
     {
       "type": "range",

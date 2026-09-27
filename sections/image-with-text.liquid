@@ -30,7 +30,7 @@
       <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'medium' %}2-col-tablet{% else %}3-col-tablet{% endif %}{% if section.settings.layout == 'text_first' %} image-with-text__grid--reverse{% endif %}">
         <div class="image-with-text__media-item image-with-text__media-item--{{ section.settings.desktop_image_width }} image-with-text__media-item--{{ section.settings.desktop_content_position }} grid__item">
           <div
-            class="image-with-text__media image-with-text__media--{{ section.settings.height }} global-media-settings{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}{% if section.settings.image != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}"
+            class="image-with-text__media image-with-text__media--{{ section.settings.height }} global-media-settings{% unless remove_color_classes %} gradient color-{{ section.settings.color_scheme }}{% else %} background-transparent{% endunless %}{% if section.settings.image != blank or section.settings.image_asset != blank %} media{% else %} image-with-text__media--placeholder placeholder{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}"
             {% if section.settings.height == 'adapt' and section.settings.image != blank %}
               style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"
             {% endif %}
@@ -54,6 +54,14 @@
                 | image_url: width: 1500
                 | image_tag: sizes: sizes, widths: widths, fetchpriority: fetch_priority
               }}
+            {%- elsif section.settings.image_asset != blank -%}
+              {%- liquid
+                assign asset_style = ''
+                if section.settings.height == 'adapt'
+                  assign asset_style = 'position: relative; height: auto;'
+                endif
+                render 'asset-image', src: section.settings.image_asset, widths: '360, 535, 750, 1080', sizes: '(min-width: 750px) 50vw, 100vw', width: section.settings.image_asset_width, height: section.settings.image_asset_height, alt: section.settings.image_asset_alt, style: asset_style, fetchpriority: fetch_priority
+              -%}
             {%- else -%}
               {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
             {%- endif -%}
@@ -119,6 +127,29 @@
       "type": "image_picker",
       "id": "image",
       "label": "t:sections.image-with-text.settings.image.label"
+    },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Image from theme assets",
+      "info": "Filename in the theme assets folder. Used when no image is selected."
+    },
+    {
+      "type": "text",
+      "id": "image_asset_alt",
+      "label": "Theme asset image alt text"
+    },
+    {
+      "type": "number",
+      "id": "image_asset_width",
+      "label": "Theme asset image width (px)",
+      "default": 1080
+    },
+    {
+      "type": "number",
+      "id": "image_asset_height",
+      "label": "Theme asset image height (px)",
+      "default": 1080
     },
     {
       "type": "select",

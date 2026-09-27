@@ -1,0 +1,21 @@
+{% comment %}
+  Renders the header logo from a theme asset (settings.logo_asset) when no logo image is uploaded.
+
+  Accepts:
+  - class: {String} Class names for the img element
+{% endcomment %}
+<div class="header__heading-logo-wrapper">
+  <img
+    src="{{ settings.logo_asset | asset_img_url: '600x' }}"
+    srcset="
+      {{ settings.logo_asset | asset_img_url: '300x' }} 300w,
+      {{ settings.logo_asset | asset_img_url: '450x' }} 450w,
+      {{ settings.logo_asset | asset_img_url: '600x' }} 600w
+    "
+    sizes="(min-width: 750px) {{ settings.logo_width }}px, 50vw"
+    width="{{ settings.logo_width }}"
+    alt="{{ shop.name | escape }}"
+    class="{{ class }}"
+    fetchpriority="high"
+  >
+</div>
