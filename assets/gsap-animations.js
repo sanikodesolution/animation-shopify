@@ -223,17 +223,25 @@
     const boxes = all(section, '.wrapper-box > .box');
     if (!boxes.length) return;
 
+    const iconsOnly = !!section.querySelector('[data-icon-motion]');
     const tl = timeline(section, 'top 80%');
-    add(tl, boxes, { autoAlpha: 0, y: 70, duration: 0.9, stagger: 0.15 }, 0);
-    add(tl, all(section, '.box__image'), { scale: 0, rotate: -20, duration: 0.8, stagger: 0.15, ease: 'back.out(1.8)' }, 0.15);
-    add(
-      tl,
-      all(section, '.box__title, .box__description').filter(hasText),
-      { autoAlpha: 0, y: 16, duration: 0.6, stagger: 0.08 },
-      0.4
-    );
+    if (iconsOnly) {
+      add(tl, all(section, '.box__image'), { autoAlpha: 0, y: 70, duration: 0.9, stagger: 0.15 }, 0);
+      add(tl, all(section, '.box__image img, .box__image svg'), { scale: 0, rotate: -20, duration: 0.8, stagger: 0.15, ease: 'back.out(1.8)' }, 0.15);
+    } else {
+      add(tl, boxes, { autoAlpha: 0, y: 70, duration: 0.9, stagger: 0.15 }, 0);
+      add(tl, all(section, '.box__image'), { scale: 0, rotate: -20, duration: 0.8, stagger: 0.15, ease: 'back.out(1.8)' }, 0.15);
+      add(
+        tl,
+        all(section, '.box__title, .box__description').filter(hasText),
+        { autoAlpha: 0, y: 16, duration: 0.6, stagger: 0.08 },
+        0.4
+      );
+    }
 
-    const badges = boxes.filter((box) => !box.querySelector('.box__title') || !hasText(box.querySelector('.box__title')));
+    const badges = iconsOnly
+      ? boxes
+      : boxes.filter((box) => !box.querySelector('.box__title') || !hasText(box.querySelector('.box__title')));
     tl.call(() => {
       badges.forEach((box, index) => {
         const image = box.querySelector('.box__image img, .box__image svg');
