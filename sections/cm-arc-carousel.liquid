@@ -32,13 +32,17 @@
     --cm-arc-bg-2: {{ section.settings.bg_color_2 }};
     --cm-arc-text: {{ section.settings.text_color }};
     --cm-arc-accent: {{ section.settings.accent }};
-    --cm-arc-w: min({{ section.settings.item_width }}px, 24vw);
+    --cm-arc-w-max: {{ section.settings.item_width }}px;
     --cm-arc-ratio: {{ section.settings.item_shape }};
     --cm-arc-curve: {{ section.settings.curve | abs }}px;
   "
 >
+  <div class="cm-arc__spot" aria-hidden="true"></div>
   <div class="cm-arc__glow" aria-hidden="true"></div>
-  <div class="section-{{ section.id }}-padding">
+  {%- if section.settings.show_frame -%}
+    <div class="cm-arc__frame" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  {%- endif -%}
+  <div class="cm-arc__content section-{{ section.id }}-padding">
     {%- if section.settings.label != blank or section.settings.heading != blank or section.settings.text != blank -%}
       <div class="cm-center page-width">
         {%- if section.settings.label != blank -%}
@@ -103,10 +107,10 @@
 
         {%- if section.settings.show_arrows -%}
           <button type="button" class="cm-arc__nav cm-arc__nav--prev" data-arc-prev aria-label="Previous">
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6M19 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <button type="button" class="cm-arc__nav cm-arc__nav--next" data-arc-next aria-label="Next">
-            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6M5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         {%- endif -%}
       </div>
@@ -114,8 +118,15 @@
       <div class="cm-arc__info page-width" aria-live="polite">
         <h3 class="cm-arc__title"></h3>
         <p class="cm-arc__subtitle"></p>
+        <div class="cm-arc__progress" aria-hidden="true">
+          <span class="cm-arc__progress-fill"></span>
+          <span class="cm-arc__progress-dot"></span>
+        </div>
         {%- if section.settings.button_label != blank -%}
           <a class="cm-btn cm-arc__btn" href="#" hidden>{{ section.settings.button_label | escape }}</a>
+        {%- endif -%}
+        {%- if section.settings.hint != blank -%}
+          <p class="cm-arc__hint">{{ section.settings.hint | escape }}</p>
         {%- endif -%}
       </div>
     </cm-arc-carousel>
@@ -198,11 +209,13 @@
     { "type": "checkbox", "id": "full_width", "label": "Full page width", "default": true },
     { "type": "range", "id": "item_width", "min": 100, "max": 280, "step": 10, "unit": "px", "label": "Product width", "default": 170 },
     { "type": "range", "id": "gap", "min": 0, "max": 160, "step": 5, "unit": "px", "label": "Gap between products", "default": 60 },
-    { "type": "range", "id": "curve", "min": -100, "max": 150, "step": 5, "unit": "px", "label": "Arc curve", "default": 50 },
-    { "type": "range", "id": "tilt", "min": 0, "max": 20, "step": 1, "unit": "°", "label": "Side product tilt", "default": 8 },
+    { "type": "range", "id": "curve", "min": -100, "max": 150, "step": 5, "unit": "px", "label": "Wave height", "default": 50 },
+    { "type": "range", "id": "tilt", "min": 0, "max": 30, "step": 1, "unit": "°", "label": "Product tilt", "default": 12 },
     { "type": "checkbox", "id": "autoplay", "label": "Auto-rotate", "default": true },
     { "type": "range", "id": "autoplay_speed", "min": 2, "max": 10, "step": 1, "unit": "s", "label": "Change every", "default": 4 },
     { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "show_frame", "label": "Show corner frame", "default": true },
+    { "type": "text", "id": "hint", "label": "Hint text", "default": "Drag to explore" },
     {
       "type": "header",
       "content": "Colors"
