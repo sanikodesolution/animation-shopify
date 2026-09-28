@@ -393,26 +393,31 @@
   }
 }
 
-.image-with-text--flush .image-with-text__content {
+/* Without its own background the text box padding only misaligns the text, so it sits on the page edge */
+.image-with-text:not(.image-with-text--overlap) .image-with-text__content.background-transparent {
   padding: 3.2rem 0 0;
 }
 
 @media screen and (min-width: 750px) {
-  .image-with-text--flush .image-with-text__content {
+  .image-with-text:not(.image-with-text--overlap) .image-with-text__content.background-transparent {
     padding: 0 0 0 5rem;
   }
 
-  .image-with-text--flush .image-with-text__grid--reverse .image-with-text__content {
+  .image-with-text:not(.image-with-text--overlap)
+    .image-with-text__grid--reverse
+    .image-with-text__content.background-transparent {
     padding: 0 5rem 0 0;
   }
 }
 
 @media screen and (min-width: 990px) {
-  .image-with-text--flush .image-with-text__content {
+  .image-with-text:not(.image-with-text--overlap) .image-with-text__content.background-transparent {
     padding-left: 7rem;
   }
 
-  .image-with-text--flush .image-with-text__grid--reverse .image-with-text__content {
+  .image-with-text:not(.image-with-text--overlap)
+    .image-with-text__grid--reverse
+    .image-with-text__content.background-transparent {
     padding-left: 0;
     padding-right: 7rem;
   }
