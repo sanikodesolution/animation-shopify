@@ -87,7 +87,9 @@
           }
           pointer.moved = true;
           this.dragging = true;
-          this.stage.setPointerCapture(event.pointerId);
+          try {
+            this.stage.setPointerCapture(event.pointerId);
+          } catch (error) {}
           this.stage.classList.add('is-dragging');
         }
 
