@@ -1245,7 +1245,7 @@ cm-arc-carousel {
   }
 
   .cm-arc__nav {
-    --cm-arc-nav: 3.6rem;
+    display: none;
   }
 
   .cm-arc__info {
