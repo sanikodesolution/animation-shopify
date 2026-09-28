@@ -516,7 +516,16 @@
     });
   }
 
+  function cmArc(root) {
+    const tl = timeline(root, 'top 75%');
+    add(tl, all(root, '.cm-arc__glow'), { autoAlpha: 0, scale: 0.4, duration: 1.6, ease: 'power2.out' }, 0);
+    cmIntro(tl, root.querySelector('.cm-center'), 0.1);
+    add(tl, all(root, '.cm-arc__stage-wrap'), { autoAlpha: 0, y: 90, scale: 0.9, duration: 1.4, ease: 'power4.out' }, 0.3);
+    add(tl, all(root, '.cm-arc__info'), { autoAlpha: 0, y: 30, duration: 0.8 }, 0.8);
+  }
+
   const cmHandlers = {
+    arc: cmArc,
     gallery: cmGallery,
     hero: cmHero,
     story: cmStory,

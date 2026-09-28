@@ -1,0 +1,46 @@
+{%- comment -%}
+  One product in the CM 3D arc carousel.
+  Accepts:
+  - image: {Object} Shopify image (optional)
+  - image_asset: {String} Theme asset filename, used when no image
+  - title: {String}
+  - subtitle: {String}
+  - link: {String}
+  - accent: {String} Hex color
+  - index: {Number}
+  - attrs: {String} block.shopify_attributes
+{%- endcomment -%}
+{%- assign alt = title | escape -%}
+<div
+  class="cm-arc__item"
+  data-title="{{ title | escape }}"
+  data-subtitle="{{ subtitle | escape }}"
+  data-link="{{ link }}"
+  data-accent="{{ accent }}"
+  role="group"
+  aria-roledescription="slide"
+  aria-label="{{ title | escape }}"
+  {{ attrs }}
+>
+  <div class="cm-arc__float" style="--cm-arc-delay: {{ index | times: -0.7 }}s;">
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 600
+        | image_tag: class: 'cm-arc__img', loading: 'lazy', sizes: '(min-width: 990px) 260px, 30vw', alt: alt, draggable: 'false'
+      }}
+    {%- elsif image_asset != blank -%}
+      <img
+        class="cm-arc__img"
+        src="{{ image_asset | asset_url }}"
+        alt="{{ alt }}"
+        width="400"
+        height="800"
+        loading="lazy"
+        draggable="false"
+      >
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'cm-arc__img cm-arc__placeholder' }}
+    {%- endif -%}
+  </div>
+</div>
