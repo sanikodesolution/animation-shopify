@@ -75,19 +75,6 @@
     );
   }
 
-  function parallax(media, section, amount = 6) {
-    if (!media.length) return;
-    gsap.fromTo(
-      media,
-      { yPercent: -amount },
-      {
-        yPercent: amount,
-        ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true },
-      }
-    );
-  }
-
   function bgParallax(images, section) {
     if (!images.length) return;
     images.forEach((image) => image.classList.add('gsap-bg-parallax'));
@@ -297,10 +284,18 @@
       setThenTo(
         null,
         image,
-        { scale: 1.35 },
-        { scale: 1.12, duration: 1.6, ease: 'power3.out', scrollTrigger: onceAt(section, 'top 75%') }
+        { scale: 1.4 },
+        { scale: 1.22, duration: 1.6, ease: 'power3.out', scrollTrigger: onceAt(section, 'top 75%') }
       );
-      parallax([image], section, 5);
+      gsap.fromTo(
+        image,
+        { yPercent: -8 },
+        {
+          yPercent: 8,
+          ease: 'none',
+          scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
+        }
+      );
     }
 
     const overlay = media && media.querySelector('.iwt-overlay');
