@@ -226,9 +226,9 @@
 
 <div class="section-{{ section.id }} feature-{{ section.id }}" style="background-color:{{ background_color }}; background-image: {{ background_gradient }};">
     <div class="section-{{ section.id }}-settings ">
-      <div class="wrapper-box"{% if section.settings.animate_icons_only %} data-icon-motion{% endif %}>
+      <div class="wrapper-box">
           {%- for block in section.blocks -%}
-              <{% if block.settings.feature_url != blank %}a href="{{ block.settings.feature_url }}"{% else %}div{% endif %} class="box">
+              <{% if block.settings.feature_url != blank %}a href="{{ block.settings.feature_url }}"{% else %}div{% endif %} class="box"{% if block.settings.animate_icon_only %} data-icon-motion{% endif %}>
                   {% unless block.settings.hide_image %}
                   <div class="box__image">
                       {%- if block.settings.feature_image != blank -%}
@@ -499,13 +499,6 @@
         "default": 42
       },
       {
-        "type": "checkbox",
-        "id": "animate_icons_only",
-        "label": "Animate icons only",
-        "info": "Icons pop in and float; titles and text stay still.",
-        "default": false
-      },
-      {
         "type":"header",
         "content":"Feature wrapper colors"
       },
@@ -720,6 +713,13 @@
                 "id":"hide_image",
                 "default": false,
                 "label":"Hide Image"
+             },
+             {
+                "type":"checkbox",
+                "id":"animate_icon_only",
+                "default": false,
+                "label":"Animate icon only",
+                "info":"Icon pops in and floats; title and text stay still."
              }
           ]
        }

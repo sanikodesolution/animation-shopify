@@ -33,6 +33,13 @@
     return tl;
   }
 
+  // ScrollTrigger.refresh() drops the start state of scroll-triggered fromTo tweens,
+  // so the start state is set up front and the tween only animates to the end state.
+  function setThenTo(tl, targets, fromVars, toVars, position) {
+    gsap.set(targets, fromVars);
+    return tl ? tl.to(targets, toVars, position) : gsap.to(targets, toVars);
+  }
+
   function reveal(targets, vars = {}, trigger, start) {
     const list = gsap.utils.toArray(targets);
     if (!list.length) return;
@@ -181,7 +188,8 @@
 
     const fixedBackground = !!section.querySelector('.banner__media.animate--fixed');
     if (images.length && !fixedBackground) {
-      gsap.fromTo(
+      setThenTo(
+        null,
         images,
         { scale: 1.2 },
         { scale: 1, duration: 2, ease: 'power2.out', scrollTrigger: onceAt(section, 'top 80%') }
@@ -277,7 +285,8 @@
 
     const tl = timeline(section, 'top 75%');
     if (media) {
-      tl.fromTo(
+      setThenTo(
+        tl,
         media,
         { clipPath: reversed ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)' },
         { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'power4.inOut' },
@@ -285,7 +294,8 @@
       );
     }
     if (image) {
-      gsap.fromTo(
+      setThenTo(
+        null,
         image,
         { scale: 1.35 },
         { scale: 1.12, duration: 1.6, ease: 'power3.out', scrollTrigger: onceAt(section, 'top 75%') }
@@ -382,7 +392,8 @@
 
     const media = root.querySelector('.cm-story__media');
     if (!media) return;
-    tl.fromTo(
+    setThenTo(
+      tl,
       media,
       { clipPath: 'inset(100% 0% 0% 0% round 12px)' },
       { clipPath: 'inset(0% 0% 0% 0% round 12px)', duration: 1.3, ease: 'power4.inOut' },
@@ -497,7 +508,8 @@
 
       const itemTl = timeline(item, 'top 80%');
       if (frame) {
-        itemTl.fromTo(
+        setThenTo(
+          itemTl,
           frame,
           { clipPath: fromRight ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)' },
           { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'power4.inOut' },
