@@ -1008,6 +1008,19 @@ cm-arc-carousel {
     drop-shadow(0 0 36px color-mix(in srgb, var(--cm-arc-accent) 50%, transparent));
 }
 
+.cm-arc--card .cm-arc__img {
+  object-fit: cover;
+  border-radius: 1.6rem;
+  filter: none;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.55);
+  transition: box-shadow 0.9s ease;
+}
+
+.cm-arc--card .cm-arc__item.is-active .cm-arc__img {
+  filter: none;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.6), 0 0 44px color-mix(in srgb, var(--cm-arc-accent) 55%, transparent);
+}
+
 .cm-arc__placeholder {
   border-radius: 1.2rem;
   background: rgba(255, 255, 255, 0.08);

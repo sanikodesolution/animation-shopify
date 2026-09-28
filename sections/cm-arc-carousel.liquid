@@ -25,7 +25,7 @@
 {%- if item_count > 0 -%}
 
 <div
-  class="cm cm-arc"
+  class="cm cm-arc cm-arc--{{ section.settings.image_style }}"
   data-cm="arc"
   style="
     --cm-arc-bg-1: {{ section.settings.bg_color_1 }};
@@ -184,6 +184,16 @@
         { "value": "1", "label": "Square (plates, bowls)" }
       ],
       "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "image_style",
+      "label": "Image style",
+      "options": [
+        { "value": "cutout", "label": "Cut-out (transparent PNG)" },
+        { "value": "card", "label": "Photo card" }
+      ],
+      "default": "cutout"
     },
     { "type": "checkbox", "id": "full_width", "label": "Full page width", "default": true },
     { "type": "range", "id": "item_width", "min": 100, "max": 280, "step": 10, "unit": "px", "label": "Product width", "default": 170 },
