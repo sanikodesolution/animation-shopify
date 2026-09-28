@@ -1,4 +1,12 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.overlay_heading != blank or section.settings.overlay_text != blank -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Montserrat:ital,wght@1,500&display=swap"
+  >
+{%- endif -%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -64,6 +72,32 @@
               -%}
             {%- else -%}
               {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            {%- if section.settings.overlay_heading != blank or section.settings.overlay_text != blank -%}
+              <div
+                class="iwt-overlay iwt-overlay--{{ section.settings.overlay_position }}"
+                style="--iwt-overlay-bg: {{ section.settings.overlay_bg }}; --iwt-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }}; --iwt-overlay-color: {{ section.settings.overlay_text_color }}; --iwt-overlay-width: {{ section.settings.overlay_width }}%;"
+              >
+                <div class="iwt-overlay__panel">
+                  <span class="iwt-overlay__box" aria-hidden="true"></span>
+                  <div class="iwt-overlay__text">
+                    {%- if section.settings.overlay_heading != blank -%}
+                      {%- assign overlay_lines = section.settings.overlay_heading | escape | newline_to_br | split: '<br />' -%}
+                      <p class="iwt-overlay__heading">
+                        {%- for line in overlay_lines -%}
+                          {%- assign line = line | strip -%}
+                          {%- if line != blank -%}
+                            <span class="iwt-overlay__line"><span>{{ line }}</span></span>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </p>
+                    {%- endif -%}
+                    {%- if section.settings.overlay_text != blank -%}
+                      <p class="iwt-overlay__sub">{{ section.settings.overlay_text | escape | newline_to_br }}</p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
             {%- endif -%}
           </div>
         </div>
@@ -230,6 +264,64 @@
       ],
       "default": "none",
       "label": "t:sections.all.animation.image_behavior.label"
+    },
+    {
+      "type": "header",
+      "content": "Image text overlay"
+    },
+    {
+      "type": "textarea",
+      "id": "overlay_heading",
+      "label": "Overlay heading",
+      "info": "Each line break starts a new line. Leave empty to hide the overlay."
+    },
+    {
+      "type": "textarea",
+      "id": "overlay_text",
+      "label": "Overlay text"
+    },
+    {
+      "type": "select",
+      "id": "overlay_position",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "middle", "label": "Middle" },
+        { "value": "bottom", "label": "Bottom" }
+      ],
+      "default": "top",
+      "label": "Overlay position"
+    },
+    {
+      "type": "range",
+      "id": "overlay_width",
+      "min": 30,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Overlay box width",
+      "default": 54
+    },
+    {
+      "type": "color",
+      "id": "overlay_bg",
+      "label": "Overlay box color",
+      "default": "#2451a3"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Overlay box opacity",
+      "default": 88
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Overlay text color",
+      "default": "#ffffff"
     },
     {
       "type": "header",

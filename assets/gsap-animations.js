@@ -302,6 +302,25 @@
       );
       parallax([image], section, 5);
     }
+
+    const overlay = media && media.querySelector('.iwt-overlay');
+    if (overlay) {
+      add(tl, all(overlay, '.iwt-overlay__box'), { scaleY: 0, duration: 0.9, ease: 'power4.inOut' }, 0.75);
+      add(tl, all(overlay, '.iwt-overlay__line > span'), { yPercent: 110, duration: 0.9, stagger: 0.12, ease: 'power4.out' }, 1.2);
+      add(tl, all(overlay, '.iwt-overlay__sub'), { autoAlpha: 0, y: 20, filter: 'blur(6px)', duration: 0.8, clearProps: `${CLEAR},filter` }, 1.45);
+      const text = overlay.querySelector('.iwt-overlay__text');
+      if (text) {
+        gsap.fromTo(
+          text,
+          { y: 14 },
+          {
+            y: -14,
+            ease: 'none',
+            scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: true },
+          }
+        );
+      }
+    }
     if (!content) return;
 
     const offset = reversed ? -50 : 50;
