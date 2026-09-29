@@ -233,6 +233,7 @@ food-menu {
 }
 
 .food-hero__title-accent {
+  align-self: flex-start;
   margin-top: 0.14em;
   color: var(--food-accent);
   font-size: 0.555em;
@@ -319,15 +320,24 @@ food-menu {
   filter: drop-shadow(0 3rem 3rem rgba(0, 0, 0, 0.65));
 }
 
+.food-hero--photo .food-hero__media {
+  aspect-ratio: 1.25;
+}
+
 .food-hero__product--fade {
-  inset: 0 -4% -4% -8%;
+  inset: 0;
 }
 
 .food-hero__product--fade .food-hero__img {
-  object-fit: cover;
   filter: none;
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 58%, transparent 100%);
-  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 58%, transparent 100%);
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, #000 13%, #000 91%, transparent),
+    linear-gradient(180deg, transparent, #000 13%, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 13%, #000 91%, transparent),
+    linear-gradient(180deg, transparent, #000 13%, #000 88%, transparent);
+  mask-composite: intersect;
 }
 
 .food-hero__product .food-placeholder {
@@ -419,6 +429,14 @@ food-menu {
 
   .food-hero__proof {
     justify-content: flex-start;
+  }
+
+  .food-hero--photo .food-hero__inner {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .food-hero--photo .food-hero__media {
+    margin-right: -3rem;
   }
 }
 

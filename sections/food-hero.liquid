@@ -12,7 +12,7 @@
 -%}
 
 <section
-  class="food food-hero"
+  class="food food-hero{% if section.settings.image_fade %} food-hero--photo{% endif %}"
   data-food="hero"
   style="--food-bg: {{ section.settings.bg }}; --food-accent: {{ section.settings.accent }}; --food-text: {{ section.settings.text_color }};"
 >
@@ -164,8 +164,8 @@
     {
       "type": "checkbox",
       "id": "image_fade",
-      "label": "Blend image edges into background",
-      "info": "Use for photos with a dark background instead of a transparent PNG.",
+      "label": "Photo with background",
+      "info": "Shows the full photo and softly blends its outer edges into the section. Use for photos with a dark background instead of a transparent PNG.",
       "default": false
     },
     { "type": "checkbox", "id": "show_seal", "label": "Show quality seal", "default": true },

@@ -584,7 +584,11 @@
     add(tl, all(root, '.food-hero__title-main'), { autoAlpha: 0, yPercent: 40, scale: 0.9, duration: 1.1, ease: 'power4.out' }, 0.1);
     add(tl, all(root, '.food-hero__title-accent'), { autoAlpha: 0, y: 30, letterSpacing: '0.3em', duration: 1 }, 0.3);
     add(tl, all(root, '.food-hero__text, .food-hero__btn, .food-hero__proof'), { autoAlpha: 0, y: 24, duration: 0.8, stagger: 0.1 }, 0.5);
-    add(tl, all(root, '.food-hero__product'), { autoAlpha: 0, scale: 0.6, rotate: -14, y: 60, duration: 1.4, ease: 'back.out(1.4)' }, 0.2);
+    if (root.classList.contains('food-hero--photo')) {
+      add(tl, all(root, '.food-hero__product'), { autoAlpha: 0, scale: 1.12, duration: 1.6, ease: 'power2.out' }, 0.1);
+    } else {
+      add(tl, all(root, '.food-hero__product'), { autoAlpha: 0, scale: 0.6, rotate: -14, y: 60, duration: 1.4, ease: 'back.out(1.4)' }, 0.2);
+    }
     add(tl, all(root, '.food-hero__float'), { autoAlpha: 0, scale: 0, duration: 0.9, stagger: 0.08, ease: 'back.out(2)' }, 0.7);
     add(tl, all(root, '.food-hero__seal'), { autoAlpha: 0, scale: 0, rotate: -180, duration: 1.1, ease: 'back.out(1.6)' }, 0.9);
 
