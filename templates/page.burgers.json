@@ -1,0 +1,231 @@
+{
+  "sections": {
+    "food_hero": {
+      "type": "food-hero",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "kicker": "The",
+        "title": "Burger",
+        "title_accent": "Collection",
+        "text": "Crafted for serious cravings.\nFresh ingredients. Premium taste.",
+        "button_label": "Explore burgers",
+        "button_link": "",
+        "proof_text": "4.8k+ Happy Customers",
+        "rating": 5,
+        "avatar_1": "",
+        "avatar_2": "",
+        "avatar_3": "",
+        "avatar_4": "",
+        "image_asset": "food-hero-burger.jpg",
+        "image_alt": "Loaded cheeseburger with flying ingredients",
+        "image_fade": true,
+        "show_seal": false,
+        "seal_text": "PREMIUM • QUALITY • PREMIUM • QUALITY •",
+        "seal_value": "100%",
+        "show_sparks": true,
+        "bg": "#0a0a0a",
+        "accent": "#f5a623",
+        "text_color": "#ffffff",
+        "padding_top": 72,
+        "padding_bottom": 56
+      }
+    },
+    "food_menu": {
+      "type": "food-menu",
+      "blocks": {
+        "cat_beef": { "type": "category", "settings": { "title": "Beef", "icon": "beef" } },
+        "cat_chicken": { "type": "category", "settings": { "title": "Chicken", "icon": "chicken" } },
+        "cat_spicy": { "type": "category", "settings": { "title": "Spicy", "icon": "spicy" } },
+        "cat_veggie": { "type": "category", "settings": { "title": "Veggie", "icon": "veggie" } },
+        "cat_signature": { "type": "category", "settings": { "title": "Signature", "icon": "signature" } },
+        "item_classic_cheese": {
+          "type": "item",
+          "settings": {
+            "title": "Classic Cheese",
+            "image_asset": "food-classic-cheese.png",
+            "badge": "New",
+            "badge_style": "new",
+            "description": "Beef patty, cheddar, lettuce, tomato, onion.",
+            "price": "$11.99",
+            "categories": "Beef",
+            "calories": "520",
+            "protein": "28g",
+            "carbs": "38g",
+            "fat": "26g",
+            "featured": false
+          }
+        },
+        "item_smoky_bbq": {
+          "type": "item",
+          "settings": {
+            "title": "Smoky BBQ Burger",
+            "image_asset": "food-smoky-bbq-featured.png",
+            "gallery": "food-smoky-bbq.png",
+            "badge": "Best seller",
+            "badge_style": "best",
+            "description": "Juicy beef patty, smoky BBQ sauce, cheddar cheese, crispy onion, fresh lettuce & pickles.",
+            "price": "$13.99",
+            "categories": "Beef, Signature",
+            "calories": "560",
+            "protein": "32g",
+            "carbs": "36g",
+            "fat": "28g",
+            "featured": true
+          }
+        },
+        "item_firehouse": {
+          "type": "item",
+          "settings": {
+            "title": "Firehouse",
+            "image_asset": "food-firehouse.png",
+            "badge": "Spicy",
+            "badge_style": "spicy",
+            "description": "Spicy sauce, jalapeño, pepper jack, lettuce.",
+            "price": "$14.99",
+            "categories": "Beef, Spicy",
+            "calories": "610",
+            "protein": "34g",
+            "carbs": "35g",
+            "fat": "31g",
+            "featured": false
+          }
+        },
+        "item_mushroom_swiss": {
+          "type": "item",
+          "settings": {
+            "title": "Mushroom Swiss",
+            "image_asset": "food-mushroom-swiss.png",
+            "badge": "New",
+            "badge_style": "new",
+            "description": "Swiss cheese, sautéed mushrooms, mayo.",
+            "price": "$12.99",
+            "categories": "Beef, Signature",
+            "calories": "540",
+            "protein": "30g",
+            "carbs": "34g",
+            "fat": "27g",
+            "featured": false
+          }
+        },
+        "item_veggie_delight": {
+          "type": "item",
+          "settings": {
+            "title": "Veggie Delight",
+            "image_asset": "food-veggie-delight.png",
+            "badge": "Veggie",
+            "badge_style": "veggie",
+            "description": "Plant-based patty, lettuce, tomato, onion, vegan sauce.",
+            "price": "$11.49",
+            "categories": "Veggie",
+            "calories": "430",
+            "protein": "21g",
+            "carbs": "42g",
+            "fat": "18g",
+            "featured": false
+          }
+        },
+        "item_bacon_bliss": {
+          "type": "item",
+          "settings": {
+            "title": "Bacon Bliss",
+            "image_asset": "food-bacon-bliss.png",
+            "badge": "Best seller",
+            "badge_style": "best",
+            "description": "Beef patty, crispy bacon, cheddar, special sauce.",
+            "price": "$13.99",
+            "categories": "Beef, Signature",
+            "calories": "640",
+            "protein": "36g",
+            "carbs": "33g",
+            "fat": "35g",
+            "featured": false
+          }
+        },
+        "item_jalapeno": {
+          "type": "item",
+          "settings": {
+            "title": "Jalapeño Burger",
+            "image_asset": "food-jalapeno-burger.png",
+            "badge": "Spicy",
+            "badge_style": "spicy",
+            "description": "Crispy chicken, jalapeños, spicy mayo, cheddar, lettuce.",
+            "price": "$13.49",
+            "categories": "Chicken, Spicy",
+            "calories": "580",
+            "protein": "31g",
+            "carbs": "40g",
+            "fat": "27g",
+            "featured": false
+          }
+        },
+        "item_hawaiian": {
+          "type": "item",
+          "settings": {
+            "title": "Hawaiian",
+            "image_asset": "food-hawaiian.png",
+            "badge": "New",
+            "badge_style": "new",
+            "description": "Teriyaki chicken, pineapple, Swiss cheese, mayo.",
+            "price": "$12.49",
+            "categories": "Chicken",
+            "calories": "510",
+            "protein": "29g",
+            "carbs": "44g",
+            "fat": "22g",
+            "featured": false
+          }
+        }
+      },
+      "block_order": [
+        "cat_beef",
+        "cat_chicken",
+        "cat_spicy",
+        "cat_veggie",
+        "cat_signature",
+        "item_classic_cheese",
+        "item_smoky_bbq",
+        "item_firehouse",
+        "item_mushroom_swiss",
+        "item_veggie_delight",
+        "item_bacon_bliss",
+        "item_jalapeno",
+        "item_hawaiian"
+      ],
+      "settings": {
+        "show_tabs": true,
+        "all_label": "All",
+        "show_spotlight": true,
+        "hint": "Drag to Rotate",
+        "heading": "Our Burger Collection",
+        "per_page": 8,
+        "load_more_label": "Load more",
+        "bg": "#0a0a0a",
+        "card": "#141414",
+        "accent": "#f5a623",
+        "text_color": "#ffffff",
+        "padding_top": 24,
+        "padding_bottom": 56
+      }
+    },
+    "food_features": {
+      "type": "food-features",
+      "blocks": {
+        "feature_delivery": { "type": "feature", "settings": { "icon": "truck", "title": "Free Delivery", "text": "On orders over $50" } },
+        "feature_same_day": { "type": "feature", "settings": { "icon": "clock", "title": "Same Day Delivery", "text": "Order before 10AM" } },
+        "feature_fresh": { "type": "feature", "settings": { "icon": "fresh", "title": "100% Fresh", "text": "High quality ingredients" } },
+        "feature_secure": { "type": "feature", "settings": { "icon": "secure", "title": "Secure Payment", "text": "100% secure checkout" } }
+      },
+      "block_order": ["feature_delivery", "feature_same_day", "feature_fresh", "feature_secure"],
+      "settings": {
+        "bg": "#0a0a0a",
+        "card": "#141414",
+        "accent": "#f5a623",
+        "text_color": "#ffffff",
+        "padding_top": 8,
+        "padding_bottom": 56
+      }
+    }
+  },
+  "order": ["food_hero", "food_menu", "food_features"]
+}

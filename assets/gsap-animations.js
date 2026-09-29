@@ -578,6 +578,86 @@
     else generic(section);
   }
 
+  function foodHero(root) {
+    const tl = gsap.timeline({ delay: 0.2, defaults: { ease: 'power3.out', clearProps: CLEAR } });
+    add(tl, all(root, '.food-hero__kicker'), { autoAlpha: 0, y: 20, letterSpacing: '0.5em', duration: 0.9 }, 0);
+    add(tl, all(root, '.food-hero__title-main'), { autoAlpha: 0, yPercent: 40, scale: 0.9, duration: 1.1, ease: 'power4.out' }, 0.1);
+    add(tl, all(root, '.food-hero__title-accent'), { autoAlpha: 0, y: 30, letterSpacing: '0.3em', duration: 1 }, 0.3);
+    add(tl, all(root, '.food-hero__text, .food-hero__btn, .food-hero__proof'), { autoAlpha: 0, y: 24, duration: 0.8, stagger: 0.1 }, 0.5);
+    add(tl, all(root, '.food-hero__product'), { autoAlpha: 0, scale: 0.6, rotate: -14, y: 60, duration: 1.4, ease: 'back.out(1.4)' }, 0.2);
+    add(tl, all(root, '.food-hero__float'), { autoAlpha: 0, scale: 0, duration: 0.9, stagger: 0.08, ease: 'back.out(2)' }, 0.7);
+    add(tl, all(root, '.food-hero__seal'), { autoAlpha: 0, scale: 0, rotate: -180, duration: 1.1, ease: 'back.out(1.6)' }, 0.9);
+
+    const image = root.querySelector('.food-hero__img');
+    if (image) {
+      gsap.to(image, {
+        yPercent: 10,
+        ease: 'none',
+        scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: 0.6 },
+      });
+    }
+  }
+
+  function foodMenu(root) {
+    const tl = timeline(root, 'top 80%');
+    add(tl, all(root, '.food-tabs'), { autoAlpha: 0, y: 30, duration: 0.8 }, 0);
+    add(tl, all(root, '.food-tab'), { autoAlpha: 0, y: 14, duration: 0.5, stagger: 0.05 }, 0.2);
+
+    const spot = root.querySelector('.food-spot');
+    if (spot) {
+      const spotTl = timeline(spot, 'top 80%');
+      add(spotTl, spot, { autoAlpha: 0, y: 60, duration: 1, ease: 'power4.out' }, 0);
+      add(spotTl, all(spot, '.food-spot__platform'), { autoAlpha: 0, scale: 0.6, duration: 1, ease: 'power3.out' }, 0.2);
+      add(spotTl, all(spot, '.food-spot__product'), { autoAlpha: 0, y: -80, scale: 0.8, duration: 1.2, ease: 'bounce.out' }, 0.35);
+      add(spotTl, all(spot, '.food-spot__gallery > *, .food-spot__thumbs > *'), { autoAlpha: 0, x: -20, duration: 0.5, stagger: 0.06 }, 0.4);
+      add(spotTl, visible(all(spot, '.food-spot__info > *')), { autoAlpha: 0, x: 30, duration: 0.6, stagger: 0.07 }, 0.4);
+      add(spotTl, all(spot, '.food-spot__trust li'), { autoAlpha: 0, y: 16, duration: 0.5, stagger: 0.07 }, 0.8);
+    }
+
+    const heading = root.querySelector('.food-heading');
+    if (heading) {
+      const headTl = timeline(heading, 'top 85%');
+      add(headTl, all(heading, '.food-heading__line'), { scaleX: 0, duration: 1, ease: 'power3.inOut' }, 0);
+      add(headTl, all(heading, '.food-heading__title'), { autoAlpha: 0, y: 24, duration: 0.8 }, 0.2);
+      add(headTl, all(heading, '.food-heading__icon'), { autoAlpha: 0, scale: 0, rotate: -90, duration: 0.6, ease: 'back.out(2.5)' }, 0.5);
+    }
+
+    const grid = root.querySelector('.food-grid');
+    const cards = grid ? all(grid, '.food-card').filter((card) => !card.hidden) : [];
+    if (cards.length) {
+      ScrollTrigger.batch(cards, {
+        start: 'top 90%',
+        once: true,
+        onEnter: (batch) => {
+          const pending = batch.filter((card) => card.style.visibility === 'hidden');
+          if (!pending.length) return;
+          gsap.fromTo(
+            pending,
+            { autoAlpha: 0, y: 50, scale: 0.94 },
+            { autoAlpha: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.08, ease: 'power3.out', clearProps: CLEAR }
+          );
+        },
+      });
+      gsap.set(cards, { autoAlpha: 0 });
+    }
+    reveal(all(root, '.food-more'), { y: 20 }, root.querySelector('.food-more'), 'top 95%');
+  }
+
+  function foodFeatures(root) {
+    const tl = timeline(root, 'top 85%');
+    add(tl, all(root, '.food-features__item'), { autoAlpha: 0, y: 40, duration: 0.8, stagger: 0.1 }, 0);
+    add(tl, all(root, '.food-features__icon'), { scale: 0, rotate: -30, duration: 0.7, stagger: 0.1, ease: 'back.out(2)' }, 0.25);
+  }
+
+  const foodHandlers = { hero: foodHero, menu: foodMenu, features: foodFeatures };
+
+  function food(section) {
+    const root = section.querySelector('[data-food]');
+    const run = root && foodHandlers[root.dataset.food];
+    if (run) run(root);
+    else generic(section);
+  }
+
   function generic(section) {
     const container = section.querySelector('.page-width, .page-width--narrow');
     const items = container ? visible(Array.from(container.children)) : [];
@@ -585,6 +665,7 @@
   }
 
   const handlers = [
+    { match: '[data-food]', run: food },
     { match: '[data-cm]', run: chefMatt },
     { match: '.announcement-bar-section', run: announcementBar },
     { match: '.section-header', run: header },

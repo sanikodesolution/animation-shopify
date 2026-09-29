@@ -1,0 +1,451 @@
+{%- render 'food-assets', section: section -%}
+
+{%- liquid
+  assign items = section.blocks | where: 'type', 'item'
+  assign categories = section.blocks | where: 'type', 'category'
+  assign spot_index = 0
+  for item in items
+    if item.settings.featured
+      assign spot_index = forloop.index0
+      break
+    endif
+  endfor
+-%}
+
+{%- capture items_json -%}
+  [
+  {%- for block in items -%}
+    {%- liquid
+      assign p = block.settings.product
+      assign title = block.settings.title | default: p.title
+      assign desc = block.settings.description
+      if desc == blank and p != blank
+        assign desc = p.description | strip_html | truncatewords: 18
+      endif
+      assign price = block.settings.price
+      if price == blank and p != blank
+        assign price = p.price | money
+      endif
+      assign variant = p.selected_or_first_available_variant
+      assign link = block.settings.link | default: p.url | default: ''
+      assign desc = desc | default: ''
+      assign price = price | default: ''
+
+      assign images = ''
+      if block.settings.image != blank
+        assign images = block.settings.image | image_url: width: 900
+      elsif block.settings.image_asset != blank
+        assign images = block.settings.image_asset | asset_img_url: '900x'
+      elsif p.featured_image != blank
+        assign images = p.featured_image | image_url: width: 900
+      endif
+      assign gallery = block.settings.gallery | split: ','
+      for file in gallery
+        assign file = file | strip
+        if file != blank
+          assign url = file | asset_img_url: '900x'
+          if images == blank
+            assign images = url
+          else
+            assign images = images | append: '|' | append: url
+          endif
+        endif
+      endfor
+
+      assign frames = ''
+      assign frame_files = block.settings.spin_frames | split: ','
+      for file in frame_files
+        assign file = file | strip
+        if file != blank
+          assign url = file | asset_img_url: '900x'
+          if frames == blank
+            assign frames = url
+          else
+            assign frames = frames | append: '|' | append: url
+          endif
+        endif
+      endfor
+    -%}
+    {
+      "title": {{ title | json }},
+      "badge": {{ block.settings.badge | json }},
+      "badgeStyle": {{ block.settings.badge_style | json }},
+      "desc": {{ desc | json }},
+      "price": {{ price | strip_html | json }},
+      "calories": {{ block.settings.calories | json }},
+      "protein": {{ block.settings.protein | json }},
+      "carbs": {{ block.settings.carbs | json }},
+      "fat": {{ block.settings.fat | json }},
+      "images": {{ images | split: '|' | json }},
+      "frames": {{ frames | split: '|' | json }},
+      "variant": {% if variant != blank %}{{ variant.id }}{% else %}null{% endif %},
+      "available": {% if variant != blank %}{{ variant.available }}{% else %}false{% endif %},
+      "link": {{ link | json }}
+    }{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+  ]
+{%- endcapture -%}
+
+<section
+  id="food-menu"
+  class="food food-menu"
+  data-food="menu"
+  style="--food-bg: {{ section.settings.bg }}; --food-card: {{ section.settings.card }}; --food-accent: {{ section.settings.accent }}; --food-text: {{ section.settings.text_color }};"
+>
+  <food-menu
+    class="page-width food-menu__inner section-{{ section.id }}-padding"
+    data-per-page="{{ section.settings.per_page }}"
+    data-added="{{ section.settings.added_text | escape }}"
+    data-view-cart="{{ section.settings.view_cart_text | escape }}"
+    data-cart-url="{{ routes.cart_url }}"
+  >
+    {%- if section.settings.show_tabs and categories.size > 0 -%}
+      <div class="food-tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+        <button class="food-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">
+          {%- render 'food-icon', icon: 'burger' -%}
+          <span>{{ section.settings.all_label | escape }}</span>
+        </button>
+        {%- for block in categories -%}
+          <button
+            class="food-tab"
+            type="button"
+            role="tab"
+            aria-selected="false"
+            data-filter="{{ block.settings.title | handleize }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- render 'food-icon', icon: block.settings.icon -%}
+            <span>{{ block.settings.title | escape }}</span>
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_spotlight and items.size > 0 -%}
+      {%- liquid
+        assign spot = items[spot_index]
+        assign sp = spot.settings.product
+        assign spot_title = spot.settings.title | default: sp.title
+        assign spot_price = spot.settings.price
+        if spot_price == blank and sp != blank
+          assign spot_price = sp.price | money
+        endif
+        assign spot_desc = spot.settings.description
+        if spot_desc == blank and sp != blank
+          assign spot_desc = sp.description | strip_html | truncatewords: 18
+        endif
+        assign spot_image = spot.settings.image
+        if spot_image == blank and spot.settings.image_asset == blank
+          assign spot_image = sp.featured_image
+        endif
+      -%}
+      <div class="food-spot" data-spot>
+        <div class="food-spot__gallery">
+          <button class="food-spot__tool" type="button" data-spot-spin aria-pressed="false" aria-label="{{ section.settings.spin_label | escape }}">
+            {%- render 'food-icon', icon: 'cube' -%}
+          </button>
+          <div class="food-spot__thumbs" data-spot-thumbs></div>
+          <button class="food-spot__tool food-spot__tool--more" type="button" data-spot-thumbs-next aria-label="More images">
+            {%- render 'food-icon', icon: 'chevron-down' -%}
+          </button>
+        </div>
+
+        <div
+          class="food-spot__stage"
+          data-spot-stage
+          tabindex="0"
+          role="group"
+          aria-label="{{ section.settings.hint | default: 'Drag to rotate' | escape }}"
+        >
+          <span class="food-spot__360" aria-hidden="true">
+            {%- render 'food-icon', icon: 'rotate' -%}
+            <small>360°</small>
+          </span>
+          <div class="food-spot__platform" aria-hidden="true">
+            <span class="food-spot__rim"></span>
+            <span class="food-spot__side"></span>
+            <span class="food-spot__top"><span class="food-spot__disc" data-spot-disc></span></span>
+          </div>
+          <div class="food-spot__product" data-spot-product>
+            <div class="food-spot__turn" data-spot-turn>
+              {%- render 'food-image',
+                image: spot_image,
+                asset: spot.settings.image_asset,
+                alt: spot_title,
+                class: 'food-spot__img',
+                widths: '450, 700, 900',
+                sizes: '(min-width: 990px) 40vw, 90vw',
+                loading: 'eager'
+              -%}
+            </div>
+          </div>
+          {%- if section.settings.hint != blank -%}
+            <p class="food-spot__hint">
+              {%- render 'food-icon', icon: 'sync' -%}
+              <span>{{ section.settings.hint | escape }}</span>
+            </p>
+          {%- endif -%}
+        </div>
+
+        <div class="food-spot__info">
+          <span class="food-badge food-badge--{{ spot.settings.badge_style }}{% if spot.settings.badge == blank %} is-hidden{% endif %}" data-spot-badge>
+            {%- render 'food-icon', icon: 'badge' -%}
+            <span data-spot-badge-text>{{ spot.settings.badge | escape }}</span>
+          </span>
+          <h2 class="food-spot__title" data-spot-title>{{ spot_title | escape }}</h2>
+          <p class="food-spot__price" data-spot-price>{{ spot_price }}</p>
+          <p class="food-spot__desc" data-spot-desc>{{ spot_desc | escape }}</p>
+          <ul class="food-spot__facts" role="list">
+            <li><strong data-spot-fact="calories">{{ spot.settings.calories | escape }}</strong><span>{{ section.settings.calories_label | escape }}</span></li>
+            <li class="is-accent"><strong data-spot-fact="protein">{{ spot.settings.protein | escape }}</strong><span>{{ section.settings.protein_label | escape }}</span></li>
+            <li><strong data-spot-fact="carbs">{{ spot.settings.carbs | escape }}</strong><span>{{ section.settings.carbs_label | escape }}</span></li>
+            <li><strong data-spot-fact="fat">{{ spot.settings.fat | escape }}</strong><span>{{ section.settings.fat_label | escape }}</span></li>
+          </ul>
+          <div class="food-spot__buy">
+            <div class="food-qty">
+              <button type="button" data-qty="-1" aria-label="Decrease quantity">{%- render 'food-icon', icon: 'minus' -%}</button>
+              <input type="number" value="1" min="1" max="99" data-qty-input aria-label="Quantity">
+              <button type="button" data-qty="1" aria-label="Increase quantity">{%- render 'food-icon', icon: 'plus' -%}</button>
+            </div>
+            <button class="food-btn food-spot__add" type="button" data-spot-add>
+              {%- render 'food-icon', icon: 'cart' -%}
+              <span>{{ section.settings.add_label | escape }}</span>
+            </button>
+          </div>
+        </div>
+
+        <ul class="food-spot__trust" role="list">
+          {%- for i in (1..4) -%}
+            {%- liquid
+              assign t_icon = 'trust_' | append: i | append: '_icon'
+              assign t_title = 'trust_' | append: i | append: '_title'
+              assign t_text = 'trust_' | append: i | append: '_text'
+            -%}
+            {%- if section.settings[t_title] != blank -%}
+              <li>
+                {%- render 'food-icon', icon: section.settings[t_icon] -%}
+                <span><strong>{{ section.settings[t_title] | escape }}</strong>{{ section.settings[t_text] | escape }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.heading != blank -%}
+      <div class="food-heading">
+        <span class="food-heading__line" aria-hidden="true"></span>
+        <h2 class="food-heading__title">{{ section.settings.heading | escape }}</h2>
+        <span class="food-heading__line" aria-hidden="true"></span>
+        <span class="food-heading__icon" aria-hidden="true">{%- render 'food-icon', icon: 'burger' -%}</span>
+      </div>
+    {%- endif -%}
+
+    <div class="food-grid" data-grid>
+      {%- for block in items -%}
+        {%- liquid
+          assign p = block.settings.product
+          assign title = block.settings.title | default: p.title
+          assign price = block.settings.price
+          if price == blank and p != blank
+            assign price = p.price | money
+          endif
+          assign desc = block.settings.description
+          if desc == blank and p != blank
+            assign desc = p.description | strip_html | truncatewords: 12
+          endif
+          assign cats = ''
+          assign cat_list = block.settings.categories | split: ','
+          for cat in cat_list
+            assign cat_handle = cat | handleize
+            assign cats = cats | append: ' ' | append: cat_handle
+          endfor
+          assign card_image = block.settings.image
+          if card_image == blank and block.settings.image_asset == blank
+            assign card_image = p.featured_image
+          endif
+        -%}
+        <article
+          class="food-card{% if forloop.index0 == spot_index %} is-current{% endif %}"
+          data-index="{{ forloop.index0 }}"
+          data-cats="{{ cats | strip }}"
+          {{ block.shopify_attributes }}
+        >
+          <button class="food-card__select" type="button" data-card-select aria-label="{{ title | escape }}"></button>
+          {%- if block.settings.badge != blank -%}
+            <span class="food-badge food-badge--{{ block.settings.badge_style }} food-card__badge">{{ block.settings.badge | escape }}</span>
+          {%- endif -%}
+          <button class="food-card__heart" type="button" data-heart aria-pressed="false" aria-label="Save {{ title | escape }}">
+            {%- render 'food-icon', icon: 'heart' -%}
+          </button>
+          <div class="food-card__media">
+            {%- render 'food-image',
+              image: card_image,
+              asset: block.settings.image_asset,
+              alt: title,
+              class: 'food-card__img',
+              widths: '300, 450, 600',
+              sizes: '(min-width: 990px) 22vw, 45vw'
+            -%}
+          </div>
+          <h3 class="food-card__title">{{ title | escape }}</h3>
+          {%- if desc != blank -%}
+            <p class="food-card__desc">{{ desc | escape }}</p>
+          {%- endif -%}
+          <div class="food-card__foot">
+            <span class="food-card__price">{{ price }}</span>
+            <button class="food-card__add" type="button" data-card-add aria-label="{{ section.settings.add_label | escape }}: {{ title | escape }}">
+              {%- render 'food-icon', icon: 'plus' -%}
+            </button>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    <p class="food-empty" data-empty hidden>{{ section.settings.empty_text | escape }}</p>
+
+    {%- if section.settings.load_more_label != blank -%}
+      <div class="food-more">
+        <button class="food-btn food-btn--outline" type="button" data-more hidden>
+          <span>{{ section.settings.load_more_label | escape }}</span>
+          {%- render 'food-icon', icon: 'sync' -%}
+        </button>
+      </div>
+    {%- endif -%}
+
+    <div class="food-toast" data-toast role="status" aria-live="polite"></div>
+    <template data-food-placeholder>
+      <span class="food-placeholder food-spot__img">{%- render 'food-icon', icon: 'burger' -%}</span>
+    </template>
+    <script type="application/json" data-food-items>{{ items_json | strip }}</script>
+  </food-menu>
+</section>
+
+{% schema %}
+{
+  "name": "Food menu",
+  "tag": "section",
+  "class": "section food-section",
+  "settings": [
+    { "type": "checkbox", "id": "show_tabs", "label": "Show category tabs", "default": true },
+    { "type": "text", "id": "all_label", "label": "All tab label", "default": "All" },
+    { "type": "checkbox", "id": "show_spotlight", "label": "Show product spotlight", "default": true },
+    { "type": "text", "id": "hint", "label": "Spotlight hint", "default": "Drag to Rotate" },
+    { "type": "text", "id": "spin_label", "label": "Auto rotate button label", "default": "Auto rotate" },
+    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to cart" },
+    { "type": "text", "id": "added_text", "label": "Added message", "default": "added to cart" },
+    { "type": "text", "id": "view_cart_text", "label": "View cart link", "default": "View cart" },
+    { "type": "text", "id": "calories_label", "label": "Calories label", "default": "Calories" },
+    { "type": "text", "id": "protein_label", "label": "Protein label", "default": "Protein" },
+    { "type": "text", "id": "carbs_label", "label": "Carbs label", "default": "Carbs" },
+    { "type": "text", "id": "fat_label", "label": "Fat label", "default": "Fat" },
+    { "type": "header", "content": "Spotlight badges" },
+    {
+      "type": "select", "id": "trust_1_icon", "label": "Badge 1 icon", "default": "leaf-check",
+      "options": [
+        { "value": "leaf-check", "label": "Shield check" }, { "value": "protein", "label": "Dumbbell" },
+        { "value": "natural", "label": "No sign" }, { "value": "truck", "label": "Truck" },
+        { "value": "fresh", "label": "Fresh drop" }, { "value": "clock", "label": "Clock" }
+      ]
+    },
+    { "type": "text", "id": "trust_1_title", "label": "Badge 1 title", "default": "100% Fresh" },
+    { "type": "text", "id": "trust_1_text", "label": "Badge 1 text", "default": "Never Frozen" },
+    {
+      "type": "select", "id": "trust_2_icon", "label": "Badge 2 icon", "default": "protein",
+      "options": [
+        { "value": "leaf-check", "label": "Shield check" }, { "value": "protein", "label": "Dumbbell" },
+        { "value": "natural", "label": "No sign" }, { "value": "truck", "label": "Truck" },
+        { "value": "fresh", "label": "Fresh drop" }, { "value": "clock", "label": "Clock" }
+      ]
+    },
+    { "type": "text", "id": "trust_2_title", "label": "Badge 2 title", "default": "High Protein" },
+    { "type": "text", "id": "trust_2_text", "label": "Badge 2 text", "default": "Packed Meals" },
+    {
+      "type": "select", "id": "trust_3_icon", "label": "Badge 3 icon", "default": "natural",
+      "options": [
+        { "value": "leaf-check", "label": "Shield check" }, { "value": "protein", "label": "Dumbbell" },
+        { "value": "natural", "label": "No sign" }, { "value": "truck", "label": "Truck" },
+        { "value": "fresh", "label": "Fresh drop" }, { "value": "clock", "label": "Clock" }
+      ]
+    },
+    { "type": "text", "id": "trust_3_title", "label": "Badge 3 title", "default": "No Artificial" },
+    { "type": "text", "id": "trust_3_text", "label": "Badge 3 text", "default": "Ingredients" },
+    {
+      "type": "select", "id": "trust_4_icon", "label": "Badge 4 icon", "default": "truck",
+      "options": [
+        { "value": "leaf-check", "label": "Shield check" }, { "value": "protein", "label": "Dumbbell" },
+        { "value": "natural", "label": "No sign" }, { "value": "truck", "label": "Truck" },
+        { "value": "fresh", "label": "Fresh drop" }, { "value": "clock", "label": "Clock" }
+      ]
+    },
+    { "type": "text", "id": "trust_4_title", "label": "Badge 4 title", "default": "Delivered" },
+    { "type": "text", "id": "trust_4_text", "label": "Badge 4 text", "default": "To Your Door" },
+    { "type": "header", "content": "Collection grid" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Our Burger Collection" },
+    { "type": "range", "id": "per_page", "min": 4, "max": 24, "step": 4, "label": "Items before Load more", "default": 8 },
+    { "type": "text", "id": "load_more_label", "label": "Load more label", "default": "Load more" },
+    { "type": "text", "id": "empty_text", "label": "Empty category message", "default": "New burgers are coming to this category soon." },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#0a0a0a" },
+    { "type": "color", "id": "card", "label": "Card background", "default": "#141414" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#f5a623" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 56 }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category tab",
+      "limit": 10,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Beef", "info": "Items appear under this tab when their Categories field contains this title." },
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "beef",
+          "options": [
+            { "value": "burger", "label": "Burger" }, { "value": "beef", "label": "Beef" },
+            { "value": "chicken", "label": "Chicken" }, { "value": "spicy", "label": "Chili" },
+            { "value": "veggie", "label": "Leaf" }, { "value": "signature", "label": "Star" },
+            { "value": "fish", "label": "Fish" }, { "value": "fries", "label": "Fries" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "name": "Menu item",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product", "info": "Connect a product to enable Add to cart. Empty fields below use the product's details." },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_asset", "label": "Image from theme assets", "info": "Filename in the theme assets folder. A transparent PNG works best." },
+        { "type": "text", "id": "gallery", "label": "Extra spotlight images", "info": "Theme asset filenames, separated by commas." },
+        { "type": "text", "id": "spin_frames", "label": "360° frames", "info": "Theme asset filenames of the burger photographed from different angles, in order, separated by commas. Dragging steps through them." },
+        { "type": "text", "id": "badge", "label": "Badge" },
+        {
+          "type": "select", "id": "badge_style", "label": "Badge style", "default": "new",
+          "options": [
+            { "value": "new", "label": "Green" }, { "value": "best", "label": "Orange" },
+            { "value": "spicy", "label": "Red" }, { "value": "veggie", "label": "Light green" }
+          ]
+        },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "text", "id": "price", "label": "Price", "info": "Leave empty to use the product price." },
+        { "type": "text", "id": "categories", "label": "Categories", "info": "Tab titles separated by commas, for example: Beef, Signature" },
+        { "type": "text", "id": "calories", "label": "Calories" },
+        { "type": "text", "id": "protein", "label": "Protein" },
+        { "type": "text", "id": "carbs", "label": "Carbs" },
+        { "type": "text", "id": "fat", "label": "Fat" },
+        { "type": "checkbox", "id": "featured", "label": "Show first in spotlight", "default": false },
+        { "type": "url", "id": "link", "label": "Link", "info": "Used by Add to cart when no product is connected." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Food menu"
+    }
+  ]
+}
+{% endschema %}

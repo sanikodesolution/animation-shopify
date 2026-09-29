@@ -1,0 +1,39 @@
+{%- comment -%}
+  Renders an image for the food sections from an uploaded image, a theme asset file or a placeholder.
+  Accepts:
+  - image: {Object} Image from an image_picker setting
+  - asset: {String} Filename in the theme assets folder
+  - alt: {String} Alt text
+  - class: {String} Class names
+  - widths: {String} Comma-separated srcset widths
+  - sizes: {String} img sizes attribute
+  - loading: {String} 'lazy' or 'eager'
+{%- endcomment -%}
+{%- liquid
+  assign img_widths = widths | default: '300, 450, 600, 900'
+  assign img_sizes = sizes | default: '(min-width: 990px) 25vw, 50vw'
+  assign img_loading = loading | default: 'lazy'
+-%}
+{%- if image != blank -%}
+  {%- assign img_alt = alt | default: image.alt -%}
+  {{
+    image
+    | image_url: width: 1200
+    | image_tag: widths: img_widths, sizes: img_sizes, class: class, alt: img_alt, loading: img_loading
+  }}
+{%- elsif asset != blank -%}
+  {%- render 'asset-image',
+    src: asset,
+    widths: img_widths,
+    sizes: img_sizes,
+    width: 900,
+    height: 900,
+    alt: alt,
+    class: class,
+    loading: img_loading
+  -%}
+{%- else -%}
+  <span class="food-placeholder {{ class }}" role="img" aria-label="{{ alt | escape }}">
+    {%- render 'food-icon', icon: 'burger' -%}
+  </span>
+{%- endif -%}

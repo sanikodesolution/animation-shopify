@@ -1,0 +1,206 @@
+{%- render 'food-assets', section: section -%}
+
+{%- liquid
+  assign avatars = ''
+  for i in (1..4)
+    assign key = 'avatar_' | append: i
+    if section.settings[key] != blank
+      assign avatars = avatars | append: section.settings[key] | append: ','
+    endif
+  endfor
+  assign avatars = avatars | split: ','
+-%}
+
+<section
+  class="food food-hero"
+  data-food="hero"
+  style="--food-bg: {{ section.settings.bg }}; --food-accent: {{ section.settings.accent }}; --food-text: {{ section.settings.text_color }};"
+>
+  <div class="food-hero__glow" aria-hidden="true"></div>
+  {%- if section.settings.show_sparks -%}
+    <div class="food-hero__sparks" data-food-sparks aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="page-width food-hero__inner section-{{ section.id }}-padding">
+    <div class="food-hero__content">
+      <h1 class="food-hero__title">
+        {%- if section.settings.kicker != blank -%}
+          <span class="food-hero__kicker">{{ section.settings.kicker | escape }}</span>
+        {%- endif -%}
+        <span class="food-hero__title-main">{{ section.settings.title | escape }}</span>
+        {%- if section.settings.title_accent != blank -%}
+          <span class="food-hero__title-accent">{{ section.settings.title_accent | escape }}</span>
+        {%- endif -%}
+      </h1>
+
+      {%- if section.settings.text != blank -%}
+        <p class="food-hero__text">{{ section.settings.text | escape | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <a class="food-btn food-hero__btn" href="{{ section.settings.button_link | default: '#food-menu' }}">
+          <span>{{ section.settings.button_label | escape }}</span>
+          <span class="food-btn__icon">{%- render 'food-icon', icon: 'arrow' -%}</span>
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.proof_text != blank or avatars.size > 0 -%}
+        <div class="food-hero__proof">
+          {%- if avatars.size > 0 -%}
+            <div class="food-hero__avatars">
+              {%- for avatar in avatars -%}
+                {%- render 'food-image',
+                  asset: avatar,
+                  alt: '',
+                  class: 'food-hero__avatar',
+                  widths: '96',
+                  sizes: '48px'
+                -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+          <div class="food-hero__proof-text">
+            {%- if section.settings.proof_text != blank -%}
+              <span>{{ section.settings.proof_text | escape }}</span>
+            {%- endif -%}
+            <span class="food-stars" aria-label="{{ section.settings.rating }} / 5">
+              {%- for i in (1..5) -%}
+                <span class="food-star{% if i > section.settings.rating %} food-star--off{% endif %}">★</span>
+              {%- endfor -%}
+            </span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="food-hero__media" data-food-parallax>
+      <div
+        class="food-hero__layer food-hero__product{% if section.settings.image_fade %} food-hero__product--fade{% endif %}"
+        data-depth="3"
+      >
+        {%- render 'food-image',
+          image: section.settings.image,
+          asset: section.settings.image_asset,
+          alt: section.settings.image_alt,
+          class: 'food-hero__img',
+          widths: '450, 700, 900, 1200',
+          sizes: '(min-width: 990px) 50vw, 90vw',
+          loading: 'eager'
+        -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image != blank or block.settings.image_asset != blank or request.design_mode -%}
+          <div
+            class="food-hero__layer food-hero__float{% if block.settings.blur %} food-hero__float--blur{% endif %}"
+            data-depth="{{ block.settings.depth }}"
+            style="--x: {{ block.settings.x }}%; --y: {{ block.settings.y }}%; --size: {{ block.settings.size }}%; --rot: {{ block.settings.rotate }}deg; --bob: {{ forloop.index | modulo: 3 | plus: 3 }}s;"
+            {{ block.shopify_attributes }}
+          >
+            {%- render 'food-image',
+              image: block.settings.image,
+              asset: block.settings.image_asset,
+              alt: '',
+              class: 'food-hero__float-img',
+              widths: '150, 300',
+              sizes: '15vw'
+            -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if section.settings.show_seal -%}
+        <div class="food-hero__layer food-hero__seal" data-depth="5" aria-hidden="true">
+          <svg class="food-hero__seal-ring" viewBox="0 0 120 120">
+            <defs>
+              <path id="FoodSeal-{{ section.id }}" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"/>
+            </defs>
+            <circle cx="60" cy="60" r="57" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="60" cy="60" r="32" fill="none" stroke="currentColor" stroke-width="1"/>
+            <text>
+              <textPath href="#FoodSeal-{{ section.id }}">{{ section.settings.seal_text | escape }}</textPath>
+            </text>
+          </svg>
+          <span class="food-hero__seal-value">{{ section.settings.seal_value | escape }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Food hero",
+  "tag": "section",
+  "class": "section food-section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Burger" },
+    { "type": "text", "id": "title_accent", "label": "Accent title", "default": "Collection" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Crafted for serious cravings.\nFresh ingredients. Premium taste."
+    },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore burgers" },
+    { "type": "url", "id": "button_link", "label": "Button link", "info": "Empty scrolls to the menu section on this page." },
+    { "type": "header", "content": "Social proof" },
+    { "type": "text", "id": "proof_text", "label": "Text", "default": "4.8k+ Happy Customers" },
+    { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Stars", "default": 5 },
+    { "type": "text", "id": "avatar_1", "label": "Avatar 1 (theme asset filename)" },
+    { "type": "text", "id": "avatar_2", "label": "Avatar 2 (theme asset filename)" },
+    { "type": "text", "id": "avatar_3", "label": "Avatar 3 (theme asset filename)" },
+    { "type": "text", "id": "avatar_4", "label": "Avatar 4 (theme asset filename)" },
+    { "type": "header", "content": "Main image" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "text",
+      "id": "image_asset",
+      "label": "Image from theme assets",
+      "info": "Filename in the theme assets folder. Used when no image is selected. A transparent PNG works best."
+    },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Burger" },
+    {
+      "type": "checkbox",
+      "id": "image_fade",
+      "label": "Blend image edges into background",
+      "info": "Use for photos with a dark background instead of a transparent PNG.",
+      "default": false
+    },
+    { "type": "checkbox", "id": "show_seal", "label": "Show quality seal", "default": true },
+    { "type": "text", "id": "seal_text", "label": "Seal ring text", "default": "PREMIUM • QUALITY • PREMIUM • QUALITY •" },
+    { "type": "text", "id": "seal_value", "label": "Seal center text", "default": "100%" },
+    { "type": "checkbox", "id": "show_sparks", "label": "Show floating sparks", "default": true },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#0a0a0a" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#f5a623" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Top padding", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "Bottom padding", "default": 72 }
+  ],
+  "blocks": [
+    {
+      "type": "float",
+      "name": "Floating ingredient",
+      "limit": 10,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "image_asset", "label": "Image from theme assets" },
+        { "type": "range", "id": "x", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Horizontal position", "default": 10 },
+        { "type": "range", "id": "y", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Vertical position", "default": 20 },
+        { "type": "range", "id": "size", "min": 4, "max": 40, "step": 1, "unit": "%", "label": "Size", "default": 12 },
+        { "type": "range", "id": "rotate", "min": -180, "max": 180, "step": 5, "unit": "°", "label": "Rotation", "default": 0 },
+        { "type": "range", "id": "depth", "min": 0, "max": 10, "step": 1, "label": "Parallax depth", "default": 6 },
+        { "type": "checkbox", "id": "blur", "label": "Soft focus", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Food hero"
+    }
+  ]
+}
+{% endschema %}
