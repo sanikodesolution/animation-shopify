@@ -100,8 +100,9 @@
     data-cart-url="{{ routes.cart_url }}"
   >
     {%- if section.settings.show_tabs and categories.size > 0 -%}
-      <div class="food-tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}">
-        <button class="food-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">
+      <div class="food-tabs" role="tablist" aria-label="{{ section.settings.heading | escape }}" data-tabs>
+        <span class="food-tabs__pill" data-tabs-pill aria-hidden="true"></span>
+        <button class="food-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all" data-icon="burger">
           {%- render 'food-icon', icon: 'burger' -%}
           <span>{{ section.settings.all_label | escape }}</span>
         </button>
@@ -112,6 +113,7 @@
             role="tab"
             aria-selected="false"
             data-filter="{{ block.settings.title | handleize }}"
+            data-icon="{{ block.settings.icon }}"
             {{ block.shopify_attributes }}
           >
             {%- render 'food-icon', icon: block.settings.icon -%}

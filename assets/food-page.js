@@ -113,6 +113,32 @@
 
     bindTabs() {
       this.tabs.forEach((tab) => tab.addEventListener('click', () => this.setFilter(tab, true)));
+
+      this.tabBar = this.querySelector('[data-tabs]');
+      this.pill = this.querySelector('[data-tabs-pill]');
+      if (!this.tabBar || !this.pill) return;
+      this.tabBar.classList.add('has-pill');
+      this.movePill();
+      if ('ResizeObserver' in window) {
+        new ResizeObserver(() => this.movePill()).observe(this.tabBar);
+      }
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.movePill());
+      requestAnimationFrame(() => requestAnimationFrame(() => this.tabBar.classList.add('is-ready')));
+    }
+
+    movePill() {
+      if (!this.pill) return;
+      const tab = this.tabs.find((item) => item.classList.contains('is-active')) || this.tabs[0];
+      if (!tab) return;
+      this.pill.style.width = `${tab.offsetWidth}px`;
+      this.pill.style.transform = `translateX(${tab.offsetLeft}px)`;
+    }
+
+    scrollTabIntoView(tab) {
+      const bar = this.tabBar;
+      if (!bar || bar.scrollWidth <= bar.clientWidth) return;
+      const left = tab.offsetLeft - (bar.clientWidth - tab.offsetWidth) / 2;
+      bar.scrollTo({ left: Math.max(0, left), behavior: reduceMotion ? 'auto' : 'smooth' });
     }
 
     setFilter(tab, updateSpot) {
@@ -121,6 +147,8 @@
         other.classList.toggle('is-active', active);
         other.setAttribute('aria-selected', active ? 'true' : 'false');
       });
+      this.movePill();
+      this.scrollTabIntoView(tab);
       this.filter = tab.dataset.filter || 'all';
       this.shown = this.perPage;
       const matches = this.applyFilter(true);
@@ -174,6 +202,7 @@
         tab.classList.toggle('is-active', active);
         tab.setAttribute('aria-selected', active ? 'true' : 'false');
       });
+      this.movePill();
       this.shown = Math.max(this.perPage, Number(card.dataset.index) + 1);
       this.applyFilter(false);
     }

@@ -518,7 +518,6 @@ food-menu {
   }
 
   .food-hero--wide .food-hero__inner {
-    position: static;
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     min-height: clamp(46rem, 39vw, 64rem);
   }
@@ -531,10 +530,10 @@ food-menu {
   .food-hero--wide .food-hero__media {
     position: absolute;
     top: 0;
-    right: max(2%, calc((100% - 150rem) / 2));
+    right: -4rem;
     bottom: 0;
     width: auto;
-    max-width: 66%;
+    max-width: calc(58% + 4rem);
     height: 100%;
   }
 
@@ -548,12 +547,6 @@ food-menu {
   }
 }
 
-@media screen and (min-width: 750px) and (max-width: 1199px) {
-  .food-hero--wide .food-hero__media {
-    max-width: 58%;
-  }
-}
-
 .food-hero--wide .food-hero__glow {
   background:
     radial-gradient(34% 60% at 66% 50%, rgba(255, 106, 20, 0.1), transparent 70%),
@@ -562,75 +555,150 @@ food-menu {
 
 /* Category tabs */
 .food-tabs {
+  position: relative;
   display: flex;
   gap: 0.4rem;
-  padding: 0.6rem;
-  border: 1px solid var(--food-border);
+  padding: 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--food-text) 16%, transparent);
   border-radius: 99rem;
-  background: color-mix(in srgb, var(--food-card) 70%, transparent);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent),
+    color-mix(in srgb, var(--food-card) 80%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 1.6rem 3.2rem -2rem rgba(0, 0, 0, 0.9);
   overflow-x: auto;
   scrollbar-width: none;
+  isolation: isolate;
 }
 
 .food-tabs::-webkit-scrollbar {
   display: none;
 }
 
+.food-tabs__pill {
+  position: absolute;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  left: 0;
+  z-index: -1;
+  width: 0;
+  border-radius: 99rem;
+  background: linear-gradient(180deg, #ffb933, var(--food-accent) 55%, #ec9410);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 0.8rem 2.4rem -0.8rem color-mix(in srgb, var(--food-accent) 85%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.food-tabs.has-pill .food-tabs__pill {
+  opacity: 1;
+}
+
+.food-tabs.is-ready .food-tabs__pill {
+  transition:
+    transform 0.5s cubic-bezier(0.65, 0, 0.25, 1),
+    width 0.5s cubic-bezier(0.65, 0, 0.25, 1);
+}
+
 .food-tab {
+  --tab-icon: var(--food-accent);
   position: relative;
   display: inline-flex;
   flex: 1 0 auto;
   align-items: center;
   justify-content: center;
-  gap: 0.9rem;
-  padding: 1.1rem 2rem;
+  gap: 1rem;
+  min-height: 5rem;
+  padding: 1rem 2.4rem;
   border: 0;
   border-radius: 99rem;
   background: transparent;
   color: var(--food-text);
   font-family: var(--food-body);
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease 0.12s;
+}
+
+.food-tab[data-icon='chicken'] {
+  --tab-icon: #f7b733;
+}
+
+.food-tab[data-icon='spicy'] {
+  --tab-icon: #e8392f;
+}
+
+.food-tab[data-icon='veggie'] {
+  --tab-icon: #6fbf3b;
 }
 
 .food-tab + .food-tab::before {
   content: '';
   position: absolute;
-  left: -0.2rem;
-  top: 30%;
-  bottom: 30%;
+  left: -0.25rem;
+  top: 28%;
+  bottom: 28%;
   width: 1px;
-  background: var(--food-border);
+  background: color-mix(in srgb, var(--food-text) 16%, transparent);
+  transition: opacity 0.3s ease;
 }
 
 .food-tab .food-icon {
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  color: var(--tab-icon);
+  transition: color 0.3s ease 0.12s, transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.food-tab .food-icon__stem {
+  stroke: #5aa832;
+}
+
+.food-tab:hover {
   color: var(--food-accent);
-  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .food-tab:hover .food-icon {
-  transform: scale(1.15) rotate(-6deg);
+  transform: scale(1.18) rotate(-8deg);
 }
 
-.food-tab.is-active {
+.food-tab.is-active,
+.food-tab.is-active:hover {
+  color: var(--food-ink);
+}
+
+.food-tabs:not(.has-pill) .food-tab.is-active {
   background: var(--food-accent);
-  color: var(--food-ink);
 }
 
-.food-tab.is-active .food-icon {
+.food-tab.is-active .food-icon,
+.food-tab.is-active .food-icon__stem {
   color: var(--food-ink);
+  stroke: currentColor;
 }
 
 .food-tab.is-active::before,
 .food-tab.is-active + .food-tab::before {
   opacity: 0;
+}
+
+@media screen and (max-width: 749px) {
+  .food-tab {
+    min-height: 4.4rem;
+    padding: 0.8rem 1.8rem;
+    font-size: 1.25rem;
+  }
+
+  .food-tab .food-icon {
+    width: 2rem;
+    height: 2rem;
+  }
 }
 
 /* Product spotlight */
