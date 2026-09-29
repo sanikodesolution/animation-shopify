@@ -12,7 +12,7 @@
 -%}
 
 <section
-  class="food food-hero{% if section.settings.image_fade %} food-hero--photo{% endif %}"
+  class="food food-hero{% if section.settings.image_wide or section.settings.image_fade %} food-hero--wide{% endif %}{% if section.settings.image_fade %} food-hero--photo{% endif %}"
   data-food="hero"
   style="--food-bg: {{ section.settings.bg }}; --food-accent: {{ section.settings.accent }}; --food-text: {{ section.settings.text_color }};"
 >
@@ -53,8 +53,8 @@
                   asset: avatar,
                   alt: '',
                   class: 'food-hero__avatar',
-                  widths: '96',
-                  sizes: '48px'
+                  widths: '96, 192',
+                  sizes: '46px'
                 -%}
               {%- endfor -%}
             </div>
@@ -161,6 +161,13 @@
       "info": "Filename in the theme assets folder. Used when no image is selected. A transparent PNG works best."
     },
     { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Burger" },
+    {
+      "type": "checkbox",
+      "id": "image_wide",
+      "label": "Large full-height image",
+      "info": "Fills the right side of the banner from top to bottom. Best for wide artwork with ingredients around the burger.",
+      "default": false
+    },
     {
       "type": "checkbox",
       "id": "image_fade",
