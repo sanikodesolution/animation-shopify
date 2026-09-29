@@ -201,6 +201,7 @@
         "heading": "Our Burger Collection",
         "per_page": 8,
         "load_more_label": "Load more",
+        "load_more_link": "\/collections\/all",
         "bg": "#0a0a0a",
         "card": "#141414",
         "accent": "#f5a623",

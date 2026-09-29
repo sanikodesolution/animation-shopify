@@ -308,7 +308,16 @@
 
     {%- if section.settings.load_more_label != blank -%}
       <div class="food-more">
-        <button class="food-btn food-btn--outline" type="button" data-more hidden>
+        <button
+          class="food-btn food-btn--outline food-more__btn"
+          type="button"
+          data-more
+          {% if section.settings.load_more_link != blank %}
+            data-more-link="{{ section.settings.load_more_link }}"
+          {% else %}
+            hidden
+          {% endif %}
+        >
           <span>{{ section.settings.load_more_label | escape }}</span>
           {%- render 'food-icon', icon: 'sync' -%}
         </button>
@@ -386,6 +395,12 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Our Burger Collection" },
     { "type": "range", "id": "per_page", "min": 4, "max": 24, "step": 4, "label": "Items before Load more", "default": 8 },
     { "type": "text", "id": "load_more_label", "label": "Load more label", "default": "Load more" },
+    {
+      "type": "url",
+      "id": "load_more_link",
+      "label": "Load more link",
+      "info": "Keeps the button visible when every burger is already shown and opens this page instead. Leave empty to hide the button then."
+    },
     { "type": "text", "id": "empty_text", "label": "Empty category message", "default": "New burgers are coming to this category soon." },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "bg", "label": "Background", "default": "#0a0a0a" },

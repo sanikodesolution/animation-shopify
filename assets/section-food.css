@@ -1445,6 +1445,28 @@ food-menu {
   display: none;
 }
 
+.food-more__btn {
+  gap: 1.8rem;
+  min-width: 22rem;
+  min-height: 4.6rem;
+  padding: 0.8rem 3rem;
+  border-color: var(--food-accent);
+  background: color-mix(in srgb, var(--food-card) 70%, transparent);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.food-more__btn .food-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  color: color-mix(in srgb, var(--food-text) 80%, transparent);
+}
+
+.food-more__btn:hover .food-icon {
+  color: currentColor;
+}
+
 .food-more .food-icon {
   transition: transform 0.5s ease;
 }

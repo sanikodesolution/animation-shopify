@@ -78,6 +78,7 @@
       this.cards = Array.from(this.querySelectorAll('.food-card'));
       this.tabs = Array.from(this.querySelectorAll('.food-tab'));
       this.moreButton = this.querySelector('[data-more]');
+      this.moreLink = this.moreButton ? this.moreButton.dataset.moreLink || '' : '';
       this.emptyMessage = this.querySelector('[data-empty]');
       this.toastEl = this.querySelector('[data-toast]');
       this.perPage = Number(this.dataset.perPage) || 8;
@@ -91,6 +92,10 @@
       if (this.spot) this.initSpot();
       if (this.moreButton) {
         this.moreButton.addEventListener('click', () => {
+          if (this.matches().length <= this.shown) {
+            if (this.moreLink) window.location.href = this.moreLink;
+            return;
+          }
           this.shown += this.perPage;
           this.applyFilter(true);
         });
@@ -172,7 +177,7 @@
         if (show && (card.hidden || card.style.visibility === 'hidden')) revealed.push(card);
         card.hidden = !show;
       });
-      if (this.moreButton) this.moreButton.hidden = matches.length <= this.shown;
+      if (this.moreButton) this.moreButton.hidden = matches.length <= this.shown && !this.moreLink;
       if (this.emptyMessage) this.emptyMessage.hidden = matches.length > 0;
       if (animate && window.ScrollTrigger) window.ScrollTrigger.refresh();
 
