@@ -1,0 +1,474 @@
+{% render 'cm-section-assets', section: section %}
+{{ 'section-cm-footer.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign logo = section.settings.logo | default: settings.logo
+  assign phone_digits = section.settings.cta_phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | remove: '.'
+
+  assign social_keys = 'facebook,instagram,youtube,tiktok,twitter,pinterest,snapchat,tumblr,vimeo' | split: ','
+  assign social_count = 0
+  for key in social_keys
+    assign setting_key = 'social_' | append: key | append: '_link'
+    if settings[setting_key] != blank
+      assign social_count = social_count | plus: 1
+    endif
+  endfor
+
+  assign has_policies = false
+  for policy in shop.policies
+    if policy != blank
+      assign has_policies = true
+      break
+    endif
+  endfor
+-%}
+
+<footer
+  class="cm cm-footer section-{{ section.id }}-padding"
+  data-cm="footer"
+  style="--cmf-bg: {{ section.settings.background }}; --cmf-accent: {{ section.settings.accent }}; --cmf-cols: {{ section.blocks.size }}; --cmf-logo: {{ section.settings.logo_width }}px;"
+>
+  <div class="cm-footer__glow" aria-hidden="true"></div>
+
+  <div class="page-width cm-footer__inner">
+    {%- if section.settings.show_cta -%}
+      <div class="cm-footer__cta">
+        <div class="cm-footer__cta-copy">
+          {%- if section.settings.cta_eyebrow != blank -%}
+            <p class="cm-footer__eyebrow">{{ section.settings.cta_eyebrow | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.cta_heading != blank -%}
+            <h2 class="cm-footer__cta-title">{{ section.settings.cta_heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.cta_text != blank -%}
+            <div class="cm-footer__cta-text">{{ section.settings.cta_text }}</div>
+          {%- endif -%}
+
+          {%- if section.settings.promise_1 != blank
+            or section.settings.promise_2 != blank
+            or section.settings.promise_3 != blank
+          -%}
+            <ul class="cm-footer__promises" role="list">
+              {%- if section.settings.promise_1 != blank -%}
+                <li>{% render 'cm-footer-icon', icon: 'chef' %}{{ section.settings.promise_1 | escape }}</li>
+              {%- endif -%}
+              {%- if section.settings.promise_2 != blank -%}
+                <li>{% render 'cm-footer-icon', icon: 'leaf' %}{{ section.settings.promise_2 | escape }}</li>
+              {%- endif -%}
+              {%- if section.settings.promise_3 != blank -%}
+                <li>{% render 'cm-footer-icon', icon: 'truck' %}{{ section.settings.promise_3 | escape }}</li>
+              {%- endif -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+        <div class="cm-footer__cta-actions">
+          {%- if section.settings.cta_button_label != blank -%}
+            <a
+              class="cm-footer__btn cm-footer__btn--light"
+              {% if section.settings.cta_button_link != blank %}
+                href="{{ section.settings.cta_button_link }}"
+              {% else %}
+                role="link" aria-disabled="true"
+              {% endif %}
+            >
+              <span>{{ section.settings.cta_button_label | escape }}</span>
+              {% render 'cm-footer-icon', icon: 'arrow-right' %}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.cta_phone != blank -%}
+            <a class="cm-footer__btn cm-footer__btn--ghost" href="tel:{{ phone_digits }}">
+              {% render 'cm-footer-icon', icon: 'phone' %}
+              <span>{{ section.settings.cta_phone | escape }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="cm-footer__grid{% unless section.settings.show_newsletter %} cm-footer__grid--no-news{% endunless %}">
+      <div class="cm-footer__col cm-footer__brand">
+        <a href="{{ routes.root_url }}" class="cm-footer__logo">
+          {%- if logo != blank -%}
+            {%- assign logo_sizes = section.settings.logo_width | append: 'px' -%}
+            {{
+              logo
+              | image_url: width: 520
+              | image_tag:
+                widths: '160, 260, 390, 520',
+                sizes: logo_sizes,
+                alt: shop.name,
+                loading: 'lazy'
+            }}
+          {%- elsif settings.logo_asset != blank -%}
+            <img
+              src="{{ settings.logo_asset | asset_img_url: '400x' }}"
+              srcset="{{ settings.logo_asset | asset_img_url: '200x' }} 200w, {{ settings.logo_asset | asset_img_url: '400x' }} 400w"
+              sizes="{{ section.settings.logo_width }}px"
+              width="{{ section.settings.logo_width }}"
+              height="{{ section.settings.logo_width }}"
+              alt="{{ shop.name | escape }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            <span class="cm-footer__wordmark">{{ shop.name }}</span>
+          {%- endif -%}
+        </a>
+
+        {%- if section.settings.about != blank -%}
+          <div class="cm-footer__about">{{ section.settings.about }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.show_social and social_count > 0 -%}
+          <ul class="cm-footer__social" role="list">
+            {%- for key in social_keys -%}
+              {%- assign setting_key = 'social_' | append: key | append: '_link' -%}
+              {%- if settings[setting_key] != blank -%}
+                {%- assign icon_file = 'icon-' | append: key | append: '.svg' -%}
+                <li>
+                  <a
+                    href="{{ settings[setting_key] }}"
+                    class="cm-footer__social-link"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="{{ key | capitalize }}"
+                  >
+                    {{- icon_file | inline_asset_content -}}
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div class="cm-footer__col cm-footer__col--{{ block.type }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.heading != blank -%}
+            <h3 class="cm-footer__heading">{{ block.settings.heading | escape }}</h3>
+          {%- endif -%}
+
+          {%- case block.type -%}
+            {%- when 'links' -%}
+              <ul class="cm-footer__links" role="list">
+                {%- for i in (1..6) -%}
+                  {%- assign label_key = 'label_' | append: i -%}
+                  {%- assign url_key = 'link_' | append: i -%}
+                  {%- if block.settings[label_key] != blank and block.settings[url_key] != blank -%}
+                    <li>
+                      <a href="{{ block.settings[url_key] }}" class="cm-footer__link">
+                        {{- block.settings[label_key] | escape -}}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+
+            {%- when 'menu' -%}
+              {%- assign menu = linklists[block.settings.menu] -%}
+              {%- if menu.links.size > 0 -%}
+                <ul class="cm-footer__links" role="list">
+                  {%- for link in menu.links -%}
+                    <li>
+                      <a
+                        href="{{ link.url }}"
+                        class="cm-footer__link"
+                        {% if link.current %}
+                          aria-current="page"
+                        {% endif %}
+                      >
+                        {{- link.title | escape -}}
+                      </a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+
+            {%- when 'contact' -%}
+              <ul class="cm-footer__contact" role="list">
+                {%- if block.settings.phone != blank -%}
+                  {%- assign block_phone = block.settings.phone
+                    | remove: ' '
+                    | remove: '('
+                    | remove: ')'
+                    | remove: '-'
+                    | remove: '.'
+                  -%}
+                  <li>
+                    <span class="cm-footer__contact-icon">{% render 'cm-footer-icon', icon: 'phone' %}</span>
+                    <a href="tel:{{ block_phone }}" class="cm-footer__link">{{ block.settings.phone | escape }}</a>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.email != blank -%}
+                  <li>
+                    <span class="cm-footer__contact-icon">{% render 'cm-footer-icon', icon: 'mail' %}</span>
+                    <a href="mailto:{{ block.settings.email | escape }}" class="cm-footer__link">
+                      {{- block.settings.email | escape -}}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.area != blank -%}
+                  <li>
+                    <span class="cm-footer__contact-icon">{% render 'cm-footer-icon', icon: 'pin' %}</span>
+                    <span>{{ block.settings.area | escape | newline_to_br }}</span>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.hours != blank -%}
+                  <li>
+                    <span class="cm-footer__contact-icon">{% render 'cm-footer-icon', icon: 'clock' %}</span>
+                    <span>{{ block.settings.hours | escape | newline_to_br }}</span>
+                  </li>
+                {%- endif -%}
+              </ul>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+
+      {%- if section.settings.show_newsletter -%}
+        <div class="cm-footer__col cm-footer__news">
+          {%- if section.settings.newsletter_heading != blank -%}
+            <h3 class="cm-footer__heading">{{ section.settings.newsletter_heading | escape }}</h3>
+          {%- endif -%}
+          {%- if section.settings.newsletter_text != blank -%}
+            <div class="cm-footer__news-text">{{ section.settings.newsletter_text }}</div>
+          {%- endif -%}
+
+          {%- form 'customer', id: 'CmFooterNewsletter', class: 'cm-footer__form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="cm-footer__field">
+              <label class="visually-hidden" for="CmFooterEmail-{{ section.id }}">
+                {{- 'newsletter.label' | t -}}
+              </label>
+              <input
+                id="CmFooterEmail-{{ section.id }}"
+                type="email"
+                name="contact[email]"
+                class="cm-footer__input"
+                value="{{ form.email }}"
+                autocorrect="off"
+                autocapitalize="off"
+                autocomplete="email"
+                placeholder="{{ 'newsletter.label' | t }}"
+                required
+                {% if form.errors %}
+                  aria-invalid="true" aria-describedby="CmFooterNewsletter-error"
+                {% elsif form.posted_successfully? %}
+                  aria-describedby="CmFooterNewsletter-success"
+                {% endif %}
+              >
+              <button type="submit" class="cm-footer__submit" name="commit">
+                <span>{{ section.settings.newsletter_button | default: 'Subscribe' | escape }}</span>
+                {% render 'cm-footer-icon', icon: 'arrow-right' %}
+              </button>
+            </div>
+            {%- if form.errors -%}
+              <p class="cm-footer__msg cm-footer__msg--error" id="CmFooterNewsletter-error">
+                {{- form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email -}}
+              </p>
+            {%- elsif form.posted_successfully? -%}
+              <p class="cm-footer__msg" id="CmFooterNewsletter-success" tabindex="-1" autofocus>
+                {% render 'cm-footer-icon', icon: 'check' %}
+                {{- 'newsletter.success' | t -}}
+              </p>
+            {%- endif -%}
+          {%- endform -%}
+
+          {%- if section.settings.newsletter_note != blank -%}
+            <p class="cm-footer__note">{{ section.settings.newsletter_note | escape }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.watermark != blank -%}
+      <p class="cm-footer__watermark" aria-hidden="true">{{ section.settings.watermark | escape }}</p>
+    {%- endif -%}
+
+    <div class="cm-footer__bottom">
+      <p class="cm-footer__copy">
+        &copy; {{ 'now' | date: '%Y' }}
+        {{ shop.name | link_to: routes.root_url }}. {{ section.settings.copyright_text | escape }}
+      </p>
+
+      {%- if section.settings.show_policies and has_policies -%}
+        <ul class="cm-footer__policies" role="list">
+          {%- for policy in shop.policies -%}
+            {%- if policy != blank -%}
+              <li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      <div class="cm-footer__bottom-end">
+        {%- if section.settings.show_payment and shop.enabled_payment_types.size > 0 -%}
+          <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
+          <ul class="cm-footer__payments" role="list">
+            {%- for type in shop.enabled_payment_types -%}
+              <li>{{ type | payment_type_svg_tag: class: 'cm-footer__pay' }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {%- if section.settings.show_back_to_top -%}
+          <a href="#" class="cm-footer__top" aria-label="Back to top">
+            {% render 'cm-footer-icon', icon: 'arrow-up' %}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Chef Matt footer",
+  "tag": "div",
+  "class": "section cm-footer-section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Custom links",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Explore" },
+        { "type": "text", "id": "label_1", "label": "Link 1 label", "default": "Meal plans" },
+        { "type": "url", "id": "link_1", "label": "Link 1" },
+        { "type": "text", "id": "label_2", "label": "Link 2 label" },
+        { "type": "url", "id": "link_2", "label": "Link 2" },
+        { "type": "text", "id": "label_3", "label": "Link 3 label" },
+        { "type": "url", "id": "link_3", "label": "Link 3" },
+        { "type": "text", "id": "label_4", "label": "Link 4 label" },
+        { "type": "url", "id": "link_4", "label": "Link 4" },
+        { "type": "text", "id": "label_5", "label": "Link 5 label" },
+        { "type": "url", "id": "link_5", "label": "Link 5" },
+        { "type": "text", "id": "label_6", "label": "Link 6 label" },
+        { "type": "url", "id": "link_6", "label": "Link 6" }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Quick links" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "contact",
+      "name": "Contact info",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Get in touch" },
+        { "type": "text", "id": "phone", "label": "Phone" },
+        { "type": "text", "id": "email", "label": "Email" },
+        { "type": "textarea", "id": "area", "label": "Delivery area / address" },
+        { "type": "textarea", "id": "hours", "label": "Order & delivery days" }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    { "type": "checkbox", "id": "show_cta", "label": "Show call to action banner", "default": true },
+    { "type": "text", "id": "cta_eyebrow", "label": "Eyebrow", "default": "Fresh every week" },
+    { "type": "text", "id": "cta_heading", "label": "Heading", "default": "Ready to eat better this week?" },
+    {
+      "type": "richtext",
+      "id": "cta_text",
+      "label": "Text",
+      "default": "<p>Chef-made, portion-controlled meals prepared fresh and delivered to your door.</p>"
+    },
+    { "type": "text", "id": "promise_1", "label": "Promise 1", "default": "Chef-made weekly" },
+    { "type": "text", "id": "promise_2", "label": "Promise 2", "default": "Locally sourced" },
+    { "type": "text", "id": "promise_3", "label": "Promise 3", "default": "Local delivery" },
+    { "type": "text", "id": "cta_button_label", "label": "Button label", "default": "View meal plans" },
+    { "type": "url", "id": "cta_button_link", "label": "Button link" },
+    { "type": "text", "id": "cta_phone", "label": "Phone button", "info": "Leave empty to hide the call button." },
+    {
+      "type": "header",
+      "content": "Brand"
+    },
+    { "type": "image_picker", "id": "logo", "label": "Logo", "info": "Uses the theme logo when empty. A light or white logo works best." },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 260,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width",
+      "default": 110
+    },
+    {
+      "type": "richtext",
+      "id": "about",
+      "label": "About text",
+      "default": "<p>Healthy, flavour-forward meal prep made with clean, honest ingredients.</p>"
+    },
+    { "type": "checkbox", "id": "show_social", "label": "Show social icons", "default": true, "info": "Links come from Theme settings > Social media." },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter", "default": true },
+    { "type": "text", "id": "newsletter_heading", "label": "Heading", "default": "Get the weekly menu" },
+    {
+      "type": "richtext",
+      "id": "newsletter_text",
+      "label": "Text",
+      "default": "<p>New dishes, meal plan drops and subscriber-only offers straight to your inbox.</p>"
+    },
+    { "type": "text", "id": "newsletter_button", "label": "Button label", "default": "Subscribe" },
+    { "type": "text", "id": "newsletter_note", "label": "Small note", "default": "No spam. Unsubscribe anytime." },
+    {
+      "type": "header",
+      "content": "Bottom bar"
+    },
+    { "type": "text", "id": "watermark", "label": "Large background text", "default": "Chef Matt's" },
+    { "type": "text", "id": "copyright_text", "label": "Copyright text", "default": "All rights reserved." },
+    { "type": "checkbox", "id": "show_policies", "label": "Show policy links", "default": true },
+    { "type": "checkbox", "id": "show_payment", "label": "Show payment icons", "default": true },
+    { "type": "checkbox", "id": "show_back_to_top", "label": "Show back to top button", "default": true },
+    {
+      "type": "header",
+      "content": "Colors & spacing"
+    },
+    { "type": "color", "id": "background", "label": "Background", "default": "#0b1a30" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#3f64a4" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Chef Matt footer",
+      "blocks": [
+        { "type": "links" },
+        { "type": "contact" }
+      ]
+    }
+  ]
+}
+{% endschema %}

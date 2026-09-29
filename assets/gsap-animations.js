@@ -558,7 +558,30 @@
     add(tl, all(root, '.cm-arc__info'), { autoAlpha: 0, y: 30, duration: 0.8 }, 0.8);
   }
 
+  function cmFooter(root) {
+    const cta = root.querySelector('.cm-footer__cta');
+    if (cta) {
+      const ctaTl = timeline(cta, 'top 88%');
+      add(ctaTl, cta, { autoAlpha: 0, y: 60, scale: 0.96, duration: 1.1, ease: 'power4.out' }, 0);
+      add(ctaTl, all(cta, '.cm-footer__cta-copy > *'), { autoAlpha: 0, y: 24, duration: 0.7, stagger: 0.08 }, 0.3);
+      add(ctaTl, all(cta, '.cm-footer__promises li'), { autoAlpha: 0, scale: 0.7, duration: 0.5, stagger: 0.07, ease: 'back.out(2)' }, 0.6);
+      add(ctaTl, all(cta, '.cm-footer__btn'), { autoAlpha: 0, x: 30, duration: 0.7, stagger: 0.1 }, 0.45);
+    }
+
+    const grid = root.querySelector('.cm-footer__grid');
+    if (grid) {
+      const gridTl = timeline(grid, 'top 92%');
+      add(gridTl, all(grid, '.cm-footer__col'), { autoAlpha: 0, y: 40, duration: 0.8, stagger: 0.1 }, 0);
+      add(gridTl, all(grid, '.cm-footer__logo img'), { autoAlpha: 0, scale: 0.6, rotate: -120, duration: 1.1, ease: 'back.out(1.6)' }, 0.1);
+      add(gridTl, all(grid, '.cm-footer__social li'), { autoAlpha: 0, y: 14, duration: 0.5, stagger: 0.06 }, 0.5);
+    }
+
+    reveal(all(root, '.cm-footer__watermark'), { y: 80, duration: 1.4, ease: 'power4.out' }, null, 'top 100%');
+    reveal(all(root, '.cm-footer__bottom'), { y: 20 }, null, 'top 100%');
+  }
+
   const cmHandlers = {
+    footer: cmFooter,
     arc: cmArc,
     gallery: cmGallery,
     hero: cmHero,

@@ -1,0 +1,41 @@
+{%- comment -%}
+  Line icons for the Chef Matt footer.
+  Accepts:
+  - icon: {String} Icon name
+{%- endcomment -%}
+<svg
+  class="cm-footer__icon"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.7"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {%- case icon -%}
+    {%- when 'phone' -%}
+      <path d="M5 4h3.5l1.8 4.4-2.2 1.4a11 11 0 0 0 6.1 6.1l1.4-2.2L20 15.5V19a1.5 1.5 0 0 1-1.6 1.5C10.6 20 4 13.4 3.5 5.6A1.5 1.5 0 0 1 5 4Z"/>
+    {%- when 'mail' -%}
+      <rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="m4 7 8 6 8-6"/>
+    {%- when 'pin' -%}
+      <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3"/>
+    {%- when 'clock' -%}
+      <circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>
+    {%- when 'check' -%}
+      <path d="m5 12.5 4.2 4.2L19 7"/>
+    {%- when 'leaf' -%}
+      <path d="M5 19c0-7.6 4.8-12.8 14-14 0 9-5 14-14 14Z"/><path d="M5 19c3.2-3.2 6.2-6.8 9-10.5"/>
+    {%- when 'chef' -%}
+      <path d="M7 14.5V19h10v-4.5"/><path d="M7 14.5a4 4 0 0 1-1.2-7.8 4.5 4.5 0 0 1 8.4-2 4 4 0 0 1 4 6.3 3.9 3.9 0 0 1-1.2 3.5"/><path d="M7 16.5h10"/>
+    {%- when 'truck' -%}
+      <path d="M3 6.5h11v9H3Z"/><path d="M14 9.5h3.5l3 3v3H14"/><circle cx="7" cy="17" r="1.8"/><circle cx="17" cy="17" r="1.8"/>
+    {%- when 'arrow-up' -%}
+      <path d="M12 19V5M6 11l6-6 6 6"/>
+    {%- when 'arrow-right' -%}
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    {%- else -%}
+      <path d="m5 12.5 4.2 4.2L19 7"/>
+  {%- endcase -%}
+</svg>

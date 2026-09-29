@@ -1,1 +1,70 @@
-{"name":"t:sections.footer.name","type":"footer","sections":{"footer":{"type":"footer","blocks":{"text_LXfHKw":{"type":"text","settings":{"heading":"About Chef Matt's Meals","subtext":"<p>Healthy, flavour-forward meal prep made with clean, honest, and locally sourced ingredients — prepared with care by Chef Matthew, who draws on more than 40 years of culinary mastery to deliver meals you can feel good about.<\/p>"}},"link_list":{"type":"link_list","settings":{"heading":"Quick links","menu":"footer"}},"newsletter_9pCGwW":{"type":"newsletter","settings":{}}},"block_order":["text_LXfHKw","link_list","newsletter_9pCGwW"],"settings":{"color_scheme":"scheme-1","newsletter_enable":true,"newsletter_heading":"Subscribe to our emails","enable_follow_on_shop":false,"show_social":true,"enable_country_selector":true,"enable_language_selector":true,"payment_enable":true,"show_policy":true,"margin_top":0,"padding_top":36,"padding_bottom":36}}},"order":["footer"]}
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "cm_footer": {
+      "type": "cm-footer",
+      "blocks": {
+        "explore": {
+          "type": "links",
+          "settings": {
+            "heading": "Explore",
+            "label_1": "Meal plans",
+            "link_1": "shopify://collections/meal-plans",
+            "label_2": "Custom meal plans",
+            "link_2": "shopify://pages/custom-meal-plans",
+            "label_3": "Private chef experience",
+            "link_3": "shopify://pages/private-chef-experience",
+            "label_4": "Burgers",
+            "link_4": "shopify://pages/burgers",
+            "label_5": "FAQs",
+            "link_5": "shopify://pages/faqs",
+            "label_6": "Contact us",
+            "link_6": "shopify://pages/contact"
+          }
+        },
+        "contact": {
+          "type": "contact",
+          "settings": {
+            "heading": "Get in touch",
+            "phone": "+1 (920)-355-1137",
+            "email": "",
+            "area": "We deliver across Milwaukee",
+            "hours": "Order by Thursday for next week's delivery"
+          }
+        }
+      },
+      "block_order": ["explore", "contact"],
+      "settings": {
+        "show_cta": true,
+        "cta_eyebrow": "Fresh every week",
+        "cta_heading": "Ready to eat better this week?",
+        "cta_text": "<p>Chef-made, portion-controlled meals prepared fresh with local ingredients and delivered across Milwaukee.</p>",
+        "promise_1": "Chef-made weekly",
+        "promise_2": "Locally sourced",
+        "promise_3": "Milwaukee delivery",
+        "cta_button_label": "View meal plans",
+        "cta_button_link": "shopify://collections/meal-plans",
+        "cta_phone": "+1 (920)-355-1137",
+        "logo_width": 110,
+        "about": "<p>Healthy, flavour-forward meal prep made with clean, honest, and locally sourced ingredients — prepared with care by Chef Matthew, who draws on more than 40 years of culinary mastery.</p>",
+        "show_social": true,
+        "show_newsletter": true,
+        "newsletter_heading": "Get the weekly menu",
+        "newsletter_text": "<p>New dishes, meal plan drops and subscriber-only offers straight to your inbox.</p>",
+        "newsletter_button": "Subscribe",
+        "newsletter_note": "No spam. Unsubscribe anytime.",
+        "watermark": "Chef Matt's",
+        "copyright_text": "All rights reserved.",
+        "show_policies": true,
+        "show_payment": true,
+        "show_back_to_top": true,
+        "background": "#0b1a30",
+        "accent": "#3f64a4",
+        "padding_top": 64,
+        "padding_bottom": 24
+      }
+    }
+  },
+  "order": ["cm_footer"]
+}
