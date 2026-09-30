@@ -1,0 +1,173 @@
+{
+  "sections": {
+    "plans": {
+      "type": "cm-plans",
+      "settings": {
+        "label": "Meal Plans",
+        "heading": "Pick the Plan\nThat Fits Your Week",
+        "text": "<p>No subscription. Pick your plan and pay once. Every meal is 24oz, chef-made and never frozen.</p>",
+        "background": "cream",
+        "padding_top": 80,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "plan_1": {
+          "type": "plan",
+          "settings": {
+            "number": "6",
+            "link": "/products/6-meal-plan"
+          }
+        },
+        "plan_2": {
+          "type": "plan",
+          "settings": {
+            "number": "7",
+            "link": "/products/7-meal-plan"
+          }
+        },
+        "plan_3": {
+          "type": "plan",
+          "settings": {
+            "number": "10",
+            "link": "/products/10-meal-plan"
+          }
+        },
+        "plan_4": {
+          "type": "plan",
+          "settings": {
+            "number": "15",
+            "link": "/products/15-meal-plan"
+          }
+        }
+      },
+      "block_order": [
+        "plan_1",
+        "plan_2",
+        "plan_3",
+        "plan_4"
+      ]
+    },
+    "steps": {
+      "type": "cm-steps",
+      "settings": {
+        "label": "Simple Process",
+        "heading": "How Your Plan Works",
+        "background": "white",
+        "padding_top": 64,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Pick Your Meals",
+            "text": "Choose what you want from this week's menu."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "We Cook It Fresh",
+            "text": "Chef Matt makes every meal from scratch. Nothing frozen."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "We Deliver It",
+            "text": "Your meals come straight to your door in Hartland."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Heat and Eat",
+            "text": "2 minutes in the microwave and it's ready. No cooking, no mess."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    },
+    "plan_faq": {
+      "type": "collapsible-content",
+      "settings": {
+        "heading": "Plan Questions",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
+        "open_first_collapsible_row": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "caption": ""
+      },
+      "blocks": {
+        "collapsible_row_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this a subscription?",
+            "icon": "check_mark",
+            "row_content": "<p>No. Pick your plan and pay once. Order again whenever you want another week of meals.</p>"
+          }
+        },
+        "collapsible_row_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When do I need to order?",
+            "icon": "check_mark",
+            "row_content": "<p>Meals are delivered every <strong>Monday</strong> between <strong>10:00 AM – 2:00 PM</strong>. Orders must be placed before the weekly <strong>Friday 11:59 PM cutoff</strong>. A delivery logistics fee may apply depending on your location.</p>"
+          }
+        },
+        "collapsible_row_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "What comes in each meal?",
+            "icon": "check_mark",
+            "row_content": "<p>Every meal is built around a lean protein, a smart carb and a serving of veggies. Most meals are under 600 calories with around 45g of protein, packed in a 24oz container.</p>"
+          }
+        },
+        "collapsible_row_4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I heat the meals?",
+            "icon": "check_mark",
+            "row_content": "<p>Meals are delivered fresh and fully cooked. Most dishes can be microwaved in just a few minutes. Remove any sauce cups before heating and warm until hot throughout.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_1",
+        "collapsible_row_2",
+        "collapsible_row_3",
+        "collapsible_row_4"
+      ]
+    },
+    "cta": {
+      "type": "cm-contact-cta",
+      "settings": {
+        "heading": "Build a Custom Meal Plan",
+        "text": "<p>Special diet, bigger portions or a set number of meals? Tell us what you need and Chef Matt will build it for you.</p>",
+        "button_label": "Request a Custom Plan",
+        "background": "warm",
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "label": "Need Something Different?",
+        "button_link": "/pages/custom-meal-plans"
+      }
+    }
+  },
+  "order": [
+    "plans",
+    "steps",
+    "plan_faq",
+    "cta"
+  ]
+}

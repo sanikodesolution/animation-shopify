@@ -1,0 +1,197 @@
+{
+  "sections": {
+    "hero": {
+      "type": "cm-hero",
+      "settings": {
+        "eyebrow": "How It Works",
+        "heading": "Chef-Made Meals.\nOrdered in Minutes.\nDelivered Every Monday.",
+        "ticker_speed": 30,
+        "padding_top": 48,
+        "padding_bottom": 44,
+        "text": "<p>Pick your meals by Friday night. Chef Matt cooks them fresh, and they land at your door on Monday, ready to heat and eat.</p>"
+      },
+      "blocks": {
+        "chip_1": {
+          "type": "chip",
+          "settings": {
+            "number": "40+",
+            "label": "Years Experience"
+          }
+        },
+        "chip_2": {
+          "type": "chip",
+          "settings": {
+            "number": "<600",
+            "label": "Cal Most Meals"
+          }
+        },
+        "chip_3": {
+          "type": "chip",
+          "settings": {
+            "number": "45g",
+            "label": "Protein Most Meals"
+          }
+        },
+        "chip_4": {
+          "type": "chip",
+          "settings": {
+            "number": "24oz",
+            "label": "Per Container"
+          }
+        },
+        "chip_5": {
+          "type": "chip",
+          "settings": {
+            "number": "2-3 Min",
+            "label": "Heat and Eat"
+          }
+        },
+        "chip_6": {
+          "type": "chip",
+          "settings": {
+            "number": "Fresh",
+            "label": "Never Frozen"
+          }
+        },
+        "chip_7": {
+          "type": "chip",
+          "settings": {
+            "number": "Gluten",
+            "label": "Free Options"
+          }
+        }
+      },
+      "block_order": [
+        "chip_1",
+        "chip_2",
+        "chip_3",
+        "chip_4",
+        "chip_5",
+        "chip_6",
+        "chip_7"
+      ]
+    },
+    "steps": {
+      "type": "cm-steps",
+      "settings": {
+        "label": "Four Simple Steps",
+        "heading": "From Our Kitchen\nto Your Fridge",
+        "background": "cream",
+        "padding_top": 64,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Pick Your Meals",
+            "text": "Choose what you want from this week's menu."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "We Cook It Fresh",
+            "text": "Chef Matt makes every meal from scratch. Nothing frozen."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "We Deliver It",
+            "text": "Your meals come straight to your door in Hartland."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Heat and Eat",
+            "text": "2 minutes in the microwave and it's ready. No cooking, no mess."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    },
+    "good_to_know": {
+      "type": "collapsible-content",
+      "settings": {
+        "heading": "Good to Know",
+        "heading_size": "h2",
+        "heading_alignment": "center",
+        "layout": "none",
+        "container_color_scheme": "scheme-2",
+        "color_scheme": "scheme-1",
+        "open_first_collapsible_row": true,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "caption": ""
+      },
+      "blocks": {
+        "collapsible_row_1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "When is the order cutoff?",
+            "icon": "check_mark",
+            "row_content": "<p>Meals are delivered every <strong>Monday</strong> between <strong>10:00 AM – 2:00 PM</strong>. Orders must be placed before the weekly <strong>Friday 11:59 PM cutoff</strong>. A delivery logistics fee may apply depending on your location.</p>"
+          }
+        },
+        "collapsible_row_2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I heat the meals?",
+            "icon": "check_mark",
+            "row_content": "<p>Meals are delivered fresh and fully cooked. Most dishes can be microwaved in just a few minutes. Remove any sauce cups before heating and warm until hot throughout.</p>"
+          }
+        },
+        "collapsible_row_3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How long do meals stay fresh?",
+            "icon": "check_mark",
+            "row_content": "<p>Meals stay fresh in the fridge for up to several days. If needed, you can freeze them for longer storage. For best results, thaw completely and reheat thoroughly before eating.</p>"
+          }
+        },
+        "collapsible_row_4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Do you deliver to my area?",
+            "icon": "check_mark",
+            "row_content": "<p>We currently serve <strong>Hartland, Delafield, Pewaukee, Waukesha, Sussex, Merton, Nashotah, Okauchee Lake, Oconomowoc, Oconomowoc Lake, Chenequa, Lisbon, Lannon, Menomonee Falls, Brookfield, Elm Grove, Wales, Dousman, Summit, Lake Country, Stone Bank, North Lake, Mapleton, Genesee and Mukwonago.</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_1",
+        "collapsible_row_2",
+        "collapsible_row_3",
+        "collapsible_row_4"
+      ]
+    },
+    "cta": {
+      "type": "cm-contact-cta",
+      "settings": {
+        "heading": "Fill Your Fridge This Week",
+        "text": "<p>Browse this week's menu and place your order before the Friday 11:59 PM cutoff.</p>",
+        "button_label": "Shop the Menu",
+        "background": "warm",
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "label": "Ready?",
+        "button_link": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "steps",
+    "good_to_know",
+    "cta"
+  ]
+}

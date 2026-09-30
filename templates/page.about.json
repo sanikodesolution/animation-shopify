@@ -1,0 +1,103 @@
+{
+  "sections": {
+    "story": {
+      "type": "cm-chef-story",
+      "settings": {
+        "label": "Meet Chef Matt",
+        "heading": "40 Years in the Kitchen.\nNow Cooking for You.",
+        "text": "<p>Chef Matthew brings classical French training, family-restaurant roots, and experience across multiple cuisines to every container he packs. <strong>Every meal balances clean eating with big, satisfying flavour.</strong> No shortcuts, no fillers - just food that works for your goals.</p>",
+        "video_url": "https://cdn.shopify.com/videos/c/o/v/aecf7059ee5e4033962b56b84b615744.mp4",
+        "media_position": "right",
+        "quote": "\"I have been a private chef for 40 years, and now my only goal is to cook flavorful, healthy meals for all of Lake Country.\"",
+        "author": "Matthew, Founder and Chef",
+        "background": "cream",
+        "padding_top": 80,
+        "padding_bottom": 72
+      }
+    },
+    "usp": {
+      "type": "cm-usp",
+      "settings": {
+        "label": "What We Stand For",
+        "heading": "Real Food.\nCooked With Care.",
+        "background": "white",
+        "padding_top": 64,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-balance.jpg",
+            "image_width": 1400,
+            "image_height": 1120,
+            "image_alt": "Salmon with rice and carrots, annotated with macros",
+            "label": "Built for Balance",
+            "title": "Protein, carbs, and veggies in every container.",
+            "text": "<p>Every meal is built around a lean protein, a smart carb, and a serving of veggies, so your plate stays balanced without any extra thought. <strong>Macros portioned right</strong>, to help you hit your goals meal after meal.</p>"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-portions.jpg",
+            "image_width": 1400,
+            "image_height": 1213,
+            "image_alt": "BBQ chicken meal in a 24oz container",
+            "label": "Generous Portions You Can Count On",
+            "title": "24oz every time. You won't go hungry.",
+            "text": "<p>Every meal comes packed in a <strong>24oz container</strong>, giving you satisfying portions that keep you full for hours.</p>"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-eco.jpg",
+            "image_width": 1000,
+            "image_height": 1333,
+            "image_alt": "Eco-friendly meal prep containers",
+            "label": "Better for You. Better for the Planet.",
+            "title": "Eco-friendly packaging on every order.",
+            "text": "<p>Every meal is packed in <strong>environmentally friendly containers</strong> - designed to reduce waste without cutting corners on quality or freshness. Clean food in clean packaging. That is the Chef Matt standard.</p>"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "image_asset": "cm-usp-menu.gif",
+            "image_width": 900,
+            "image_height": 525,
+            "image_alt": "Rotating menu of Chef Matt meals",
+            "label": "Always Something New",
+            "title": "Over 10 meals to pick from.",
+            "text": "<p>Chef Matt adds new meals every two weeks. More choices, more variety. <strong>You will always find something you love.</strong></p>"
+          }
+        }
+      },
+      "block_order": [
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4"
+      ]
+    },
+    "cta": {
+      "type": "cm-contact-cta",
+      "settings": {
+        "heading": "Let Chef Matt Cook for You",
+        "text": "<p>Fresh, chef-crafted meals delivered across Hartland and Lake Country every Monday.</p>",
+        "button_label": "Shop the Menu",
+        "background": "warm",
+        "padding_top": 56,
+        "padding_bottom": 56,
+        "label": "Taste the Difference",
+        "button_link": "/collections/all"
+      }
+    }
+  },
+  "order": [
+    "story",
+    "usp",
+    "cta"
+  ]
+}
