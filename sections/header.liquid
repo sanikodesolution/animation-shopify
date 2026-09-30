@@ -2,6 +2,15 @@
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
+{%- if section.settings.cm_style -%}
+  {{ 'component-cm-header.css' | asset_url | stylesheet_tag }}
+  {%- style -%}
+    .cm-header {
+      --cmh-seal-max: {{ section.settings.seal_size }}px;
+      --cmh-order: {{ section.settings.order_color }};
+    }
+  {%- endstyle -%}
+{%- endif -%}
 
 {%- if settings.predictive_search_enabled -%}
   <link rel="stylesheet" href="{{ 'component-price.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -148,7 +157,7 @@
   endif
 %}
 
-<{{ header_tag }} {% if header_tag == 'sticky-header' %}data-sticky-type="{{ section.settings.sticky_header_type }}"{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
+<{{ header_tag }} {% if header_tag == 'sticky-header' %}data-sticky-type="{{ section.settings.sticky_header_type }}"{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}{% if section.settings.cm_style %} cm-header{% if section.settings.hang_logo %} cm-header--seal{% endif %}{% endif %}">
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -324,6 +333,19 @@
           </div>
         {%- endif -%}
       </a>
+
+      {%- if section.settings.cm_style and section.settings.order_label != blank -%}
+        <a
+          class="cm-header__order"
+          {% if section.settings.order_link != blank %}
+            href="{{ section.settings.order_link }}"
+          {% else %}
+            href="{{ routes.all_products_collection_url }}"
+          {% endif %}
+        >
+          {{- section.settings.order_label | escape -}}
+        </a>
+      {%- endif -%}
     </div>
   </header>
 </{{ header_tag }}>
@@ -627,6 +649,50 @@
       "default": true,
       "label": "t:sections.header.settings.enable_customer_avatar.label",
       "info": "t:sections.header.settings.enable_customer_avatar.info"
+    },
+    {
+      "type": "header",
+      "content": "Chef Matt style"
+    },
+    {
+      "type": "checkbox",
+      "id": "cm_style",
+      "label": "Use Chef Matt header style",
+      "info": "Pill menu, round logo seal and order button. Works best with logo position \"Middle center\".",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "hang_logo",
+      "label": "Let the logo hang over the header edge",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "seal_size",
+      "min": 72,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "label": "Logo seal size",
+      "default": 108
+    },
+    {
+      "type": "text",
+      "id": "order_label",
+      "label": "Order button label",
+      "default": "Order now"
+    },
+    {
+      "type": "url",
+      "id": "order_link",
+      "label": "Order button link"
+    },
+    {
+      "type": "color",
+      "id": "order_color",
+      "label": "Order button color",
+      "default": "#e4473a"
     },
     {
       "type": "header",

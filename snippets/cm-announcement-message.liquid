@@ -1,0 +1,36 @@
+{%- comment -%}
+  Announcement message with an optional status dot and click-to-call link.
+  Accepts:
+  - block: {Object} Announcement block
+{%- endcomment -%}
+{%- liquid
+  assign text = block.settings.text
+  assign link = block.settings.link
+  assign phone = block.settings.phone
+  assign phone_digits = phone | remove: ' ' | remove: '(' | remove: ')' | remove: '-' | remove: '.'
+-%}
+{%- if text != blank or phone != blank -%}
+  <p class="announcement-bar__message h5 cm-announce">
+    {%- if block.settings.show_dot -%}
+      <span class="cm-announce__dot" aria-hidden="true"></span>
+    {%- endif -%}
+    {%- if text != blank -%}
+      {%- if link != blank -%}
+        <a href="{{ link }}" class="announcement-bar__link link link--text focus-inset animate-arrow cm-announce__text">
+          <span>{{ text | escape }}</span>
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        </a>
+      {%- else -%}
+        <span class="cm-announce__text">{{ text | escape }}</span>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if phone != blank -%}
+      <a href="tel:{{ phone_digits }}" class="cm-announce__phone focus-inset">
+        {%- if block.settings.phone_label != blank -%}
+          <span>{{ block.settings.phone_label | escape }}</span>
+        {%- endif -%}
+        <strong>{{ phone | escape }}</strong>
+      </a>
+    {%- endif -%}
+  </p>
+{%- endif -%}
