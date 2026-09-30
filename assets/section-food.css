@@ -1591,6 +1591,99 @@ food-menu {
   }
 }
 
+/* Light version */
+.food--light {
+  --food-muted: color-mix(in srgb, var(--food-text) 62%, transparent);
+  --food-border: color-mix(in srgb, var(--food-text) 10%, transparent);
+  --food-shadow: 0 1.8rem 3.6rem -2.4rem rgba(60, 35, 10, 0.28);
+}
+
+.food--light .food-hero__glow {
+  background:
+    radial-gradient(38% 58% at 72% 52%, rgba(255, 166, 60, 0.22), transparent 70%),
+    radial-gradient(26% 36% at 86% 18%, rgba(255, 120, 40, 0.1), transparent 70%),
+    radial-gradient(40% 50% at 10% 90%, rgba(255, 180, 80, 0.12), transparent 70%);
+}
+
+.food--light.food-hero--wide .food-hero__glow {
+  background:
+    radial-gradient(34% 60% at 66% 50%, rgba(255, 166, 60, 0.2), transparent 70%),
+    radial-gradient(40% 50% at 8% 92%, rgba(255, 180, 80, 0.1), transparent 70%);
+}
+
+.food--light .food-hero__img,
+.food--light.food-hero--wide .food-hero__img {
+  filter: drop-shadow(0 2.4rem 2.4rem rgba(80, 40, 10, 0.22));
+}
+
+.food--light .food-hero__float-img {
+  filter: drop-shadow(0 1rem 1.2rem rgba(80, 40, 10, 0.2));
+}
+
+.food--light .food-hero__float--blur .food-hero__float-img {
+  filter: blur(3px) drop-shadow(0 1rem 1.2rem rgba(80, 40, 10, 0.2));
+}
+
+.food--light .food-hero__avatar {
+  border-color: #fff;
+  box-shadow: 0 0.6rem 1.4rem rgba(60, 35, 10, 0.25);
+}
+
+.food--light .food-hero__sparks span {
+  background: #ffb54a;
+  box-shadow: 0 0 5px 1px rgba(255, 140, 20, 0.45);
+}
+
+.food--light .food-tabs {
+  background: #fff;
+  box-shadow: var(--food-shadow);
+}
+
+.food--light .food-spot,
+.food--light .food-features__item {
+  box-shadow: var(--food-shadow);
+}
+
+.food--light .food-spot__rim {
+  background: linear-gradient(90deg, #d9d2c8, #f3eee7 50%, #d9d2c8);
+  box-shadow: 0 2.6rem 4rem rgba(60, 35, 10, 0.22);
+}
+
+.food--light .food-spot__side {
+  background: linear-gradient(90deg, #d4ccc1, #efe9e1 50%, #d4ccc1);
+}
+
+.food--light .food-spot__top {
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.08),
+    0 0 4rem color-mix(in srgb, var(--food-accent) 18%, transparent);
+}
+
+.food--light .food-spot__disc {
+  background:
+    radial-gradient(circle, #fbf8f4 0 56%, transparent 56.5%),
+    radial-gradient(circle, transparent 0 88%, rgba(0, 0, 0, 0.1) 88.5% 89.5%, transparent 90%),
+    repeating-conic-gradient(rgba(0, 0, 0, 0.12) 0 0.7deg, transparent 0.7deg 7.5deg),
+    #f1ece5;
+}
+
+.food--light .food-spot__img {
+  filter: drop-shadow(0 2.2rem 1.8rem rgba(60, 35, 10, 0.28));
+}
+
+.food--light .food-card__img {
+  filter: drop-shadow(0 1.4rem 1.2rem rgba(60, 35, 10, 0.22));
+}
+
+.food--light .food-card:hover {
+  box-shadow: 0 2.4rem 4rem -2.4rem color-mix(in srgb, var(--food-accent) 60%, transparent);
+}
+
+.food--light .food-more__btn {
+  background: #fff;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .food-hero__sparks,
   .food-hero__float-img,

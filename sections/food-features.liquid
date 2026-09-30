@@ -1,7 +1,7 @@
 {%- render 'food-assets', section: section -%}
 
 <section
-  class="food food-features"
+  class="food food-features{% if section.settings.light_mode %} food--light{% endif %}"
   data-food="features"
   style="--food-bg: {{ section.settings.bg }}; --food-card: {{ section.settings.card }}; --food-accent: {{ section.settings.accent }}; --food-text: {{ section.settings.text_color }};"
 >
@@ -28,6 +28,7 @@
   "tag": "section",
   "class": "section food-section",
   "settings": [
+    { "type": "checkbox", "id": "light_mode", "label": "Light version", "info": "Use with a light background and dark text color.", "default": false },
     { "type": "color", "id": "bg", "label": "Background", "default": "#0a0a0a" },
     { "type": "color", "id": "card", "label": "Card background", "default": "#141414" },
     { "type": "color", "id": "accent", "label": "Accent", "default": "#f5a623" },

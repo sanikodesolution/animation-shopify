@@ -12,7 +12,7 @@
 -%}
 
 <section
-  class="food food-hero{% if section.settings.image_wide or section.settings.image_fade %} food-hero--wide{% endif %}{% if section.settings.image_fade %} food-hero--photo{% endif %}"
+  class="food food-hero{% if section.settings.light_mode %} food--light{% endif %}{% if section.settings.image_wide or section.settings.image_fade %} food-hero--wide{% endif %}{% if section.settings.image_fade %} food-hero--photo{% endif %}"
   data-food="hero"
   style="--food-bg: {{ section.settings.bg }}; --food-accent: {{ section.settings.accent }}; --food-text: {{ section.settings.text_color }};"
 >
@@ -180,6 +180,7 @@
     { "type": "text", "id": "seal_value", "label": "Seal center text", "default": "100%" },
     { "type": "checkbox", "id": "show_sparks", "label": "Show floating sparks", "default": true },
     { "type": "header", "content": "Colors" },
+    { "type": "checkbox", "id": "light_mode", "label": "Light version", "info": "Use with a light background and dark text color.", "default": false },
     { "type": "color", "id": "bg", "label": "Background", "default": "#0a0a0a" },
     { "type": "color", "id": "accent", "label": "Accent", "default": "#f5a623" },
     { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" },
