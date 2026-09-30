@@ -119,8 +119,23 @@
   transform: none;
 }
 
-.banner__buttons:has(.pm) {
-  align-items: center;
+.banner__buttons .pm.pm-a {
+  justify-content: space-between;
+  gap: 14px;
+  min-height: calc(4.5rem + var(--buttons-border-width, 1px) * 2);
+  padding: 4px 4px 4px 22px;
+}
+
+@media screen and (min-width: 750px) {
+  .banner__buttons--multiple:has(.pm) {
+    flex-wrap: nowrap;
+    max-width: 52rem;
+  }
+
+  .banner__buttons--multiple:has(.pm) > * {
+    flex: 1 1 0;
+    min-width: 22rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
