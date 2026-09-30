@@ -176,18 +176,28 @@
   }
 
   .banner-prep__plate-img--d1 {
-    background-size: auto 120%;
-    background-position: 86% 50%;
+    background-size: 409.6% auto;
+    background-position: 72.1% 4.9%;
   }
 
   .banner-prep__plate-img--d2 {
-    background-size: 230%;
-    background-position: 5% 85%;
+    background-size: 409.6% auto;
+    background-position: 35.8% 78.5%;
   }
 
   .banner-prep__plate-img--d3 {
-    background-size: 220%;
-    background-position: 98% 99%;
+    background-size: 568.9% auto;
+    background-position: 92.7% 98.9%;
+  }
+
+  .banner--prep-plates::after {
+    background: linear-gradient(
+      90deg,
+      rgba(var(--bp-navy), 1) 0%,
+      rgba(var(--bp-navy), 0.92) 40%,
+      rgba(var(--bp-navy), 0.8) 70%,
+      rgba(var(--bp-navy), 0.72) 100%
+    );
   }
 
   .banner-prep__badge {

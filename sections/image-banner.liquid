@@ -56,7 +56,7 @@
 
 <div
   id="Banner-{{ section.id }}"
-  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if section.settings.hero_style == 'prep' %} banner--prep{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if section.settings.hero_style == 'prep' %} banner--prep{% if section.settings.show_visual %} banner--prep-plates{% endif %}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
   {%- if section.settings.image != blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -200,12 +200,7 @@
                 assign plate_url = plate_image | image_url: width: 700
                 assign plate_class = ''
               else
-                case i
-                  when 1
-                    assign plate_url = 'cm-usp-balance.jpg' | asset_img_url: '900x'
-                  else
-                    assign plate_url = 'cm-healthy-meals.jpg' | asset_img_url: '1024x'
-                endcase
+                assign plate_url = 'cm-hero-banner.jpg' | asset_img_url: '1800x'
                 assign plate_class = ' banner-prep__plate-img--d' | append: i
               endif
             -%}
@@ -264,7 +259,7 @@
       "type": "image_picker",
       "id": "visual_image_1",
       "label": "Large plate photo",
-      "info": "Leave empty to use the built-in photo. Square food photos work best."
+      "info": "Leave empty to use a plate from the banner image. Square food photos work best."
     },
     {
       "type": "image_picker",
