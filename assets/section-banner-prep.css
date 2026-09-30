@@ -108,7 +108,7 @@
     right: max(5rem, calc((100% - var(--page-width, 120rem)) / 2 + 5rem));
     z-index: 3;
     display: block;
-    width: clamp(24rem, 30vw, 44rem);
+    width: clamp(26rem, 36vw, 50rem);
     aspect-ratio: 1;
     transform: translateY(-50%);
     pointer-events: none;
