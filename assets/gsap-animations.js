@@ -198,8 +198,11 @@
       return true;
     });
 
-    add(tl, subtitles, { autoAlpha: 0, y: 20, letterSpacing: '0.4em', duration: 1.1 }, 0.2);
+    const eyebrows = subtitles.filter((text) => !text.classList.contains('body'));
+    const bodyTexts = subtitles.filter((text) => text.classList.contains('body'));
+    add(tl, eyebrows, { autoAlpha: 0, y: 20, letterSpacing: '0.4em', duration: 1.1 }, 0.2);
     addSplitHeading(tl, box.querySelector('.banner__heading'), 0.3);
+    add(tl, bodyTexts, { autoAlpha: 0, y: 24, duration: 0.9 }, '-=0.5');
     add(
       tl,
       pins,
@@ -211,6 +214,12 @@
       all(box, '.banner__buttons .button, .banner__buttons .pm'),
       { autoAlpha: 0, y: 30, scale: 0.9, duration: 0.8, stagger: 0.12, ease: 'back.out(1.7)' },
       '-=0.5'
+    );
+    add(
+      tl,
+      section.querySelector('.banner-prep__badge'),
+      { autoAlpha: 0, y: 24, scale: 0.8, duration: 0.8, ease: 'back.out(1.8)' },
+      '-=0.4'
     );
   }
 

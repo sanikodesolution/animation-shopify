@@ -1,4 +1,7 @@
 {{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.hero_style == 'prep' -%}
+  {{ 'section-banner-prep.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
 
 {%- if section.settings.image_height == 'adapt' and section.settings.image != blank -%}
   {%- style -%}
@@ -53,7 +56,7 @@
 
 <div
   id="Banner-{{ section.id }}"
-  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+  class="banner banner--content-align-{{ section.settings.desktop_content_alignment }} banner--content-align-mobile-{{ section.settings.mobile_content_alignment }} banner--{{ section.settings.image_height }}{% if section.settings.stack_images_on_mobile and section.settings.image != blank and section.settings.image_2 != blank %} banner--stacked{% endif %}{% if section.settings.image_height == 'adapt' and section.settings.image != blank %} banner--adapt{% endif %}{% if section.settings.show_text_below %} banner--mobile-bottom{%- endif -%}{% if section.settings.show_text_box == false %} banner--desktop-transparent{% endif %}{% if section.settings.hero_style == 'prep' %} banner--prep{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
 >
   {%- if section.settings.image != blank -%}
     <div class="banner__media media{% if section.settings.image == blank and section.settings.image_2 == blank %} placeholder{% endif %}{% if section.settings.image_2 != blank %} banner__media-half{% endif %}{% if section.settings.image_behavior != 'none' %} animate--{{ section.settings.image_behavior }}{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
@@ -146,7 +149,13 @@
               {{ block.shopify_attributes }}
             >
               {%- if block.settings.button_label_1 != blank and block.settings.button_animated_1 -%}
-                {%- render 'pm-button', label: block.settings.button_label_1, link: block.settings.button_link_1 -%}
+                {%- liquid
+                  assign pm_style = 'dark'
+                  if section.settings.hero_style == 'prep'
+                    assign pm_style = 'light'
+                  endif
+                  render 'pm-button', label: block.settings.button_label_1, link: block.settings.button_link_1, style: pm_style
+                -%}
               {%- elsif block.settings.button_label_1 != blank -%}
                 <a
                   {% if block.settings.button_link_1 == blank %}
@@ -159,7 +168,9 @@
                   {{- block.settings.button_label_1 | escape -}}
                 </a>
               {%- endif -%}
-              {%- if block.settings.button_label_2 != blank -%}
+              {%- if block.settings.button_label_2 != blank and block.settings.button_animated_2 -%}
+                {%- render 'pm-button', label: block.settings.button_label_2, link: block.settings.button_link_2, style: 'outline' -%}
+              {%- elsif block.settings.button_label_2 != blank -%}
                 <a
                   {% if block.settings.button_link_2 == blank %}
                     role="link" aria-disabled="true"
@@ -176,6 +187,11 @@
       {%- endfor -%}
     </div>
   </div>
+  {%- if section.settings.hero_style == 'prep' and section.settings.badge_text != blank -%}
+    <div class="banner-prep__badge">
+      <span class="banner-prep__badge-inner">{{ section.settings.badge_text | escape }}</span>
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -187,6 +203,23 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "select",
+      "id": "hero_style",
+      "label": "Banner style",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "prep", "label": "Prep meal (text left, navy gradient)" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Floating badge text",
+      "info": "Shown on the right side in the Prep meal style.",
+      "default": "Delivered fresh"
+    },
     {
       "type": "image_picker",
       "id": "image",
@@ -440,7 +473,7 @@
     {
       "type": "text",
       "name": "t:sections.image-banner.blocks.text.name",
-      "limit": 1,
+      "limit": 2,
       "settings": [
         {
           "type": "inline_richtext",
@@ -524,6 +557,12 @@
           "id": "button_style_secondary_2",
           "default": false,
           "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_2.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_animated_2",
+          "default": false,
+          "label": "Animated outline style"
         }
       ]
     }
