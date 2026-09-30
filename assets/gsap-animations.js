@@ -208,7 +208,7 @@
     );
     add(
       tl,
-      all(box, '.banner__buttons .button'),
+      all(box, '.banner__buttons .button, .banner__buttons .pm'),
       { autoAlpha: 0, y: 30, scale: 0.9, duration: 0.8, stagger: 0.12, ease: 'back.out(1.7)' },
       '-=0.5'
     );

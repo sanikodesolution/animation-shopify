@@ -1,0 +1,131 @@
+.pm {
+  --pm-bg: #092a49;
+  --pm-text: #fff;
+  --pm-accent: #3f64a4;
+  --pm-accent-text: #fff;
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.pm:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(63, 100, 164, 0.45);
+}
+
+.pm.pm-a {
+  gap: 18px;
+  padding: 8px 8px 8px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  color: var(--pm-text);
+  background: var(--pm-bg);
+  box-shadow: 0 1.2rem 2.6rem -1.4rem rgba(9, 42, 73, 0.9);
+  transition: border-color 0.5s;
+}
+
+.pm.pm-a:hover {
+  border-color: var(--pm-accent);
+  background: var(--pm-bg);
+}
+
+.pm-roll {
+  position: relative;
+  z-index: 2;
+  display: block;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.pm-roll span {
+  display: block;
+  height: 1.2em;
+  line-height: 1.2em;
+  color: var(--pm-text) !important;
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.pm-roll span + span {
+  color: var(--pm-accent-text) !important;
+}
+
+.pm-a:hover .pm-roll span {
+  transform: translateY(-100%);
+}
+
+.pm-dot {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 44px;
+  height: 44px;
+}
+
+.pm-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--pm-accent);
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.pm.pm-a:hover .pm-bg {
+  transform: scale(24);
+}
+
+.pm-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.pm-ic {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pm-accent-text);
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.pm-ic svg {
+  position: static !important;
+  display: block;
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+}
+
+.pm-ic + .pm-ic {
+  transform: translate(-100%, 100%);
+}
+
+.pm-a:hover .pm-ic:first-child {
+  transform: translate(100%, -100%);
+}
+
+.pm-a:hover .pm-ic + .pm-ic {
+  transform: none;
+}
+
+.banner__buttons:has(.pm) {
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm,
+  .pm * {
+    transition: none !important;
+  }
+}

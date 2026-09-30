@@ -1,0 +1,31 @@
+{%- comment -%}
+  Animated pill button with rolling label and expanding arrow dot.
+  Accepts:
+  - label: {String} Button text
+  - link: {String} Button URL (renders a disabled link when blank)
+  - class: {String} Extra class names
+{%- endcomment -%}
+{{ 'component-pm-button.css' | asset_url | stylesheet_tag }}
+<a
+  {% if link != blank %}
+    href="{{ link }}"
+  {% else %}
+    role="link" aria-disabled="true"
+  {% endif %}
+  class="pm pm-a{% if class != blank %} {{ class }}{% endif %}"
+>
+  <span class="pm-roll">
+    <span>{{ label | escape }}</span>
+    <span aria-hidden="true">{{ label | escape }}</span>
+  </span>
+  <span class="pm-dot" aria-hidden="true">
+    <span class="pm-bg"></span>
+    <span class="pm-clip">
+      {%- for i in (1..2) -%}
+        <span class="pm-ic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>
+        </span>
+      {%- endfor -%}
+    </span>
+  </span>
+</a>

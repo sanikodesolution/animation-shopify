@@ -123,7 +123,12 @@
           <span class="cm-arc__progress-dot"></span>
         </div>
         {%- if section.settings.button_label != blank -%}
-          <a class="cm-btn cm-arc__btn" href="#" hidden>{{ section.settings.button_label | escape }}</a>
+          <a class="cm-btn cm-arc__btn" href="#" hidden>
+            <span>{{ section.settings.button_label | escape }}</span>
+            <span class="cm-arc__btn-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
         {%- endif -%}
         {%- if section.settings.hint != blank -%}
           <p class="cm-arc__hint">{{ section.settings.hint | escape }}</p>
