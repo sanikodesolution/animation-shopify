@@ -1002,7 +1002,7 @@ a.cm-map__foot:hover {
 cm-arc-carousel {
   position: relative;
   display: block;
-  margin-top: 1.2rem;
+  margin-top: 3.2rem;
 }
 
 .cm-arc__stage-wrap {
@@ -1149,7 +1149,7 @@ cm-arc-carousel {
   position: relative;
   z-index: 2;
   min-height: 14rem;
-  margin-top: 0.4rem;
+  margin-top: 3.2rem;
   text-align: center;
 }
 
@@ -1167,8 +1167,8 @@ cm-arc-carousel {
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
 }
 
-.cm-arc__subtitle {
-  margin: 0.8rem 0 0;
+.cm .cm-arc__subtitle {
+  margin: 1rem 0 0;
   font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -1282,7 +1282,7 @@ cm-arc-carousel {
   display: none;
 }
 
-.cm-arc__hint {
+.cm .cm-arc__hint {
   margin: 1.8rem 0 0;
   font-size: 1.1rem;
   font-weight: 500;
