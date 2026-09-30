@@ -215,6 +215,13 @@
       { autoAlpha: 0, y: 30, scale: 0.9, duration: 0.8, stagger: 0.12, ease: 'back.out(1.7)' },
       '-=0.5'
     );
+    add(tl, section.querySelector('.banner-prep__blob'), { autoAlpha: 0, scale: 0.6, duration: 1, ease: 'power3.out' }, 0.2);
+    add(
+      tl,
+      all(section, '.banner-prep__plate'),
+      { autoAlpha: 0, scale: 0.5, duration: 0.9, stagger: 0.12, ease: 'back.out(1.6)' },
+      0.35
+    );
     add(
       tl,
       section.querySelector('.banner-prep__badge'),
