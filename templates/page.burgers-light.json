@@ -75,7 +75,7 @@
           "type": "item",
           "settings": {
             "title": "Classic Cheese",
-            "image_asset": "food-classic-cheese.png",
+            "image_asset": "food-classic-cheese-light.png",
             "badge": "New",
             "badge_style": "new",
             "description": "Beef patty, cheddar, lettuce, tomato, onion.",
@@ -92,7 +92,7 @@
           "type": "item",
           "settings": {
             "title": "Smoky BBQ Burger",
-            "image_asset": "food-smoky-bbq-featured.png",
+            "image_asset": "food-smoky-bbq-light.png",
             "gallery": "food-smoky-bbq.png",
             "badge": "Best seller",
             "badge_style": "best",
