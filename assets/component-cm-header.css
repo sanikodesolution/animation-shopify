@@ -43,7 +43,7 @@
   align-items: center;
   gap: 0.4rem;
   padding-bottom: 0.1rem;
-  border-bottom: 2px solid var(--cmh-order, #e4473a);
+  border-bottom: 2px solid #7ba7e8;
   font-weight: 700;
   color: inherit;
   text-decoration: none;
@@ -186,7 +186,7 @@
   font-size: 1rem;
   font-weight: 700;
   color: #fff;
-  background: var(--cmh-order, #e4473a);
+  background: var(--cmh-order, #3f64a4);
   box-shadow: 0 0 0 2px #fff;
 }
 
@@ -209,8 +209,9 @@
     white-space: nowrap;
     color: #fff;
     text-decoration: none;
-    background: var(--cmh-order, #e4473a);
-    box-shadow: 0 1rem 2rem -1rem var(--cmh-order, #e4473a);
+    background: var(--cmh-order, #3f64a4);
+    background: linear-gradient(135deg, var(--cmh-order, #3f64a4), color-mix(in srgb, var(--cmh-order, #3f64a4), #0d1a2e 35%));
+    box-shadow: 0 1rem 2rem -1rem var(--cmh-order, #3f64a4);
     transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
   }
 
