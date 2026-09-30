@@ -272,6 +272,7 @@
       this.angle = 0;
       this.velocity = 0;
       this.lean = 0;
+      this.turnAngle = 0;
       this.autoSpin = false;
       this.dragging = false;
       this.frames = [];
@@ -480,9 +481,11 @@
         }
         const targetLean = this.dragging || this.velocity ? clamp(this.velocity * 2.4, -26, 26) : 0;
         this.lean += (targetLean - this.lean) * 0.14;
+        this.stepTurn();
         this.render();
 
-        const settled = !this.dragging && !this.autoSpin && this.velocity === 0 && Math.abs(this.lean) < 0.05;
+        const settled =
+          !this.dragging && !this.autoSpin && this.velocity === 0 && Math.abs(this.lean) < 0.05 && this.turnAngle === 0;
         if (settled) {
           this.lean = 0;
           this.render();
@@ -492,6 +495,22 @@
         this.frame = requestAnimationFrame(step);
       };
       this.frame = requestAnimationFrame(step);
+    }
+
+    /* With a single image, auto spin turns the image itself; it eases back to the front when stopped. */
+    stepTurn() {
+      if (this.frames.length > 1) {
+        this.turnAngle = 0;
+        return;
+      }
+      if (this.autoSpin && !reduceMotion) {
+        this.turnAngle += this.velocity * 1.6;
+        return;
+      }
+      if (this.turnAngle === 0) return;
+      const target = Math.round(this.turnAngle / 360) * 360;
+      this.turnAngle += (target - this.turnAngle) * 0.08;
+      if (Math.abs(target - this.turnAngle) < 0.1) this.turnAngle = 0;
     }
 
     render() {
@@ -506,8 +525,9 @@
         }
       }
       const lean = count > 1 ? this.lean * 0.3 : this.lean;
-      this.turn.style.transform = lean
-        ? `rotateY(${lean.toFixed(2)}deg) translateX(${(lean * 0.12).toFixed(2)}%)`
+      const turn = (this.turnAngle % 360) + lean;
+      this.turn.style.transform = turn
+        ? `rotateY(${turn.toFixed(2)}deg) translateX(${(lean * 0.12).toFixed(2)}%)`
         : '';
     }
 

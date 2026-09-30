@@ -42,7 +42,7 @@
                           aria-current="page"
                         {% endif %}
                       >
-                        {{ childlink.title | escape }}
+                        <span>{{ childlink.title | escape }}</span>
                       </a>
                     {%- else -%}
                       <details id="Details-HeaderSubMenu-{{ link.handle }}-{{ childlink.handle }}">
@@ -67,7 +67,7 @@
                                   aria-current="page"
                                 {% endif %}
                               >
-                                {{ grandchildlink.title | escape }}
+                                <span>{{ grandchildlink.title | escape }}</span>
                               </a>
                             </li>
                           {%- endfor -%}

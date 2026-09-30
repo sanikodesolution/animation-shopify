@@ -7,12 +7,11 @@
 .banner--prep::after {
   background: linear-gradient(
     90deg,
-    rgba(var(--bp-navy), 0.97) 0%,
-    rgba(var(--bp-navy), 0.9) 34%,
-    rgba(var(--bp-navy), 0.45) 62%,
-    rgba(var(--bp-navy), 0.05) 100%
+    rgba(var(--bp-navy), 1) 0%,
+    rgba(var(--bp-navy), 0.85) 28%,
+    rgba(var(--bp-navy), 0.3) 58%,
+    rgba(var(--bp-navy), 0) 82%
   );
-  opacity: 1 !important;
 }
 
 .banner--prep .banner__box {
@@ -143,9 +142,17 @@
     background: linear-gradient(
       180deg,
       rgba(var(--bp-navy), 0.55) 0%,
-      rgba(var(--bp-navy), 0.85) 55%,
-      rgba(var(--bp-navy), 0.97) 100%
+      rgba(var(--bp-navy), 0.7) 40%,
+      rgba(var(--bp-navy), 1) 100%
     );
+  }
+
+  .banner--prep .banner__box {
+    text-shadow: 0 1px 1.2rem rgba(var(--bp-navy), 0.6);
+  }
+
+  .banner--prep .banner__buttons {
+    text-shadow: none;
   }
 
   .banner--prep .banner__content {
