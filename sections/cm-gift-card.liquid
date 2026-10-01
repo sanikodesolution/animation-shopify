@@ -1,0 +1,349 @@
+{{ 'section-cm-gift-card.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cm-gift-card.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign gc_product = section.settings.product
+  assign hd_700 = settings.type_header_font | font_modify: 'weight', '700'
+  assign hd_800 = settings.type_header_font | font_modify: 'weight', '800'
+  assign facts = section.blocks | where: 'type', 'fact'
+  assign steps = section.blocks | where: 'type', 'step'
+  assign faqs = section.blocks | where: 'type', 'faq'
+  assign default_amount = section.settings.default_amount | plus: 0
+
+  assign selected_variant = gc_product.selected_or_first_available_variant
+  for variant in gc_product.variants
+    assign variant_amount = variant.price | divided_by: 100
+    if variant_amount == default_amount and variant.available
+      assign selected_variant = variant
+      break
+    endif
+  endfor
+-%}
+
+{%- style -%}
+  {%- if hd_700 -%}{{ hd_700 | font_face: font_display: 'swap' }}{%- endif -%}
+  {%- if hd_800 -%}{{ hd_800 | font_face: font_display: 'swap' }}{%- endif -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<cm-gift-card
+  class="cm-gc"
+  style="--gc-accent: {{ section.settings.accent }}; --gc-ink: {{ section.settings.ink }}; --gc-paper: {{ section.settings.paper }};"
+  data-hints="{{ section.settings.hints | escape }}"
+  data-added="{{ section.settings.added_text | escape }}"
+  data-unavailable="{{ section.settings.unavailable_text | escape }}"
+  data-cart-url="{{ routes.cart_url }}"
+>
+  <div class="cm-gc__hero">
+    <div class="cm-gc__stage" data-gc-stage>
+      <div class="cm-gc__label" data-gc-label aria-hidden="true">
+        {%- if section.settings.card_title != blank -%}
+          <h2 class="cm-gc__label-title">{{ section.settings.card_title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.card_subtitle != blank -%}
+          <small class="cm-gc__label-sub">{{ section.settings.card_subtitle | escape }}</small>
+        {%- endif -%}
+        <div class="cm-gc__rule"></div>
+        <div class="cm-gc__amt">
+          <span>{{ section.settings.card_amount_label | escape }}</span>
+          <strong data-gc-big>
+            {%- if selected_variant -%}
+              {{ selected_variant.price | money_without_trailing_zeros }}
+            {%- else -%}
+              ${{ default_amount }}
+            {%- endif -%}
+          </strong>
+        </div>
+        {%- for block in facts -%}
+          <div class="cm-gc__row" {{ block.shopify_attributes }}>
+            <b>{{ block.settings.label | escape }}</b>
+            <span>{{ block.settings.value | escape }}</span>
+          </div>
+        {%- endfor -%}
+        {%- if section.settings.stamp_text != blank -%}
+          <div class="cm-gc__stamp">
+            <i>{{ section.settings.stamp_initials | escape }}</i>
+            <span>{{ section.settings.stamp_text | escape }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="cm-gc__buy">
+      {%- if section.settings.heading != blank -%}
+        <h1 class="cm-gc__title">{{ section.settings.heading | escape }}</h1>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="cm-gc__lead">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      <div class="cm-gc__price" data-gc-price>
+        {%- if selected_variant -%}
+          {{ selected_variant.price | money }}
+        {%- else -%}
+          ${{ default_amount }}.00
+        {%- endif %}
+        <small>{{ cart.currency.iso_code }}</small>
+      </div>
+
+      <form class="cm-gc__form" data-gc-form>
+        <fieldset class="cm-gc__fieldset">
+          <legend>{{ section.settings.amount_legend | escape }}</legend>
+          <div class="cm-gc__chips">
+            {%- if gc_product != blank -%}
+              {%- for variant in gc_product.variants -%}
+                <input
+                  type="radio"
+                  name="id"
+                  id="GcAmount-{{ section.id }}-{{ forloop.index }}"
+                  value="{{ variant.id }}"
+                  data-big="{{ variant.price | money_without_trailing_zeros | escape }}"
+                  data-price="{{ variant.price | money | escape }}"
+                  data-amount="{{ variant.price | divided_by: 100 }}"
+                  {% if variant.id == selected_variant.id %}
+                    checked
+                  {% endif %}
+                  {% unless variant.available %}
+                    disabled
+                  {% endunless %}
+                >
+                <label for="GcAmount-{{ section.id }}-{{ forloop.index }}">
+                  {{- variant.price | money_without_trailing_zeros -}}
+                </label>
+              {%- endfor -%}
+            {%- else -%}
+              {%- assign fallback_amounts = section.settings.fallback_amounts | split: ',' -%}
+              {%- for amount in fallback_amounts -%}
+                {%- assign amount_value = amount | strip | plus: 0 -%}
+                <input
+                  type="radio"
+                  name="amount"
+                  id="GcAmount-{{ section.id }}-{{ forloop.index }}"
+                  value="{{ amount_value }}"
+                  data-big="${{ amount_value }}"
+                  data-price="${{ amount_value }}.00"
+                  data-amount="{{ amount_value }}"
+                  {% if amount_value == default_amount %}
+                    checked
+                  {% endif %}
+                >
+                <label for="GcAmount-{{ section.id }}-{{ forloop.index }}">${{ amount_value }}</label>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </fieldset>
+
+        <p class="cm-gc__hint" data-gc-hint aria-live="polite"></p>
+
+        {%- if gc_product != blank -%}
+          <label class="cm-gc__gift">
+            <input type="checkbox" data-gc-gift>
+            {{ section.settings.gift_label | escape }}
+          </label>
+          <div class="cm-gc__gf" data-gc-fields hidden>
+            <label>
+              {{- section.settings.recipient_name_label | escape -}}
+              <input type="text" name="properties[Recipient name]" autocomplete="off" disabled>
+            </label>
+            <label>
+              {{- section.settings.recipient_email_label | escape -}}
+              <input type="email" name="properties[Recipient email]" autocomplete="off" disabled data-gc-email>
+            </label>
+            <label>
+              {{- section.settings.send_on_label | escape -}}
+              <input type="date" name="properties[Send on]" pattern="\d{4}-\d{2}-\d{2}" disabled data-gc-date>
+            </label>
+            <label>
+              {{- section.settings.sender_name_label | escape -}}
+              <input type="text" autocomplete="name" disabled data-gc-sender>
+            </label>
+            <label class="cm-gc__full">
+              {{- section.settings.message_label | escape -}}
+              <textarea
+                name="properties[Message]"
+                maxlength="200"
+                placeholder="{{ section.settings.message_placeholder | escape }}"
+                disabled
+                data-gc-message
+              ></textarea>
+            </label>
+            <input type="hidden" name="properties[__shopify_send_gift_card_to_recipient]" value="on" disabled>
+            <input type="hidden" name="properties[__shopify_offset]" value="" disabled data-gc-offset>
+          </div>
+        {%- elsif request.design_mode -%}
+          <p class="cm-gc__notice">Select your gift card product in this section's settings to enable checkout.</p>
+        {%- endif -%}
+
+        <button class="cm-gc__cta" type="submit" data-gc-add>
+          <span>{{ section.settings.button_label | escape }}</span>
+        </button>
+      </form>
+
+      {%- if section.settings.fine_print != blank -%}
+        <p class="cm-gc__fine">{{ section.settings.fine_print | escape }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.strip_text != blank -%}
+    <div class="cm-gc__strip" aria-hidden="true" style="--gc-strip-speed: {{ section.settings.strip_speed }}s;">
+      <div class="cm-gc__strip-track">
+        {%- for i in (1..4) -%}
+          <span>{{ section.settings.strip_text | escape }}</span>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if steps.size > 0 -%}
+    <section class="cm-gc__how section-{{ section.id }}-padding">
+      {%- if section.settings.how_heading != blank -%}
+        <h2 class="cm-gc__t">{{ section.settings.how_heading | escape }}</h2>
+      {%- endif -%}
+      <ol class="cm-gc__steps" style="--gc-steps: {{ steps.size | at_most: 4 }};">
+        {%- for block in steps -%}
+          <li {{ block.shopify_attributes }}>
+            <b>{{ forloop.index }}</b>
+            <h3>{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.text != blank -%}
+              <p>{{ block.settings.text | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    </section>
+  {%- endif -%}
+
+  {%- if faqs.size > 0 -%}
+    <section class="cm-gc__faq section-{{ section.id }}-padding">
+      {%- if section.settings.faq_heading != blank -%}
+        <h2 class="cm-gc__t">{{ section.settings.faq_heading | escape }}</h2>
+      {%- endif -%}
+      {%- for block in faqs -%}
+        <details {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.question | escape }}</summary>
+          <div class="cm-gc__answer">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </section>
+  {%- endif -%}
+
+  <div class="cm-gc__toast" data-gc-toast role="status"></div>
+</cm-gift-card>
+
+{% schema %}
+{
+  "name": "CM gift card",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 30,
+  "blocks": [
+    {
+      "type": "fact",
+      "name": "Label row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Cooking required" },
+        { "type": "text", "id": "value", "label": "Value", "default": "0 min" }
+      ]
+    },
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Pick an amount" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Can they use it on any meal plan?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Yes. The balance applies at checkout to any meal plan on the menu.</p>" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "product", "id": "product", "label": "Gift card product" },
+    { "type": "number", "id": "default_amount", "label": "Default amount", "default": 50 },
+    {
+      "type": "text",
+      "id": "fallback_amounts",
+      "label": "Preview amounts",
+      "info": "Shown only when no gift card product is selected. Separate with commas.",
+      "default": "10, 25, 50, 100"
+    },
+    { "type": "header", "content": "Gift facts card" },
+    { "type": "text", "id": "card_title", "label": "Title", "default": "Gift Facts" },
+    { "type": "text", "id": "card_subtitle", "label": "Subtitle", "default": "Serving size: one very good week" },
+    { "type": "text", "id": "card_amount_label", "label": "Amount label", "default": "Amount per card" },
+    { "type": "text", "id": "stamp_initials", "label": "Stamp initials", "default": "CM" },
+    {
+      "type": "textarea",
+      "id": "stamp_text",
+      "label": "Stamp text",
+      "default": "Made from scratch by Chef Matt, with 40+ years in the kitchen. Redeemable on any meal plan."
+    },
+    { "type": "header", "content": "Buy panel" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Give someone a week off from cooking." },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>A Chef Matt's Meals gift card lets them pick from the rotating menu and get fresh, chef-made meals delivered to their home.</p>"
+    },
+    { "type": "text", "id": "amount_legend", "label": "Amount label", "default": "Choose an amount" },
+    {
+      "type": "textarea",
+      "id": "hints",
+      "label": "Amount hints",
+      "info": "One per line, written as amount | hint. Example: 50 | Close to a full 5-meal plan.",
+      "default": "10 | A small treat toward any plan.\n25 | A good top-up toward a 5-meal plan, which starts at $60.\n50 | Close to a full 5-meal plan, which starts at $60.\n100 | Covers a 7-meal plan ($84 and up) with room to spare."
+    },
+    { "type": "text", "id": "gift_label", "label": "Gift checkbox label", "default": "I want to send this as a gift" },
+    { "type": "text", "id": "recipient_name_label", "label": "Recipient name label", "default": "Recipient name" },
+    { "type": "text", "id": "recipient_email_label", "label": "Recipient email label", "default": "Recipient email" },
+    { "type": "text", "id": "send_on_label", "label": "Send date label", "default": "Send on" },
+    { "type": "text", "id": "sender_name_label", "label": "Sender name label", "default": "Your name" },
+    { "type": "text", "id": "message_label", "label": "Message label", "default": "Message" },
+    { "type": "text", "id": "message_placeholder", "label": "Message placeholder", "default": "Happy birthday! Dinner is on me this week." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add gift card to cart" },
+    { "type": "text", "id": "added_text", "label": "Added message", "default": "gift card added to your cart" },
+    { "type": "text", "id": "unavailable_text", "label": "Unavailable message", "default": "Gift cards are coming soon." },
+    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "Secure checkout. Delivered by email, so it arrives in minutes." },
+    { "type": "header", "content": "Scrolling strip" },
+    { "type": "text", "id": "strip_text", "label": "Text", "default": "REAL INGREDIENTS. REAL FLAVOUR. REAL CHEF MATT." },
+    { "type": "range", "id": "strip_speed", "min": 10, "max": 60, "step": 2, "unit": "s", "label": "Loop duration", "default": 28 },
+    { "type": "header", "content": "Steps and FAQ" },
+    { "type": "text", "id": "how_heading", "label": "Steps heading", "default": "How a gift card works" },
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Gift card questions" },
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "accent", "label": "Accent", "default": "#f5a623" },
+    { "type": "color", "id": "ink", "label": "Ink", "default": "#14213d" },
+    { "type": "color", "id": "paper", "label": "Background", "default": "#fffdf8" },
+    { "type": "header", "content": "Steps and FAQ padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 72 }
+  ],
+  "presets": [
+    {
+      "name": "CM gift card",
+      "blocks": [
+        { "type": "fact", "settings": { "label": "Cooking required", "value": "0 min" } },
+        { "type": "fact", "settings": { "label": "Delivered fresh to the door", "value": "100%" } },
+        { "type": "fact", "settings": { "label": "Real ingredients", "value": "100%" } },
+        { "type": "fact", "settings": { "label": "Recipient's reaction", "value": "Very happy" } },
+        { "type": "step", "settings": { "title": "Pick an amount", "text": "Choose $10 to $100 and add a personal message if you want to send it as a gift." } },
+        { "type": "step", "settings": { "title": "They get it by email", "text": "The card arrives with your note, on the day you pick." } },
+        { "type": "step", "settings": { "title": "They choose their meals", "text": "They build their week from the menu, and we deliver it fresh." } },
+        { "type": "faq", "settings": { "question": "Can they use it on any meal plan?", "answer": "<p>Yes. The balance applies at checkout to any meal plan on the menu.</p>" } },
+        { "type": "faq", "settings": { "question": "How does the recipient get the card?", "answer": "<p>By email, on the date you choose. If you pick no date, it is sent right after checkout.</p>" } },
+        { "type": "faq", "settings": { "question": "Can I buy more than one?", "answer": "<p>Yes. Add as many cards as you like, in any mix of amounts.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

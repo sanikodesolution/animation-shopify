@@ -1,245 +1,119 @@
 {
   "sections": {
-    "hero": {
-      "type": "cm-hero",
-      "settings": {
-        "eyebrow": "ChefMatts Gift Cards",
-        "heading": "Give the Gift of\nHealthy Eating",
-        "text": "<p>Chef-made meals, delivered fresh. A ChefMatts gift card is the easy way to treat someone to a week of good food with no cooking and no cleanup.</p>",
-        "ticker_speed": 30,
-        "padding_top": 64,
-        "padding_bottom": 44
-      },
+    "gift_card": {
+      "type": "cm-gift-card",
       "blocks": {
-        "chip_1": {
-          "type": "chip",
+        "fact_1": {
+          "type": "fact",
           "settings": {
-            "number": "$25",
-            "label": "Gift Card"
+            "label": "Cooking required",
+            "value": "0 min"
           }
         },
-        "chip_2": {
-          "type": "chip",
+        "fact_2": {
+          "type": "fact",
           "settings": {
-            "number": "$50",
-            "label": "Gift Card"
+            "label": "Delivered fresh to the door",
+            "value": "100%"
           }
         },
-        "chip_3": {
-          "type": "chip",
+        "fact_3": {
+          "type": "fact",
           "settings": {
-            "number": "$100",
-            "label": "Gift Card"
+            "label": "Real ingredients",
+            "value": "100%"
           }
         },
-        "chip_4": {
-          "type": "chip",
+        "fact_4": {
+          "type": "fact",
           "settings": {
-            "number": "$150",
-            "label": "Gift Card"
+            "label": "Recipient's reaction",
+            "value": "Very happy"
           }
         },
-        "chip_5": {
-          "type": "chip",
-          "settings": {
-            "number": "Email",
-            "label": "Instant Delivery"
-          }
-        },
-        "chip_6": {
-          "type": "chip",
-          "settings": {
-            "number": "Any",
-            "label": "Meal or Plan"
-          }
-        }
-      },
-      "block_order": [
-        "chip_1",
-        "chip_2",
-        "chip_3",
-        "chip_4",
-        "chip_5",
-        "chip_6"
-      ]
-    },
-    "amounts": {
-      "type": "cm-plans",
-      "settings": {
-        "label": "Pick an Amount",
-        "heading": "Choose Your\nGift Card",
-        "text": "<p>Every card works on any meal or meal plan on the menu. The gift card is sent straight to the recipient's inbox, ready to use.</p>",
-        "background": "cream",
-        "padding_top": 72,
-        "padding_bottom": 64
-      },
-      "blocks": {
-        "amount_1": {
-          "type": "plan",
-          "settings": {
-            "number": "$25",
-            "label": "Gift Card",
-            "button_label": "Buy Now",
-            "link": "/products/gift-card"
-          }
-        },
-        "amount_2": {
-          "type": "plan",
-          "settings": {
-            "number": "$50",
-            "label": "Gift Card",
-            "button_label": "Buy Now",
-            "link": "/products/gift-card"
-          }
-        },
-        "amount_3": {
-          "type": "plan",
-          "settings": {
-            "number": "$100",
-            "label": "Gift Card",
-            "button_label": "Buy Now",
-            "link": "/products/gift-card"
-          }
-        },
-        "amount_4": {
-          "type": "plan",
-          "settings": {
-            "number": "$150",
-            "label": "Gift Card",
-            "button_label": "Buy Now",
-            "link": "/products/gift-card"
-          }
-        }
-      },
-      "block_order": [
-        "amount_1",
-        "amount_2",
-        "amount_3",
-        "amount_4"
-      ]
-    },
-    "steps": {
-      "type": "cm-steps",
-      "settings": {
-        "label": "Simple Process",
-        "heading": "How Gift Cards Work",
-        "background": "white",
-        "padding_top": 64,
-        "padding_bottom": 64
-      },
-      "blocks": {
         "step_1": {
           "type": "step",
           "settings": {
-            "title": "Pick an Amount",
-            "text": "Choose the gift card value that fits your budget."
+            "title": "Pick an amount",
+            "text": "Choose $10 to $100 and add a personal message if you want to send it as a gift."
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
-            "title": "Add a Message",
-            "text": "Enter the recipient's email and a personal note at checkout."
+            "title": "They get it by email",
+            "text": "The card arrives with your note, on the day you pick."
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
-            "title": "We Send It",
-            "text": "The gift card code lands in their inbox right away."
+            "title": "They choose their meals",
+            "text": "They build their week from the menu, and we deliver it fresh."
           }
         },
-        "step_4": {
-          "type": "step",
+        "faq_1": {
+          "type": "faq",
           "settings": {
-            "title": "They Enjoy Fresh Meals",
-            "text": "They pick their meals and apply the code at checkout."
+            "question": "Can they use it on any meal plan?",
+            "answer": "<p>Yes. The balance applies at checkout to any meal plan on the menu.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "How does the recipient get the card?",
+            "answer": "<p>By email, on the date you choose. If you pick no date, it is sent right after checkout.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I buy more than one?",
+            "answer": "<p>Yes. Add as many cards as you like, in any mix of amounts.</p>"
           }
         }
       },
       "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4",
         "step_1",
         "step_2",
         "step_3",
-        "step_4"
-      ]
-    },
-    "gift_faq": {
-      "type": "collapsible-content",
+        "faq_1",
+        "faq_2",
+        "faq_3"
+      ],
       "settings": {
-        "heading": "Gift Card Questions",
-        "heading_size": "h2",
-        "heading_alignment": "center",
-        "layout": "none",
-        "container_color_scheme": "scheme-2",
-        "color_scheme": "scheme-1",
-        "open_first_collapsible_row": true,
-        "image_ratio": "adapt",
-        "desktop_layout": "image_second",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "caption": ""
-      },
-      "blocks": {
-        "collapsible_row_1": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "How is the gift card delivered?",
-            "icon": "check_mark",
-            "row_content": "<p>Gift cards are digital. After checkout, the gift card code is emailed to the recipient (or to you, if you'd rather hand it over yourself).</p>"
-          }
-        },
-        "collapsible_row_2": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "What can the gift card be used for?",
-            "icon": "check_mark",
-            "row_content": "<p>Any meal or meal plan on the ChefMatts menu. Just enter the gift card code at checkout.</p>"
-          }
-        },
-        "collapsible_row_3": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Can the balance be used across multiple orders?",
-            "icon": "check_mark",
-            "row_content": "<p>Yes. Any remaining balance stays on the card and can be used on future orders.</p>"
-          }
-        },
-        "collapsible_row_4": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Does the recipient need to be in the delivery area?",
-            "icon": "check_mark",
-            "row_content": "<p>Yes. Meals are delivered every <strong>Monday</strong> within our delivery areas, so make sure the recipient lives in an area we serve.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "collapsible_row_1",
-        "collapsible_row_2",
-        "collapsible_row_3",
-        "collapsible_row_4"
-      ]
-    },
-    "cta": {
-      "type": "cm-contact-cta",
-      "settings": {
-        "label": "Corporate and Bulk Gifts",
-        "heading": "Gifting for a Team or Event?",
-        "text": "<p>Need several gift cards for staff, clients or a special occasion? Get in touch and we'll set it up for you.</p>",
-        "button_label": "Contact Us",
-        "button_link": "/pages/contact",
-        "background": "warm",
-        "padding_top": 56,
-        "padding_bottom": 56
+        "default_amount": 50,
+        "fallback_amounts": "10, 25, 50, 100",
+        "card_title": "Gift Facts",
+        "card_subtitle": "Serving size: one very good week",
+        "card_amount_label": "Amount per card",
+        "stamp_initials": "CM",
+        "stamp_text": "Made from scratch by Chef Matt, with 40+ years in the kitchen. Redeemable on any meal plan.",
+        "heading": "Give someone a week off from cooking.",
+        "text": "<p>A Chef Matt's Meals gift card lets them pick from the rotating menu and get fresh, chef-made meals delivered to their home.</p>",
+        "amount_legend": "Choose an amount",
+        "hints": "10 | A small treat toward any plan.\n25 | A good top-up toward a 5-meal plan, which starts at $60.\n50 | Close to a full 5-meal plan, which starts at $60.\n100 | Covers a 7-meal plan ($84 and up) with room to spare.",
+        "gift_label": "I want to send this as a gift",
+        "button_label": "Add gift card to cart",
+        "fine_print": "Secure checkout. Delivered by email, so it arrives in minutes.",
+        "strip_text": "REAL INGREDIENTS. REAL FLAVOUR. REAL CHEF MATT.",
+        "strip_speed": 28,
+        "how_heading": "How a gift card works",
+        "faq_heading": "Gift card questions",
+        "accent": "#f5a623",
+        "ink": "#14213d",
+        "paper": "#fffdf8",
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     }
   },
   "order": [
-    "hero",
-    "amounts",
-    "steps",
-    "gift_faq",
-    "cta"
+    "gift_card"
   ]
 }
