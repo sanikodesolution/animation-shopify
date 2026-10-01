@@ -665,9 +665,9 @@
         "show_arrows": true,
         "show_frame": true,
         "hint": "Drag to explore",
-        "bg_color_1": "#3a3a3a",
-        "bg_color_2": "#070707",
-        "text_color": "#ffffff",
+        "bg_color_1": "#fffdf7",
+        "bg_color_2": "#fdefd2",
+        "text_color": "#111111",
         "accent": "#f5a623",
         "padding_top": 64,
         "padding_bottom": 64
