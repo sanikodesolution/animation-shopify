@@ -1,6 +1,6 @@
 .banner--prep {
   --bp-navy: 9, 42, 73;
-  --bp-eyebrow: #9dbdf0;
+  --bp-eyebrow: #ffc35c;
   --bp-sub: #c9d6ee;
 }
 
@@ -126,7 +126,7 @@
     width: 90%;
     height: 90%;
     border-radius: 50%;
-    background: #1e4a94;
+    background: #f5a623;
     box-shadow: 0 3rem 6rem -3rem rgba(0, 0, 0, 0.6);
   }
 

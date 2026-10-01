@@ -1,8 +1,10 @@
 .cm {
-  --cm-blue: #3a66b0;
-  --cm-blue-dk: #2a4e8a;
-  --cm-blue-light: #eef3fb;
-  --cm-accent: #7ba7e8;
+  --cm-brand: #f5a623;
+  --cm-brand-dk: #e3931a;
+  --cm-brand-light: #fef3df;
+  --cm-brand-ink: #111111;
+  --cm-brand-text: #a86400;
+  --cm-accent: #ffc35c;
   --cm-dark: #0d1a2e;
   --cm-cream: #fafaf8;
   --cm-warm: #f4f2ee;
@@ -66,7 +68,7 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--cm-blue);
+  color: var(--cm-brand-text);
 }
 
 .cm .cm-heading {
@@ -82,7 +84,7 @@
 
 .cm .cm-heading em {
   font-style: normal;
-  color: var(--cm-blue);
+  color: var(--cm-brand-text);
 }
 
 .cm-body {
@@ -114,17 +116,17 @@
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: #fff;
+  color: var(--cm-brand-ink);
   text-decoration: none;
-  background: var(--cm-blue);
+  background: var(--cm-brand);
   cursor: pointer;
   transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .cm-btn:hover {
-  background: var(--cm-blue-dk);
+  background: var(--cm-brand-dk);
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(58, 102, 176, 0.3);
+  box-shadow: 0 10px 24px rgba(245, 166, 35, 0.35);
 }
 
 /* Hero + ticker */
@@ -137,7 +139,7 @@
 .cm-hero__glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 70% 0%, rgba(58, 102, 176, 0.3) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 70% 0%, rgba(245, 166, 35, 0.18) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -185,7 +187,7 @@
   position: relative;
   overflow: hidden;
   padding: 1.4rem 0;
-  background: var(--cm-blue);
+  background: var(--cm-brand);
 }
 
 .cm-ticker__track {
@@ -216,14 +218,14 @@
   gap: 0.3rem;
   min-width: 13rem;
   padding: 0 2.6rem;
-  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: 1px solid rgba(17, 17, 17, 0.15);
 }
 
 .cm-chip__num {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
+  color: var(--cm-brand-ink);
 }
 
 .cm-chip__label {
@@ -231,7 +233,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(17, 17, 17, 0.7);
 }
 
 /* Chef story */
@@ -383,7 +385,7 @@
 }
 
 .cm-step:hover {
-  background: var(--cm-blue-light);
+  background: var(--cm-brand-light);
 }
 
 .cm-step__num {
@@ -396,9 +398,9 @@
   border-radius: 50%;
   font-size: 2.1rem;
   font-weight: 700;
-  color: #fff;
-  background: var(--cm-blue);
-  box-shadow: 0 0 0 6px rgba(58, 102, 176, 0.12);
+  color: var(--cm-brand-ink);
+  background: var(--cm-brand);
+  box-shadow: 0 0 0 6px rgba(245, 166, 35, 0.18);
 }
 
 .cm .cm-step__title {
@@ -479,18 +481,18 @@
   flex: 1;
   padding: 1.3rem;
   text-align: center;
-  color: #fff;
+  color: var(--cm-brand-ink);
   text-decoration: none;
-  background: var(--cm-blue);
+  background: var(--cm-brand);
   transition: background 0.25s ease;
 }
 
 .cm-map__foot + .cm-map__foot {
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(17, 17, 17, 0.15);
 }
 
 a.cm-map__foot:hover {
-  background: var(--cm-blue-dk);
+  background: var(--cm-brand-dk);
 }
 
 .cm-map__foot strong {
@@ -501,7 +503,7 @@ a.cm-map__foot:hover {
 
 .cm-map__foot span {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(17, 17, 17, 0.72);
 }
 
 .cm-map .leaflet-container {
@@ -514,14 +516,14 @@ a.cm-map__foot:hover {
   border-radius: 4px;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--cm-brand-ink);
   white-space: nowrap;
-  background: var(--cm-blue);
+  background: var(--cm-brand);
   box-shadow: 0 2px 6px rgba(13, 26, 46, 0.25);
 }
 
 .cm-map .cm-tip::before {
-  border-top-color: var(--cm-blue);
+  border-top-color: var(--cm-brand);
 }
 
 .cm-map .leaflet-bar {
@@ -533,11 +535,11 @@ a.cm-map__foot:hover {
 
 .cm-map .leaflet-bar a {
   font-weight: 700;
-  color: var(--cm-blue);
+  color: var(--cm-brand-text);
 }
 
 .cm-map .leaflet-bar a:hover {
-  background: var(--cm-blue-light);
+  background: var(--cm-brand-light);
 }
 
 .cm-pin {
@@ -597,7 +599,7 @@ a.cm-map__foot:hover {
 }
 
 .cm-plan:hover {
-  background: #e8edf7;
+  background: var(--cm-brand-light);
 }
 
 .cm-plan__num {
@@ -605,7 +607,7 @@ a.cm-map__foot:hover {
   font-size: clamp(4rem, 8vw, 6.4rem);
   font-weight: 900;
   line-height: 1;
-  color: var(--cm-blue);
+  color: var(--cm-brand-dk);
   font-variant-numeric: tabular-nums;
 }
 
@@ -622,18 +624,18 @@ a.cm-map__foot:hover {
 .cm-plan__cta {
   display: inline-block;
   padding: 0.7rem 1.4rem;
-  border: 1px solid rgba(58, 102, 176, 0.2);
+  border: 1px solid rgba(245, 166, 35, 0.4);
   border-radius: 10rem;
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--cm-blue);
-  background: var(--cm-blue-light);
+  color: var(--cm-brand-text);
+  background: var(--cm-brand-light);
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 .cm-plan:hover .cm-plan__cta {
-  color: #fff;
-  background: var(--cm-blue);
+  color: var(--cm-brand-ink);
+  background: var(--cm-brand);
 }
 
 @media screen and (max-width: 500px) {
@@ -675,8 +677,8 @@ a.cm-map__foot:hover {
   border-radius: 10rem;
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--cm-blue);
-  background: var(--cm-blue-light);
+  color: var(--cm-brand-text);
+  background: var(--cm-brand-light);
 }
 
 .cm-form__header {
@@ -734,8 +736,8 @@ a.cm-map__foot:hover {
 
 .cm-field select {
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--cm-blue) 50%),
-    linear-gradient(135deg, var(--cm-blue) 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, var(--cm-brand-dk) 50%),
+    linear-gradient(135deg, var(--cm-brand-dk) 50%, transparent 50%);
   background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
   background-size: 6px 6px;
   background-repeat: no-repeat;
@@ -750,8 +752,8 @@ a.cm-map__foot:hover {
 .cm-field textarea:focus,
 .cm-field select:focus {
   outline: none;
-  border-color: var(--cm-blue);
-  box-shadow: 0 0 0 3px rgba(58, 102, 176, 0.2);
+  border-color: var(--cm-brand);
+  box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.25);
 }
 
 .cm .cm-form__group-title {
@@ -869,7 +871,7 @@ a.cm-map__foot:hover {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--cm-blue);
+  color: var(--cm-brand-text);
   text-decoration: none;
 }
 
@@ -1216,9 +1218,10 @@ cm-arc-carousel {
   margin-top: 2.2rem;
   overflow: hidden;
   isolation: isolate;
+  color: var(--cm-arc-ink, var(--cm-brand-ink));
   background: var(--cm-arc-accent);
   box-shadow: 0 1rem 2.4rem -1.4rem var(--cm-arc-accent);
-  transition: background 0.8s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease,
+  transition: color 0.8s ease, background 0.8s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease,
     filter 0.25s ease;
 }
 

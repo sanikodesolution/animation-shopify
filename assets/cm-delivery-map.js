@@ -61,7 +61,7 @@
       }
       if (!this.isConnected || this.map) return;
 
-      const color = getComputedStyle(this).getPropertyValue('--cm-blue').trim() || '#3a66b0';
+      const color = getComputedStyle(this).getPropertyValue('--cm-brand').trim() || '#f5a623';
       const num = (value) => parseFloat(value);
       const map = L.map(this.querySelector('.cm-map__canvas'), { scrollWheelZoom: false }).setView(
         [num(config.center[0]), num(config.center[1])],

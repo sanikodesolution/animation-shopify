@@ -4,6 +4,12 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mod = (value, size) => ((value % size) + size) % size;
   const WAVE_FREQUENCY = 0.62;
+  const inkFor = (hex) => {
+    const m = /^#?([\da-f]{2})([\da-f]{2})([\da-f]{2})$/i.exec((hex || '').trim());
+    if (!m) return '';
+    const [r, g, b] = m.slice(1).map((v) => parseInt(v, 16));
+    return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? '#111111' : '#ffffff';
+  };
 
   class CmArcCarousel extends HTMLElement {
     connectedCallback() {
@@ -300,7 +306,11 @@
         const progress = count > 1 ? (this.activeIndex / (count - 1)) * 100 : 100;
         this.progressEl.style.setProperty('--cm-arc-progress', `${progress}%`);
       }
-      if (this.section) this.section.style.setProperty('--cm-arc-accent', accent || this.dataset.accent);
+      if (this.section) {
+        const color = accent || this.dataset.accent;
+        this.section.style.setProperty('--cm-arc-accent', color);
+        this.section.style.setProperty('--cm-arc-ink', inkFor(color));
+      }
 
       if (!animate || reduceMotion.matches) return;
       [this.titleEl, this.subtitleEl]

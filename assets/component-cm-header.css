@@ -43,7 +43,7 @@
   align-items: center;
   gap: 0.4rem;
   padding-bottom: 0.1rem;
-  border-bottom: 2px solid #7ba7e8;
+  border-bottom: 2px solid #f5a623;
   font-weight: 700;
   color: inherit;
   text-decoration: none;
@@ -62,7 +62,10 @@
 /* Header */
 
 .header-wrapper.cm-header {
-  --cmh-blue: #3f64a4;
+  --cmh-brand: #f5a623;
+  --cmh-brand-light: #fef3df;
+  --cmh-brand-text: #a86400;
+  --cmh-on-brand: #111111;
   --cmh-ink: #1b2740;
   --cmh-seal: calc(var(--cmh-seal-max, 108px) * 0.7);
   --cmh-hang: calc(var(--cmh-seal) * 0.4);
@@ -142,8 +145,8 @@
 .cm-header .list-menu--inline > li > .header__menu-item:hover,
 .cm-header .list-menu--inline > li > header-menu > details > .header__menu-item:hover,
 .cm-header .list-menu--inline > li > header-menu > details[open] > .header__menu-item {
-  color: var(--cmh-blue);
-  background: #eef3fb;
+  color: var(--cmh-ink);
+  background: var(--cmh-brand-light);
 }
 
 .cm-header .header__menu-item span,
@@ -156,9 +159,9 @@
 
 .cm-header .list-menu--inline > li > .header__menu-item[aria-current='page'],
 .cm-header .list-menu--inline > li > header-menu > details > .header__menu-item:has(.header__active-menu-item) {
-  color: #fff;
-  background: var(--cmh-blue);
-  box-shadow: 0 0.8rem 1.6rem -0.8rem rgba(63, 100, 164, 0.8);
+  color: var(--cmh-on-brand);
+  background: var(--cmh-brand);
+  box-shadow: 0 0.8rem 1.6rem -0.8rem rgba(245, 166, 35, 0.8);
 }
 
 /* Dropdown links: underline grows out from the centre */
@@ -211,7 +214,7 @@
 }
 
 .cm-header .header__icon:hover {
-  color: var(--cmh-blue);
+  color: var(--cmh-brand-text);
 }
 
 .cm-header .cart-count-bubble {
@@ -223,8 +226,8 @@
   height: 1.8rem;
   font-size: 1rem;
   font-weight: 700;
-  color: #fff;
-  background: var(--cmh-order, #3f64a4);
+  color: var(--cmh-on-brand);
+  background: var(--cmh-order, #f5a623);
   box-shadow: 0 0 0 2px #fff;
 }
 
@@ -245,11 +248,11 @@
     font-weight: 700;
     letter-spacing: 0.01em;
     white-space: nowrap;
-    color: #fff;
+    color: var(--cmh-on-brand);
     text-decoration: none;
-    background: var(--cmh-order, #3f64a4);
-    background: linear-gradient(135deg, var(--cmh-order, #3f64a4), color-mix(in srgb, var(--cmh-order, #3f64a4), #0d1a2e 35%));
-    box-shadow: 0 1rem 2rem -1rem var(--cmh-order, #3f64a4);
+    background: var(--cmh-order, #f5a623);
+    background: linear-gradient(135deg, var(--cmh-order, #f5a623), color-mix(in srgb, var(--cmh-order, #f5a623), #c85f00 30%));
+    box-shadow: 0 1rem 2rem -1rem var(--cmh-order, #f5a623);
     transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
   }
 

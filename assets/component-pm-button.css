@@ -1,8 +1,8 @@
 .pm {
   --pm-bg: #092a49;
   --pm-text: #fff;
-  --pm-accent: #3f64a4;
-  --pm-accent-text: #fff;
+  --pm-accent: #f5a623;
+  --pm-accent-text: #111;
 
   position: relative;
   overflow: hidden;
@@ -20,7 +20,7 @@
 
 .pm:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(63, 100, 164, 0.45);
+  box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.45);
 }
 
 .pm.pm-a {
