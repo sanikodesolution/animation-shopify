@@ -3,7 +3,7 @@
   Accepts:
   - label: {String} Button text
   - link: {String} Button URL (renders a disabled link when blank)
-  - style: {String} 'dark' (default), 'light' or 'outline'
+  - style: {String} 'dark' (default), 'light', 'ink' or 'outline'
   - class: {String} Extra class names
 {%- endcomment -%}
 {{ 'component-pm-button.css' | asset_url | stylesheet_tag }}
@@ -12,6 +12,8 @@
   case style
     when 'light'
       assign pm_class = 'pm pm-a pm--light'
+    when 'ink'
+      assign pm_class = 'pm pm-a pm--ink'
     when 'outline'
       assign pm_class = 'pm pm-s'
   endcase

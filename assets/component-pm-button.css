@@ -127,6 +127,13 @@
   box-shadow: 0 1.4rem 3rem -1.6rem rgba(0, 0, 0, 0.55);
 }
 
+.pm.pm--ink {
+  --pm-bg: #111;
+  --pm-text: #fff;
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 1.4rem 3rem -1.6rem rgba(0, 0, 0, 0.75);
+}
+
 .pm.pm-s {
   justify-content: center;
   min-height: calc(4.5rem + var(--buttons-border-width, 1px) * 2);
