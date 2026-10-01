@@ -102,9 +102,13 @@
     font-size: 1.7rem;
   }
 
+  .banner.banner--prep.banner--prep-plates:not(.banner--adapt) {
+    min-height: calc(clamp(26rem, 36vw, 50rem) + 20rem);
+  }
+
   .banner-prep__visual {
     position: absolute;
-    top: 50%;
+    top: calc(50% + 1.5rem);
     right: max(5rem, calc((100% - var(--page-width, 120rem)) / 2 + 5rem));
     z-index: 3;
     display: block;
