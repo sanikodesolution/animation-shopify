@@ -197,10 +197,10 @@
   .banner--prep-plates::after {
     background: linear-gradient(
       90deg,
-      rgba(var(--bp-navy), 0.95) 0%,
-      rgba(var(--bp-navy), 0.7) 35%,
-      rgba(var(--bp-navy), 0.35) 62%,
-      rgba(var(--bp-navy), 0.18) 100%
+      rgba(var(--bp-navy), 0.8) 0%,
+      rgba(var(--bp-navy), 0.5) 35%,
+      rgba(var(--bp-navy), 0.18) 62%,
+      rgba(var(--bp-navy), 0.06) 100%
     );
   }
 
