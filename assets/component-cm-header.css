@@ -132,7 +132,7 @@
 .cm-header .list-menu--inline > li > header-menu > details > .header__menu-item {
   padding: 0.7rem 1.6rem;
   border-radius: 99rem;
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: var(--cmh-ink);
   transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
@@ -244,9 +244,10 @@
     margin-left: 1.6rem;
     padding: 0 2.2rem;
     border-radius: 99rem;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     letter-spacing: 0.01em;
+    text-transform: uppercase;
     white-space: nowrap;
     color: var(--cmh-on-brand);
     text-decoration: none;
