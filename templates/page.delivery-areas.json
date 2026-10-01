@@ -31,7 +31,7 @@
         "pin_1": {
           "type": "pin",
           "settings": {
-            "name": "Waukesha",
+            "area": "Waukesha",
             "lat": "43.0117",
             "lng": "-88.2315"
           }
@@ -39,7 +39,7 @@
         "pin_2": {
           "type": "pin",
           "settings": {
-            "name": "Oconomowoc",
+            "area": "Oconomowoc",
             "lat": "43.1039",
             "lng": "-88.4993"
           }
@@ -47,7 +47,7 @@
         "pin_3": {
           "type": "pin",
           "settings": {
-            "name": "Delafield",
+            "area": "Delafield",
             "lat": "43.0606",
             "lng": "-88.4048"
           }
@@ -55,7 +55,7 @@
         "pin_4": {
           "type": "pin",
           "settings": {
-            "name": "Menomonee Falls",
+            "area": "Menomonee Falls",
             "lat": "43.1786",
             "lng": "-88.1132"
           }
@@ -63,7 +63,7 @@
         "pin_5": {
           "type": "pin",
           "settings": {
-            "name": "Pewaukee",
+            "area": "Pewaukee",
             "lat": "43.0800",
             "lng": "-88.2543"
           }
@@ -71,7 +71,7 @@
         "pin_6": {
           "type": "pin",
           "settings": {
-            "name": "Brookfield",
+            "area": "Brookfield",
             "lat": "43.0606",
             "lng": "-88.1065"
           }
@@ -79,7 +79,7 @@
         "pin_7": {
           "type": "pin",
           "settings": {
-            "name": "Elm Grove",
+            "area": "Elm Grove",
             "lat": "43.0428",
             "lng": "-88.0848"
           }
@@ -87,7 +87,7 @@
         "pin_8": {
           "type": "pin",
           "settings": {
-            "name": "New Berlin",
+            "area": "New Berlin",
             "lat": "42.9761",
             "lng": "-88.1676"
           }
@@ -95,7 +95,7 @@
         "pin_9": {
           "type": "pin",
           "settings": {
-            "name": "Muskego",
+            "area": "Muskego",
             "lat": "42.9056",
             "lng": "-88.1398"
           }
@@ -103,7 +103,7 @@
         "pin_10": {
           "type": "pin",
           "settings": {
-            "name": "Lake Country",
+            "area": "Lake Country",
             "lat": "43.0931",
             "lng": "-88.4354"
           }
@@ -111,7 +111,7 @@
         "pin_11": {
           "type": "pin",
           "settings": {
-            "name": "Sussex",
+            "area": "Sussex",
             "lat": "43.1342",
             "lng": "-88.2215"
           }
@@ -119,7 +119,7 @@
         "pin_12": {
           "type": "pin",
           "settings": {
-            "name": "Mukwonago",
+            "area": "Mukwonago",
             "lat": "42.8656",
             "lng": "-88.3376"
           }
@@ -127,7 +127,7 @@
         "pin_13": {
           "type": "pin",
           "settings": {
-            "name": "Concord",
+            "area": "Concord",
             "lat": "43.0200",
             "lng": "-88.5200"
           }
@@ -135,7 +135,7 @@
         "pin_14": {
           "type": "pin",
           "settings": {
-            "name": "Milwaukee",
+            "area": "Milwaukee",
             "lat": "43.0389",
             "lng": "-87.9065"
           }
@@ -143,7 +143,7 @@
         "pin_15": {
           "type": "pin",
           "settings": {
-            "name": "West Allis",
+            "area": "West Allis",
             "lat": "43.0167",
             "lng": "-88.0070"
           }
@@ -151,7 +151,7 @@
         "pin_16": {
           "type": "pin",
           "settings": {
-            "name": "Wauwatosa",
+            "area": "Wauwatosa",
             "lat": "43.0497",
             "lng": "-88.0076"
           }
@@ -159,7 +159,7 @@
         "pin_17": {
           "type": "pin",
           "settings": {
-            "name": "Greenfield",
+            "area": "Greenfield",
             "lat": "42.9614",
             "lng": "-88.0126"
           }
