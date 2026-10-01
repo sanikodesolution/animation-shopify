@@ -1,1 +1,111 @@
-{"sections":{"main":{"type":"main-page","disabled":true,"settings":{"padding_top":28,"padding_bottom":28}},"intro":{"type":"rich-text","blocks":{"item_1":{"type":"heading","settings":{"heading":"Private Chef Experience","heading_size":"h1"}},"item_2":{"type":"heading","settings":{"heading":"Restaurant-Level Dining. In the Comfort of Your Home.","heading_size":"h2"}},"item_3":{"type":"text","settings":{"text":"<p>Turn your home into a private dining experience crafted by a chef with over 40 years of culinary mastery.<\/p><p>Whether you're celebrating a birthday, anniversary, girls’ night, romantic dinner, or hosting a team gathering — Chef Matt designs a fully customized menu tailored to your guests, your tastes, and your occasion.<\/p><p>No crowded restaurants.<br\/>No rushed service.<br\/>No cleanup stress.<\/p><p>Just exceptional food, thoughtful presentation, and a memorable evening created exclusively for you.<\/p>"}}},"block_order":["item_1","item_2","item_3"],"settings":{"desktop_content_position":"center","content_alignment":"center","color_scheme":"scheme-1","full_width":true,"padding_top":40,"padding_bottom":20}},"perfect_for":{"type":"rich-text","blocks":{"item_1":{"type":"heading","settings":{"heading":"Perfect For","heading_size":"h2"}},"item_2":{"type":"text","settings":{"text":"<p>• Birthdays<br\/>• Anniversaries<br\/>• Date Nights<br\/>• Girls’ Night In<br\/>• Executive Dinners<br\/>• Team Meetings<br\/>• Small Celebrations<\/p>"}},"item_3":{"type":"heading","settings":{"heading":"What You Can Expect","heading_size":"h2"}},"item_4":{"type":"text","settings":{"text":"<p>✓ Custom-curated menu<br\/>✓ Professional in-home preparation<br\/>✓ Elevated presentation<br\/>✓ High-quality, clean ingredients<br\/>✓ Full kitchen cleanup after service<\/p><p>From classical French techniques to globally inspired flavors, every dish reflects decades of culinary experience.<\/p>"}}},"block_order":["item_1","item_2","item_3","item_4"],"settings":{"desktop_content_position":"center","content_alignment":"center","color_scheme":"scheme-1","full_width":true,"padding_top":20,"padding_bottom":20}},"how_it_works":{"type":"cm-steps","blocks":{"step_1":{"type":"step","settings":{"title":"Submit Your Event Details","text":"Tell us the date, guest count and occasion."}},"step_2":{"type":"step","settings":{"title":"We Design Your Custom Menu","text":"Chef Matt builds a menu around your tastes and dietary needs."}},"step_3":{"type":"step","settings":{"title":"Chef Matt Cooks & Serves","text":"Everything is prepared and plated fresh in your home."}},"step_4":{"type":"step","settings":{"title":"You Relax and Enjoy","text":"Savor the evening. We handle the full kitchen cleanup."}}},"block_order":["step_1","step_2","step_3","step_4"],"settings":{"label":"Simple Process","heading":"How It Works","text":"","background":"cream","padding_top":64,"padding_bottom":64}},"form":{"type":"cm-contact-form","blocks":{"field_1":{"type":"field","settings":{"label":"Name","type":"text","placeholder":"","required":true,"half_width":false}},"field_2":{"type":"field","settings":{"label":"Email","type":"email","placeholder":"","required":true,"half_width":true}},"field_3":{"type":"field","settings":{"label":"Phone","type":"tel","placeholder":"","required":true,"half_width":true}},"field_4":{"type":"field","settings":{"label":"Event date","type":"date","placeholder":"","required":true,"half_width":true}},"field_5":{"type":"field","settings":{"label":"Number of guests","type":"number","placeholder":"","required":true,"half_width":true}},"field_6":{"type":"field","settings":{"label":"Type of event","type":"select","placeholder":"Select event type","options":"Birthday\nAnniversary\nGirls night\nDate night\nTeam meeting\nOther","required":true,"half_width":false}},"field_7":{"type":"field","settings":{"label":"Additional details","type":"textarea","placeholder":"Tell us about your event, dietary restrictions, menu preferences, etc.","required":false,"half_width":false}}},"block_order":["field_1","field_2","field_3","field_4","field_5","field_6","field_7"],"settings":{"label":"Book Chef Matt","heading":"Intimate event catering","text":"<p>Exceptional, memorable, custom catered events. Birthdays, anniversaries, girls night, date night, team meeting. Why not stay at home and let me create a special menu for your event.<\/p>","note":"Cost: Contact for quotes","alignment":"left","button_label":"Request a quote","success_message":"Thanks! Chef Matt will reach out with a custom quote soon.","max_width":800,"background":"warm","padding_top":56,"padding_bottom":56}}},"order":["main","intro","perfect_for","how_it_works","form"]}
+{
+  "sections": {
+    "private_chef": {
+      "type": "cm-private-chef",
+      "blocks": {
+        "perk_1": { "type": "perk", "settings": { "title": "No crowds", "text": "Your table, your pace" } },
+        "perk_2": { "type": "perk", "settings": { "title": "No rush", "text": "Courses served as you wish" } },
+        "perk_3": { "type": "perk", "settings": { "title": "No cleanup", "text": "Kitchen left spotless" } },
+        "occasion_1": { "type": "occasion", "settings": { "label": "Birthdays" } },
+        "occasion_2": { "type": "occasion", "settings": { "label": "Anniversaries" } },
+        "occasion_3": { "type": "occasion", "settings": { "label": "Date Nights" } },
+        "occasion_4": { "type": "occasion", "settings": { "label": "Girls' Night In" } },
+        "occasion_5": { "type": "occasion", "settings": { "label": "Executive Dinners" } },
+        "occasion_6": { "type": "occasion", "settings": { "label": "Team Meetings" } },
+        "occasion_7": { "type": "occasion", "settings": { "label": "Small Celebrations" } },
+        "expect_1": { "type": "expect", "settings": { "text": "Custom-curated menu" } },
+        "expect_2": { "type": "expect", "settings": { "text": "Professional in-home preparation" } },
+        "expect_3": { "type": "expect", "settings": { "text": "Elevated presentation" } },
+        "expect_4": { "type": "expect", "settings": { "text": "High-quality, clean ingredients" } },
+        "expect_5": { "type": "expect", "settings": { "text": "Full kitchen cleanup after service" } },
+        "step_1": { "type": "step", "settings": { "title": "Submit details", "text": "Tell us about your event, guests and tastes." } },
+        "step_2": { "type": "step", "settings": { "title": "We design your menu", "text": "A custom menu tailored to your occasion." } },
+        "step_3": { "type": "step", "settings": { "title": "Chef Matt cooks", "text": "He prepares and serves in your home." } },
+        "step_4": { "type": "step", "settings": { "title": "You relax", "text": "Enjoy the evening. We handle the rest." } },
+        "field_1": { "type": "field", "settings": { "label": "Name", "type": "text", "placeholder": "", "required": true, "half_width": true } },
+        "field_2": { "type": "field", "settings": { "label": "Email", "type": "email", "placeholder": "", "required": true, "half_width": true } },
+        "field_3": { "type": "field", "settings": { "label": "Phone", "type": "tel", "placeholder": "", "required": true, "half_width": true } },
+        "field_4": { "type": "field", "settings": { "label": "Event date", "type": "date", "placeholder": "", "required": true, "half_width": true } },
+        "field_5": {
+          "type": "field",
+          "settings": {
+            "label": "Type of event",
+            "type": "select",
+            "placeholder": "Select event type",
+            "options": "Birthday\nAnniversary\nDate Night\nGirls' Night In\nExecutive Dinner\nTeam Meeting\nSmall Celebration",
+            "required": true,
+            "half_width": true
+          }
+        },
+        "field_6": { "type": "field", "settings": { "label": "Number of guests", "type": "number", "placeholder": "", "required": true, "half_width": true } },
+        "field_7": {
+          "type": "field",
+          "settings": {
+            "label": "Additional details",
+            "type": "textarea",
+            "placeholder": "Tell us about your event, dietary restrictions, menu preferences, etc.",
+            "required": false,
+            "half_width": false
+          }
+        }
+      },
+      "block_order": [
+        "perk_1",
+        "perk_2",
+        "perk_3",
+        "occasion_1",
+        "occasion_2",
+        "occasion_3",
+        "occasion_4",
+        "occasion_5",
+        "occasion_6",
+        "occasion_7",
+        "expect_1",
+        "expect_2",
+        "expect_3",
+        "expect_4",
+        "expect_5",
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4",
+        "field_1",
+        "field_2",
+        "field_3",
+        "field_4",
+        "field_5",
+        "field_6",
+        "field_7"
+      ],
+      "settings": {
+        "eyebrow": "Private Chef Experience",
+        "heading": "Restaurant-level dining,",
+        "heading_highlight": "in the comfort of your home.",
+        "text": "<p>A private dining evening crafted by Chef Matt, with over 40 years of culinary mastery. Custom menu, polished presentation, and a spotless kitchen when he leaves.</p>",
+        "button_label": "Request a quote",
+        "button_label_2": "How it works",
+        "plate_number": "40+",
+        "plate_label": "Years of craft",
+        "occasions_label": "Perfect for",
+        "occasions_heading": "Every occasion worth savoring",
+        "expect_label": "What you can expect",
+        "expect_heading": "Thoughtful from the first course to the last",
+        "quote": "From classical French techniques to globally inspired flavors, every dish reflects decades of culinary experience.",
+        "quote_author": "Chef Matt",
+        "steps_label": "How it works",
+        "steps_heading": "Four easy steps to your evening",
+        "form_label": "Intimate event catering",
+        "form_heading": "Let's create something special",
+        "form_text": "<p>Exceptional, memorable, custom catered events. Why not stay home and let Chef Matt create a menu for your event?</p>",
+        "form_note": "Cost: contact for quotes",
+        "form_button_label": "Request a quote",
+        "success_message": "Thank you! Chef Matt's team will be in touch shortly.",
+        "padding_top": 84,
+        "padding_bottom": 84
+      }
+    }
+  },
+  "order": [
+    "private_chef"
+  ]
+}

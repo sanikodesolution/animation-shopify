@@ -1,0 +1,379 @@
+{% render 'cm-section-assets', section: section %}
+{{ 'section-cm-private-chef.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign perks = section.blocks | where: 'type', 'perk'
+  assign occasions = section.blocks | where: 'type', 'occasion'
+  assign expects = section.blocks | where: 'type', 'expect'
+  assign steps = section.blocks | where: 'type', 'step'
+  assign fields = section.blocks | where: 'type', 'field'
+  assign form_id = 'PcQuoteForm-' | append: section.id
+-%}
+
+<div class="cm cm-pc" data-cm="private-chef">
+  <header class="cm-pc__hero">
+    <div class="cm-pc__wrap cm-pc__hero-grid">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="cm-label">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        <h1 class="cm-pc__title">
+          {{- section.settings.heading | escape -}}
+          {%- if section.settings.heading_highlight != blank %}
+            <em>{{ section.settings.heading_highlight | escape }}</em>
+          {%- endif -%}
+        </h1>
+        {%- if section.settings.text != blank -%}
+          <div class="cm-pc__lead">{{ section.settings.text }}</div>
+        {%- endif -%}
+        <div class="cm-pc__actions">
+          {%- if section.settings.button_label != blank -%}
+            <a class="cm-btn cm-pc__btn" href="#pc-quote">{{ section.settings.button_label | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.button_label_2 != blank and steps.size > 0 -%}
+            <a class="cm-btn cm-pc__btn cm-pc__btn--ghost" href="#pc-how">
+              {{- section.settings.button_label_2 | escape -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+      {%- if section.settings.plate_number != blank -%}
+        <div class="cm-pc__plate" aria-hidden="true">
+          <div>
+            <b>{{ section.settings.plate_number | escape }}</b>
+            <span>{{ section.settings.plate_label | escape }}</span>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </header>
+
+  {%- if perks.size > 0 -%}
+    <div class="cm-pc__strip">
+      <div class="cm-pc__wrap cm-pc__strip-grid" style="--pc-cols: {{ perks.size | at_most: 4 }};">
+        {%- for block in perks -%}
+          <div {{ block.shopify_attributes }}>
+            <strong>{{ block.settings.title | escape }}</strong>
+            {{ block.settings.text | escape }}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if occasions.size > 0 -%}
+    <section class="cm-pc__section section-{{ section.id }}-padding">
+      <div class="cm-pc__wrap">
+        <div class="cm-pc__head">
+          {%- if section.settings.occasions_label != blank -%}
+            <span class="cm-label">{{ section.settings.occasions_label | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.occasions_heading != blank -%}
+            <h2 class="cm-heading">{{ section.settings.occasions_heading | escape }}</h2>
+          {%- endif -%}
+        </div>
+        <div class="cm-pc__chips">
+          {%- for block in occasions -%}
+            <span class="cm-pc__chip" {{ block.shopify_attributes }}>{{ block.settings.label | escape }}</span>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- if expects.size > 0 or section.settings.quote != blank -%}
+    <section class="cm-pc__section cm-pc__section--alt section-{{ section.id }}-padding">
+      <div class="cm-pc__wrap cm-pc__split">
+        <div>
+          {%- if section.settings.expect_label != blank -%}
+            <span class="cm-label">{{ section.settings.expect_label | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.expect_heading != blank -%}
+            <h2 class="cm-heading">{{ section.settings.expect_heading | escape }}</h2>
+          {%- endif -%}
+          <ul class="cm-pc__list">
+            {%- for block in expects -%}
+              <li {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        {%- if section.settings.quote != blank -%}
+          <blockquote class="cm-pc__quote">
+            {{ section.settings.quote | escape }}
+            {%- if section.settings.quote_author != blank -%}
+              <small>{{ section.settings.quote_author | escape }}</small>
+            {%- endif -%}
+          </blockquote>
+        {%- endif -%}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- if steps.size > 0 -%}
+    <section class="cm-pc__section section-{{ section.id }}-padding" id="pc-how">
+      <div class="cm-pc__wrap">
+        <div class="cm-pc__head">
+          {%- if section.settings.steps_label != blank -%}
+            <span class="cm-label">{{ section.settings.steps_label | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.steps_heading != blank -%}
+            <h2 class="cm-heading">{{ section.settings.steps_heading | escape }}</h2>
+          {%- endif -%}
+        </div>
+        <div class="cm-pc__steps" style="--pc-cols: {{ steps.size | at_most: 4 }};">
+          {%- for block in steps -%}
+            <div class="cm-pc__step" {{ block.shopify_attributes }}>
+              <i>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</i>
+              <h3>{{ block.settings.title | escape }}</h3>
+              {%- if block.settings.text != blank -%}
+                <p>{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <section class="cm-pc__section cm-pc__section--alt section-{{ section.id }}-padding" id="pc-quote">
+    <div class="cm-pc__wrap cm-pc__form-grid">
+      <div>
+        {%- if section.settings.form_label != blank -%}
+          <span class="cm-label">{{ section.settings.form_label | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.form_heading != blank -%}
+          <h2 class="cm-heading">{{ section.settings.form_heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.form_text != blank -%}
+          <div class="cm-body">{{ section.settings.form_text }}</div>
+        {%- endif -%}
+        {%- if section.settings.form_note != blank -%}
+          <span class="cm-form__cost">{{ section.settings.form_note | escape }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- form 'contact', id: form_id, class: 'cm-pc__form' -%}
+        <input type="hidden" name="contact[Form]" value="{{ section.settings.form_heading | default: 'Private chef quote' | escape }}">
+        <div class="cm-form__fields">
+          {%- if form.posted_successfully? -%}
+            <p class="cm-form__notice cm-form__notice--success" role="status" tabindex="-1" autofocus>
+              {{ section.settings.success_message | escape }}
+            </p>
+          {%- elsif form.errors -%}
+            <div class="cm-form__notice cm-form__notice--error" role="alert" tabindex="-1" autofocus>
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          {%- for block in fields -%}
+            {%- liquid
+              assign field_id = form_id | append: '-' | append: block.id
+              assign field_type = block.settings.type
+              if field_type == 'email'
+                assign field_name = 'contact[email]'
+              else
+                assign field_name = block.settings.label | escape | prepend: 'contact[' | append: ']'
+              endif
+            -%}
+            <div class="cm-field{% if block.settings.half_width %} cm-field--half{% endif %}" {{ block.shopify_attributes }}>
+              <label for="{{ field_id }}">
+                {{- block.settings.label | escape -}}
+                {%- if block.settings.required -%}
+                  <span class="cm-field__req" aria-hidden="true">*</span>
+                {%- endif -%}
+              </label>
+              {%- case field_type -%}
+                {%- when 'textarea' -%}
+                  <textarea
+                    id="{{ field_id }}"
+                    name="{{ field_name }}"
+                    placeholder="{{ block.settings.placeholder | escape }}"
+                    {% if block.settings.required %}
+                      required aria-required="true"
+                    {% endif %}
+                  ></textarea>
+                {%- when 'select' -%}
+                  {%- assign options = block.settings.options | newline_to_br | split: '<br />' -%}
+                  <select
+                    id="{{ field_id }}"
+                    name="{{ field_name }}"
+                    {% if block.settings.required %}
+                      required aria-required="true"
+                    {% endif %}
+                  >
+                    <option value="">{{ block.settings.placeholder | default: '—' | escape }}</option>
+                    {%- for option in options -%}
+                      {%- assign option = option | strip -%}
+                      {%- if option != blank -%}
+                        <option value="{{ option | escape }}">{{ option | escape }}</option>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </select>
+                {%- else -%}
+                  <input
+                    type="{{ field_type }}"
+                    id="{{ field_id }}"
+                    name="{{ field_name }}"
+                    placeholder="{{ block.settings.placeholder | escape }}"
+                    {% if field_type == 'email' %}
+                      autocomplete="email" autocapitalize="off" autocorrect="off"
+                    {% elsif field_type == 'tel' %}
+                      autocomplete="tel"
+                    {% elsif field_type == 'number' %}
+                      min="1" inputmode="numeric"
+                    {% endif %}
+                    {% if block.settings.required %}
+                      required aria-required="true"
+                    {% endif %}
+                  >
+              {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <button type="submit" class="cm-btn cm-form__submit">
+          {{- section.settings.form_button_label | escape -}}
+        </button>
+      {%- endform -%}
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "CM private chef",
+  "tag": "section",
+  "class": "section cm-section",
+  "max_blocks": 50,
+  "blocks": [
+    {
+      "type": "perk",
+      "name": "Strip item",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "No crowds" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Your table, your pace" }
+      ]
+    },
+    {
+      "type": "occasion",
+      "name": "Occasion",
+      "settings": [{ "type": "text", "id": "label", "label": "Label", "default": "Birthdays" }]
+    },
+    {
+      "type": "expect",
+      "name": "Expect item",
+      "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Custom-curated menu" }]
+    },
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Submit details" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    },
+    {
+      "type": "field",
+      "name": "Form field",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Name" },
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Type",
+          "options": [
+            { "value": "text", "label": "Text" },
+            { "value": "email", "label": "Email" },
+            { "value": "tel", "label": "Phone" },
+            { "value": "number", "label": "Number" },
+            { "value": "date", "label": "Date" },
+            { "value": "textarea", "label": "Long text" },
+            { "value": "select", "label": "Dropdown" }
+          ],
+          "default": "text"
+        },
+        { "type": "text", "id": "placeholder", "label": "Placeholder" },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "Dropdown options",
+          "info": "One option per line. Only used for the Dropdown type."
+        },
+        { "type": "checkbox", "id": "required", "label": "Required", "default": false },
+        { "type": "checkbox", "id": "half_width", "label": "Half width on desktop", "default": true }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Private Chef Experience" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Restaurant-level dining," },
+    { "type": "text", "id": "heading_highlight", "label": "Heading highlight", "default": "in the comfort of your home." },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>A private dining evening crafted by Chef Matt, with over 40 years of culinary mastery. Custom menu, polished presentation, and a spotless kitchen when he leaves.</p>"
+    },
+    { "type": "text", "id": "button_label", "label": "Quote button label", "default": "Request a quote" },
+    { "type": "text", "id": "button_label_2", "label": "Steps button label", "default": "How it works" },
+    { "type": "text", "id": "plate_number", "label": "Badge number", "default": "40+" },
+    { "type": "text", "id": "plate_label", "label": "Badge label", "default": "Years of craft" },
+    { "type": "header", "content": "Occasions" },
+    { "type": "text", "id": "occasions_label", "label": "Label", "default": "Perfect for" },
+    { "type": "text", "id": "occasions_heading", "label": "Heading", "default": "Every occasion worth savoring" },
+    { "type": "header", "content": "What to expect" },
+    { "type": "text", "id": "expect_label", "label": "Label", "default": "What you can expect" },
+    { "type": "text", "id": "expect_heading", "label": "Heading", "default": "Thoughtful from the first course to the last" },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "From classical French techniques to globally inspired flavors, every dish reflects decades of culinary experience."
+    },
+    { "type": "text", "id": "quote_author", "label": "Quote author", "default": "Chef Matt" },
+    { "type": "header", "content": "Steps" },
+    { "type": "text", "id": "steps_label", "label": "Label", "default": "How it works" },
+    { "type": "text", "id": "steps_heading", "label": "Heading", "default": "Four easy steps to your evening" },
+    { "type": "header", "content": "Quote form" },
+    { "type": "text", "id": "form_label", "label": "Label", "default": "Intimate event catering" },
+    { "type": "text", "id": "form_heading", "label": "Heading", "default": "Let's create something special" },
+    {
+      "type": "richtext",
+      "id": "form_text",
+      "label": "Text",
+      "default": "<p>Exceptional, memorable, custom catered events. Why not stay home and let Chef Matt create a menu for your event?</p>"
+    },
+    { "type": "text", "id": "form_note", "label": "Highlighted note", "default": "Cost: contact for quotes" },
+    { "type": "text", "id": "form_button_label", "label": "Button label", "default": "Request a quote" },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you! Chef Matt's team will be in touch shortly."
+    },
+    { "type": "header", "content": "Section padding" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Top padding", "default": 84 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Bottom padding", "default": 84 }
+  ],
+  "presets": [
+    {
+      "name": "CM private chef",
+      "blocks": [
+        { "type": "perk", "settings": { "title": "No crowds", "text": "Your table, your pace" } },
+        { "type": "perk", "settings": { "title": "No rush", "text": "Courses served as you wish" } },
+        { "type": "perk", "settings": { "title": "No cleanup", "text": "Kitchen left spotless" } },
+        { "type": "occasion", "settings": { "label": "Birthdays" } },
+        { "type": "occasion", "settings": { "label": "Anniversaries" } },
+        { "type": "occasion", "settings": { "label": "Date Nights" } },
+        { "type": "expect", "settings": { "text": "Custom-curated menu" } },
+        { "type": "expect", "settings": { "text": "Professional in-home preparation" } },
+        { "type": "step", "settings": { "title": "Submit details", "text": "Tell us about your event, guests and tastes." } },
+        { "type": "step", "settings": { "title": "We design your menu", "text": "A custom menu tailored to your occasion." } },
+        { "type": "field", "settings": { "label": "Name", "type": "text", "required": true } },
+        { "type": "field", "settings": { "label": "Email", "type": "email", "required": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}
