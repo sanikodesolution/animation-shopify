@@ -332,7 +332,7 @@
         "feature_bg": "#ffffff",
         "feature_border_color": "#000000",
         "feature_shadow_color": "#000000",
-        "feature_heading_color": "#a86400",
+        "feature_heading_color": "#111111",
         "feature_text_color": "#000000",
         "feature_icon_color": "#000000",
         "background_color": "#ffffff",
@@ -512,7 +512,24 @@
       "type": "apps",
       "settings": {
         "include_margins": true
-      }
+      },
+      "blocks": {
+        "loox_reviews_loox_agg_section_hn3PDD": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-agg-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "only_photos": false,
+            "hide_thumbnails": false,
+            "product_handle": "",
+            "aggregated": true,
+            "data-limit": 20,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_agg_section_hn3PDD"
+      ]
     },
     "cm_parallax_gallery": {
       "type": "cm-parallax-gallery",

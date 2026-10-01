@@ -124,15 +124,12 @@
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0.7rem 1.4rem 0.7rem 1rem;
-  border: 1px solid rgba(17, 17, 17, 0.16);
+  padding: 1rem 1.4rem;
   border-radius: 99rem;
   font-size: 1.35rem;
   font-weight: 600;
-  line-height: 1.2;
   color: #111;
-  background: rgba(255, 255, 255, 0.28);
-  backdrop-filter: blur(6px);
+  background: #fff;
 }
 
 .cm-footer__promises .cm-footer__icon {

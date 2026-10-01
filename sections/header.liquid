@@ -4,7 +4,13 @@
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- if section.settings.cm_style -%}
   {{ 'component-cm-header.css' | asset_url | stylesheet_tag }}
+  {%- liquid
+    assign cmh_font_500 = settings.type_body_font | font_modify: 'weight', '500'
+    assign cmh_font_600 = settings.type_body_font | font_modify: 'weight', '600'
+  -%}
   {%- style -%}
+    {%- if cmh_font_500 -%}{{ cmh_font_500 | font_face: font_display: 'swap' }}{%- endif -%}
+    {%- if cmh_font_600 -%}{{ cmh_font_600 | font_face: font_display: 'swap' }}{%- endif -%}
     .cm-header {
       --cmh-seal-max: {{ section.settings.seal_size }}px;
       --cmh-order: {{ section.settings.order_color }};
