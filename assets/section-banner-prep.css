@@ -193,11 +193,19 @@
   .banner--prep-plates::after {
     background: linear-gradient(
       90deg,
-      rgba(var(--bp-navy), 1) 0%,
-      rgba(var(--bp-navy), 0.92) 40%,
-      rgba(var(--bp-navy), 0.8) 70%,
-      rgba(var(--bp-navy), 0.72) 100%
+      rgba(var(--bp-navy), 0.95) 0%,
+      rgba(var(--bp-navy), 0.7) 35%,
+      rgba(var(--bp-navy), 0.35) 62%,
+      rgba(var(--bp-navy), 0.18) 100%
     );
+  }
+
+  .banner--prep-plates .banner__box {
+    text-shadow: 0 1px 1.6rem rgba(var(--bp-navy), 0.55);
+  }
+
+  .banner--prep-plates .banner__buttons {
+    text-shadow: none;
   }
 
   .banner-prep__badge {

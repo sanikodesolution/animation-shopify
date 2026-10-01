@@ -195,7 +195,7 @@
         "text_EiwWca": {
           "type": "text",
           "settings": {
-            "text": "<p>✓ <strong>GLOBAL FLAVOURS, CLASSICAL TECHNIQUE</strong> – With over 40 years of experience, Matt blends classical training with decades spent in diverse kitchens to create dishes inspired by many cultures while still feeling familiar and enjoyable.</p><p>✓ <strong>PREMIUM, HONEST INGREDIENTS</strong> – Every meal starts with clean, thoughtful components, including some organic and locally sourced items, chosen for real flavor and quality.</p><p>✓ <strong>MEAL PREP MADE EASY FOR REAL LIFE</strong> – Skip the prep. Get fully prepared meals brought to your door each week, ready to heat and enjoy when you need something easy and good.</p>",
+            "text": "<p>âœ“ <strong>GLOBAL FLAVOURS, CLASSICAL TECHNIQUE</strong> â€“ With over 40 years of experience, Matt blends classical training with decades spent in diverse kitchens to create dishes inspired by many cultures while still feeling familiar and enjoyable.</p><p>âœ“ <strong>PREMIUM, HONEST INGREDIENTS</strong> â€“ Every meal starts with clean, thoughtful components, including some organic and locally sourced items, chosen for real flavor and quality.</p><p>âœ“ <strong>MEAL PREP MADE EASY FOR REAL LIFE</strong> â€“ Skip the prep. Get fully prepared meals brought to your door each week, ready to heat and enjoy when you need something easy and good.</p>",
             "text_style": "body"
           }
         },
@@ -251,7 +251,7 @@
             "feature_title": "Chef-Crafted Meals",
             "feature_text": "",
             "feature_image": "",
-            "feature_image_asset": "cm-badge-icon-1.png",
+            "feature_image_asset": "cm-badge-icon-1-yellow.png",
             "feature_image_alt": "Chef-Crafted Meals",
             "feature_url": "",
             "hide_image": false,
@@ -264,7 +264,7 @@
             "feature_title": "Low-Calorie & High Protein Meals",
             "feature_text": "",
             "feature_image": "",
-            "feature_image_asset": "cm-badge-icon-2.png",
+            "feature_image_asset": "cm-badge-icon-2-yellow.png",
             "feature_image_alt": "Low-Calorie & High Protein Meals",
             "feature_url": "shopify://collections/meal-plans",
             "hide_image": false,
@@ -277,7 +277,7 @@
             "feature_title": "Clean Ingredients",
             "feature_text": "",
             "feature_image": "",
-            "feature_image_asset": "cm-badge-icon-3.png",
+            "feature_image_asset": "cm-badge-icon-3-yellow.png",
             "feature_image_alt": "Clean Ingredients",
             "feature_url": "shopify://collections/meal-plans",
             "hide_image": false,
@@ -290,7 +290,7 @@
             "feature_title": "Delivered Fresh Weekly",
             "feature_text": "",
             "feature_image": "",
-            "feature_image_asset": "cm-badge-icon-4.png",
+            "feature_image_asset": "cm-badge-icon-4-yellow.png",
             "feature_image_alt": "Delivered Fresh Weekly",
             "feature_url": "shopify://collections/meal-plans",
             "hide_image": false,
@@ -433,7 +433,7 @@
         "text_MfQy8r": {
           "type": "text",
           "settings": {
-            "text": "📍 Hartland📍 Delafield📍 Pewaukee📍 Waukesha📍 Sussex📍 Merton📍 Nashotah📍 Okauchee Lake📍 Oconomowoc📍 Oconomowoc Lake📍 Chenequa📍 Lisbon📍 Lannon📍 Menomonee Falls📍 Brookfield📍 Elm Grove📍 Wales📍 Dousman📍 Summit📍 Lake Country📍 Stone Bank📍 North Lake📍 Mapleton📍 Genesee📍 Mukwonago",
+            "text": "ðŸ“ HartlandðŸ“ DelafieldðŸ“ PewaukeeðŸ“ WaukeshaðŸ“ SussexðŸ“ MertonðŸ“ NashotahðŸ“ Okauchee LakeðŸ“ OconomowocðŸ“ Oconomowoc LakeðŸ“ ChenequaðŸ“ LisbonðŸ“ LannonðŸ“ Menomonee FallsðŸ“ BrookfieldðŸ“ Elm GroveðŸ“ WalesðŸ“ DousmanðŸ“ SummitðŸ“ Lake CountryðŸ“ Stone BankðŸ“ North LakeðŸ“ MapletonðŸ“ GeneseeðŸ“ Mukwonago",
             "text_style": "body"
           }
         },
@@ -512,24 +512,7 @@
       "type": "apps",
       "settings": {
         "include_margins": true
-      },
-      "blocks": {
-        "loox_reviews_loox_agg_section_hn3PDD": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-agg-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "only_photos": false,
-            "hide_thumbnails": false,
-            "product_handle": "",
-            "aggregated": true,
-            "data-limit": 20,
-            "maxwidth": 1080,
-            "is_sample": true
-          }
-        }
-      },
-      "block_order": [
-        "loox_reviews_loox_agg_section_hn3PDD"
-      ]
+      }
     },
     "cm_parallax_gallery": {
       "type": "cm-parallax-gallery",
