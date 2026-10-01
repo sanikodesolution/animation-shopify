@@ -871,7 +871,7 @@ a.cm-map__foot:hover {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--cm-brand-text);
+  color: var(--cm-text);
   text-decoration: none;
 }
 

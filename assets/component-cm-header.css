@@ -161,7 +161,6 @@
 .cm-header .list-menu--inline > li > header-menu > details > .header__menu-item:has(.header__active-menu-item) {
   color: var(--cmh-on-brand);
   background: var(--cmh-brand);
-  box-shadow: 0 0.8rem 1.6rem -0.8rem rgba(245, 166, 35, 0.8);
 }
 
 /* Dropdown links: underline grows out from the centre */
@@ -253,8 +252,7 @@
     text-decoration: none;
     background: var(--cmh-order, #f5a623);
     background: linear-gradient(135deg, var(--cmh-order, #f5a623), color-mix(in srgb, var(--cmh-order, #f5a623), #c85f00 30%));
-    box-shadow: 0 1rem 2rem -1rem var(--cmh-order, #f5a623);
-    transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+    transition: transform 0.25s ease, filter 0.25s ease;
   }
 
   .cm-header__order:hover {
