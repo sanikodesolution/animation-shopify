@@ -178,9 +178,14 @@
           <p class="cm-gc__notice">Select your gift card product in this section's settings to enable checkout.</p>
         {%- endif -%}
 
-        <button class="cm-gc__cta" type="submit" data-gc-add>
-          <span>{{ section.settings.button_label | escape }}</span>
-        </button>
+        {% render 'pm-button',
+          label: section.settings.button_label,
+          style: 'brand',
+          tag: 'button',
+          type: 'submit',
+          class: 'cm-gc__cta',
+          attributes: 'data-gc-add'
+        %}
       </form>
 
       {%- if section.settings.fine_print != blank -%}
@@ -375,9 +380,13 @@
             </label>
             <div class="cm-gc__thumbs" data-gc-rv-thumbs></div>
             <p class="cm-gc__rv-err" data-gc-rv-err role="alert"></p>
-            <button class="cm-gc__cta" type="submit">
-              {{- section.settings.review_button_label | escape -}}
-            </button>
+            {% render 'pm-button',
+              label: section.settings.review_button_label,
+              style: 'brand',
+              tag: 'button',
+              type: 'submit',
+              class: 'cm-gc__cta'
+            %}
           </form>
         {%- endif -%}
       </div>

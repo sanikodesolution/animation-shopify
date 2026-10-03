@@ -6,6 +6,9 @@
   - style: {String} 'dark'/'brand' (theme, default), 'light', 'ink' or 'outline'
   - class: {String} Extra class names
   - hidden: {Boolean} Start hidden
+  - tag: {String} 'a' (default) or 'button'
+  - type: {String} Button type when tag is 'button' (default: 'button')
+  - attributes: {String} Extra HTML attributes (e.g. data-gc-add)
 {%- endcomment -%}
 {{ 'component-pm-button.css' | asset_url | stylesheet_tag }}
 {%- liquid
@@ -22,18 +25,10 @@
     when 'outline'
       assign pm_class = 'pm pm-s'
   endcase
+  assign pm_tag = tag | default: 'a'
+  assign pm_type = type | default: 'button'
 -%}
-<a
-  {% if link != blank %}
-    href="{{ link }}"
-  {% else %}
-    role="link" aria-disabled="true"
-  {% endif %}
-  class="{{ pm_class }}{% if class != blank %} {{ class }}{% endif %}"
-  {% if hidden %}
-    hidden
-  {% endif %}
->
+{%- capture pm_inner -%}
   {%- if style == 'outline' -%}
     <span class="pm-z">{{ label | escape }}</span>
   {%- else -%}
@@ -52,4 +47,31 @@
       </span>
     </span>
   {%- endif -%}
-</a>
+{%- endcapture -%}
+{%- if pm_tag == 'button' -%}
+  <button
+    type="{{ pm_type }}"
+    class="{{ pm_class }}{% if class != blank %} {{ class }}{% endif %}"
+    {% if hidden %}
+      hidden
+    {% endif %}
+    {{ attributes }}
+  >
+    {{ pm_inner }}
+  </button>
+{%- else -%}
+  <a
+    {% if link != blank %}
+      href="{{ link }}"
+    {% else %}
+      role="link" aria-disabled="true"
+    {% endif %}
+    class="{{ pm_class }}{% if class != blank %} {{ class }}{% endif %}"
+    {% if hidden %}
+      hidden
+    {% endif %}
+    {{ attributes }}
+  >
+    {{ pm_inner }}
+  </a>
+{%- endif -%}
