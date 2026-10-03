@@ -64,17 +64,12 @@
 
         <div class="cm-footer__cta-actions">
           {%- if section.settings.cta_button_label != blank -%}
-            <a
-              class="cm-footer__btn cm-footer__btn--light"
-              {% if section.settings.cta_button_link != blank %}
-                href="{{ section.settings.cta_button_link }}"
-              {% else %}
-                role="link" aria-disabled="true"
-              {% endif %}
-            >
-              <span>{{ section.settings.cta_button_label | escape }}</span>
-              {% render 'cm-footer-icon', icon: 'arrow-right' %}
-            </a>
+            {% render 'pm-button',
+              label: section.settings.cta_button_label,
+              link: section.settings.cta_button_link,
+              style: 'ink',
+              class: 'cm-footer__pm'
+            %}
           {%- endif -%}
           {%- if section.settings.cta_phone != blank -%}
             <a class="cm-footer__btn cm-footer__btn--ghost" href="tel:{{ phone_digits }}">

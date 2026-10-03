@@ -443,6 +443,7 @@
             "button_label_1": "Order now",
             "button_link_1": "shopify://collections/meal-plans",
             "button_style_secondary_1": false,
+            "button_animated_1": true,
             "button_label_2": "",
             "button_link_2": "",
             "button_style_secondary_2": false
@@ -653,6 +654,8 @@
         "collection": "",
         "products_limit": 9,
         "button_label": "Shop now",
+        "button_label_2": "How it works",
+        "button_link_2": "shopify://pages/how-it-works",
         "item_shape": "1.5",
         "image_style": "card",
         "full_width": true,

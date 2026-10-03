@@ -863,6 +863,10 @@ a.cm-map__foot:hover {
   color: var(--cm-text);
 }
 
+.cm-pg__btn {
+  margin-top: 1.6rem;
+}
+
 .cm-pg__link {
   display: inline-flex;
   gap: 0.6rem;
@@ -1212,7 +1216,20 @@ cm-arc-carousel {
   transition: left 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.8s ease, box-shadow 0.8s ease;
 }
 
-.cm .cm-arc__btn {
+.cm-arc__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 2.2rem;
+}
+
+.cm-arc__actions .pm {
+  margin-top: 0;
+}
+
+.cm .cm-arc__btn.cm-btn {
   position: relative;
   gap: 0;
   margin-top: 2.2rem;
@@ -1225,7 +1242,7 @@ cm-arc-carousel {
     filter 0.25s ease;
 }
 
-.cm .cm-arc__btn::before {
+.cm .cm-arc__btn.cm-btn::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -1235,8 +1252,8 @@ cm-arc-carousel {
   transition: transform 0.75s ease;
 }
 
-.cm .cm-arc__btn:hover,
-.cm .cm-arc__btn:focus-visible {
+.cm .cm-arc__btn.cm-btn:hover,
+.cm .cm-arc__btn.cm-btn:focus-visible {
   background: var(--cm-arc-accent);
   filter: brightness(1.06);
   transform: translateY(-3px);
@@ -1244,12 +1261,12 @@ cm-arc-carousel {
     0 0 0 4px color-mix(in srgb, var(--cm-arc-accent) 28%, transparent);
 }
 
-.cm .cm-arc__btn:hover::before,
-.cm .cm-arc__btn:focus-visible::before {
+.cm .cm-arc__btn.cm-btn:hover::before,
+.cm .cm-arc__btn.cm-btn:focus-visible::before {
   transform: translateX(120%);
 }
 
-.cm .cm-arc__btn:active {
+.cm .cm-arc__btn.cm-btn:active {
   transform: translateY(-1px) scale(0.98);
   transition-duration: 0.1s;
 }
@@ -1264,8 +1281,8 @@ cm-arc-carousel {
     opacity 0.3s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.cm-arc__btn:hover .cm-arc__btn-icon,
-.cm-arc__btn:focus-visible .cm-arc__btn-icon {
+.cm-arc__btn.cm-btn:hover .cm-arc__btn-icon,
+.cm-arc__btn.cm-btn:focus-visible .cm-arc__btn-icon {
   width: 1.6rem;
   margin-left: 0.8rem;
   opacity: 1;
@@ -1273,8 +1290,8 @@ cm-arc-carousel {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cm .cm-arc__btn,
-  .cm .cm-arc__btn::before,
+  .cm .cm-arc__btn.cm-btn,
+  .cm .cm-arc__btn.cm-btn::before,
   .cm-arc__btn-icon {
     transition: none;
   }

@@ -63,9 +63,13 @@
                 <div class="cm-body">{{ block.settings.text }}</div>
               {%- endif -%}
               {%- if block.settings.link_label != blank -%}
-                <a class="cm-pg__link" href="{{ block.settings.link | default: '#' }}">
-                  {{- block.settings.link_label | escape }} <span aria-hidden="true">→</span>
-                </a>
+                <div class="cm-pg__btn">
+                  {% render 'pm-button',
+                    label: block.settings.link_label,
+                    link: block.settings.link,
+                    style: 'light'
+                  %}
+                </div>
               {%- endif -%}
             </div>
           {%- endif -%}

@@ -5,6 +5,7 @@
   - link: {String} Button URL (renders a disabled link when blank)
   - style: {String} 'dark'/'brand' (theme, default), 'light', 'ink' or 'outline'
   - class: {String} Extra class names
+  - hidden: {Boolean} Start hidden
 {%- endcomment -%}
 {{ 'component-pm-button.css' | asset_url | stylesheet_tag }}
 {%- liquid
@@ -29,6 +30,9 @@
     role="link" aria-disabled="true"
   {% endif %}
   class="{{ pm_class }}{% if class != blank %} {{ class }}{% endif %}"
+  {% if hidden %}
+    hidden
+  {% endif %}
 >
   {%- if style == 'outline' -%}
     <span class="pm-z">{{ label | escape }}</span>

@@ -122,13 +122,26 @@
           <span class="cm-arc__progress-fill"></span>
           <span class="cm-arc__progress-dot"></span>
         </div>
-        {%- if section.settings.button_label != blank -%}
-          <a class="cm-btn cm-arc__btn" href="#" hidden>
-            <span>{{ section.settings.button_label | escape }}</span>
-            <span class="cm-arc__btn-icon" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </a>
+        {%- if section.settings.button_label != blank or section.settings.button_label_2 != blank -%}
+          <div class="cm-arc__actions">
+            {%- if section.settings.button_label != blank -%}
+              {% render 'pm-button',
+                label: section.settings.button_label,
+                link: '#',
+                style: 'light',
+                class: 'cm-arc__btn',
+                hidden: true
+              %}
+            {%- endif -%}
+            {%- if section.settings.button_label_2 != blank -%}
+              {% render 'pm-button',
+                label: section.settings.button_label_2,
+                link: section.settings.button_link_2,
+                style: 'brand',
+                class: 'cm-arc__btn-2'
+              %}
+            {%- endif -%}
+          </div>
         {%- endif -%}
         {%- if section.settings.hint != blank -%}
           <p class="cm-arc__hint">{{ section.settings.hint | escape }}</p>
@@ -184,7 +197,9 @@
       "info": "Used only when the section has no product blocks."
     },
     { "type": "range", "id": "products_limit", "min": 3, "max": 20, "step": 1, "label": "Products to show", "default": 9 },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "text", "id": "button_label", "label": "Primary button (white)", "default": "Shop now" },
+    { "type": "text", "id": "button_label_2", "label": "Secondary button (theme)", "default": "How it works" },
+    { "type": "url", "id": "button_link_2", "label": "Secondary button link" },
     {
       "type": "header",
       "content": "Carousel"
