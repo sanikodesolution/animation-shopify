@@ -1,4 +1,4 @@
-/* Chef Matt — Contact page (matches Contact preview) */
+/* Exact styles from: Chef Matt's – Contact preview.html */
 .cmc {
   --cmc-amber: #f5a623;
   --cmc-amber-deep: #e8920c;
@@ -7,24 +7,17 @@
   --cmc-paper: #fffdf8;
   --cmc-line: #e9e2d2;
   --cmc-muted: #5d6472;
-  --cmc-bg: #fff8e8;
-  --cmc-display: 'Gloock', Georgia, 'Times New Roman', serif;
-  --cmc-body: 'Barlow', system-ui, sans-serif;
-
   position: relative;
-  overflow: visible;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  overflow: hidden;
+  padding: clamp(7rem, 12vw, 9.5rem) 1.25rem clamp(4rem, 8vw, 6.5rem);
   background:
     radial-gradient(circle at 92% 8%, rgba(245, 166, 35, 0.16) 0 9rem, transparent 9.1rem),
     linear-gradient(180deg, #fff8e8 0, #fff 26rem);
   color: var(--cmc-ink);
-  font-family: var(--cmc-body);
+  font-family: Barlow, system-ui, sans-serif;
 }
 
-.cmc *,
-.cmc *::before,
-.cmc *::after {
+.cmc * {
   box-sizing: border-box;
 }
 
@@ -69,33 +62,27 @@
   border: 2px dashed rgba(20, 22, 28, 0.45);
 }
 
-.cmc__stamp-inner {
-  position: relative;
-  z-index: 1;
-  display: block;
+.cmc__stamp span {
   font-size: 0.9rem;
   line-height: 1.25;
   font-weight: 600;
-  padding: 0 0.85rem;
 }
 
-.cmc__stamp-inner b {
+.cmc__stamp b {
   display: block;
-  font-family: var(--cmc-display);
+  font-family: 'Gloock', Georgia, serif;
   font-weight: 400;
   font-size: 2.4rem;
   line-height: 1;
-  margin-bottom: 0.15rem;
 }
 
 .cmc__title {
-  font-family: var(--cmc-display);
+  font-family: 'Gloock', 'DM Serif Display', Georgia, serif;
   font-weight: 400;
   font-size: clamp(2.2rem, 4.4vw, 3.4rem);
   line-height: 1.04;
   letter-spacing: -0.01em;
   margin: 0 0 1rem;
-  color: var(--cmc-ink);
 }
 
 .cmc__lead {
@@ -113,6 +100,7 @@
   align-items: stretch;
 }
 
+/* Left: kitchen contact panel */
 .cmc__panel {
   display: flex;
   flex-direction: column;
@@ -136,13 +124,12 @@
   pointer-events: none;
 }
 
-.cmc__panel-title {
+.cmc__panel h3 {
   position: relative;
   z-index: 1;
-  font-family: var(--cmc-display);
+  font-family: 'Gloock', Georgia, serif;
   font-weight: 400;
   font-size: 1.6rem;
-  line-height: 1.2;
   margin: 0 0 1.5rem;
   color: #fff;
 }
@@ -178,11 +165,6 @@
 .cmc__ico svg {
   width: 20px;
   height: 20px;
-  display: block;
-}
-
-.cmc__item-copy {
-  min-width: 0;
 }
 
 .cmc__item b {
@@ -200,11 +182,31 @@
   font-size: 1.05rem;
   line-height: 1.45;
   text-decoration: none;
-  word-break: break-word;
 }
 
 .cmc__item a:hover {
   color: var(--cmc-amber);
+}
+
+.cmc__call {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: var(--cmc-amber);
+  color: var(--cmc-ink);
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.95rem 1.25rem;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.cmc__call:hover {
+  background: #ffbb45;
 }
 
 .cmc__more {
@@ -235,7 +237,6 @@
   display: grid;
   place-items: center;
   color: #fff;
-  text-decoration: none;
   transition: background 0.2s, color 0.2s;
 }
 
@@ -247,62 +248,35 @@
 .cmc__social svg {
   width: 18px;
   height: 18px;
-  display: block;
 }
 
-.cmc__call {
-  position: relative;
-  z-index: 1;
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  background: var(--cmc-amber);
-  color: var(--cmc-ink);
-  font-weight: 700;
-  font-size: 1rem;
-  border-radius: 999px;
-  padding: 0.95rem 1.25rem;
-  text-decoration: none;
-  transition: background 0.2s;
-}
-
-.cmc__call:hover {
-  background: #ffbb45;
-  color: var(--cmc-ink);
-}
-
+/* Right: order-ticket form */
 .cmc__ticket {
   position: relative;
-  display: flex;
-  flex-direction: column;
   background: var(--cmc-paper);
   border-radius: 22px;
   box-shadow:
     0 30px 60px -28px rgba(11, 27, 54, 0.35),
     0 0 0 1px var(--cmc-line);
   padding: 0 clamp(1.5rem, 3vw, 2.5rem) clamp(1.75rem, 3vw, 2.5rem);
-  overflow: visible;
+  display: flex;
+  flex-direction: column;
 }
 
 .cmc__ticket form {
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0;
 }
 
 .cmc__field--grow {
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0;
 }
 
 .cmc__field--grow textarea {
   flex: 1;
-  min-height: 160px;
 }
 
 .cmc__stub {
@@ -317,19 +291,16 @@
 }
 
 .cmc__stub strong {
-  font-family: var(--cmc-display);
+  font-family: 'Gloock', Georgia, serif;
   font-weight: 400;
   font-size: 1.35rem;
-  color: var(--cmc-ink);
 }
 
 .cmc__stub small {
   font-size: 0.85rem;
   color: var(--cmc-muted);
-  text-align: right;
 }
 
-/* Ticket punch holes — match section background */
 .cmc__ticket::before,
 .cmc__ticket::after {
   content: '';
@@ -338,9 +309,8 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: var(--cmc-bg);
+  background: #fff;
   box-shadow: inset 0 0 0 1px var(--cmc-line);
-  z-index: 2;
 }
 
 .cmc__ticket::before {
@@ -362,74 +332,62 @@
   margin-bottom: 1rem;
 }
 
-.cmc .cmc__field input,
-.cmc .cmc__field textarea {
+.cmc__field input,
+.cmc__field textarea {
   width: 100%;
-  max-width: 100%;
-  height: auto;
-  min-height: 0;
-  font-family: var(--cmc-body);
+  font: inherit;
   font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.4;
   color: var(--cmc-ink);
   background: #fff;
   border: 1.5px solid var(--cmc-line);
   border-radius: 14px;
   padding: 1.55rem 1rem 0.6rem;
   outline: 0;
-  margin: 0;
-  box-shadow: none;
-  appearance: none;
-  -webkit-appearance: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.cmc .cmc__field textarea {
+.cmc__field textarea {
   min-height: 140px;
   resize: vertical;
 }
 
-.cmc .cmc__field label {
+.cmc__field label {
   position: absolute;
   left: 1rem;
   top: 1.05rem;
   font-size: 1rem;
-  font-weight: 400;
   color: var(--cmc-muted);
   pointer-events: none;
   transform-origin: left top;
   transition: transform 0.18s, color 0.18s;
 }
 
-.cmc .cmc__field input:focus ~ label,
-.cmc .cmc__field textarea:focus ~ label,
-.cmc .cmc__field input:not(:placeholder-shown) ~ label,
-.cmc .cmc__field textarea:not(:placeholder-shown) ~ label {
+.cmc__field input:focus ~ label,
+.cmc__field textarea:focus ~ label,
+.cmc__field input:not(:placeholder-shown) ~ label,
+.cmc__field textarea:not(:placeholder-shown) ~ label {
   transform: translateY(-0.62rem) scale(0.78);
 }
 
-.cmc .cmc__field input:focus,
-.cmc .cmc__field textarea:focus {
+.cmc__field input:focus,
+.cmc__field textarea:focus {
   border-color: var(--cmc-amber);
   box-shadow: 0 0 0 4px rgba(245, 166, 35, 0.22);
 }
 
-.cmc .cmc__field input:focus ~ label,
-.cmc .cmc__field textarea:focus ~ label {
+.cmc__field input:focus ~ label,
+.cmc__field textarea:focus ~ label {
   color: var(--cmc-amber-deep);
 }
 
 .cmc__send {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 0.6rem;
   border: 0;
   cursor: pointer;
   font: inherit;
   font-weight: 700;
-  font-size: 1rem;
   background: var(--cmc-amber);
   color: var(--cmc-ink);
   border-radius: 999px;
@@ -444,8 +402,7 @@
 }
 
 .cmc__send:focus-visible,
-.cmc__call:focus-visible,
-.cmc__social a:focus-visible {
+.cmc__call:focus-visible {
   outline: 3px solid var(--cmc-navy);
   outline-offset: 3px;
 }
@@ -500,11 +457,6 @@
   .cmc__panel {
     order: 2;
   }
-
-  .cmc__ticket::before,
-  .cmc__ticket::after {
-    background: #fff;
-  }
 }
 
 @media (max-width: 520px) {
@@ -514,15 +466,7 @@
 
   .cmc__send {
     width: 100%;
-  }
-
-  .cmc__stub {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cmc__stub small {
-    text-align: left;
+    justify-content: center;
   }
 }
 
@@ -533,8 +477,29 @@
   .cmc__field textarea {
     transition: none;
   }
+}
 
-  .cmc__send:hover {
-    transform: none;
-  }
+/* Shopify/Dawn form resets — keep preview look */
+.cmc .cmc__field input,
+.cmc .cmc__field textarea {
+  margin: 0;
+  min-height: 0;
+  height: auto;
+  max-width: 100%;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.cmc .cmc__send {
+  min-width: 0;
+  min-height: 0;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: inherit;
+}
+
+.cmc .cmc__msg .errors,
+.cmc .cmc__msg .form-message {
+  margin: 0;
 }
