@@ -1,4 +1,9 @@
-{% render 'cm-section-assets', section: section %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Gloock&display=swap"
+>
 {{ 'section-cm-contact-page.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -12,12 +17,12 @@
   #shopify-section-{{ section.id }} .cmc {
     --cmc-amber: {{ section.settings.accent }};
     --cmc-navy: {{ section.settings.navy }};
-    padding-top: calc({{ section.settings.padding_top | times: 0.75 | round: 0 }}px + clamp(4.5rem, 10vw, 7.5rem));
+    padding-top: calc({{ section.settings.padding_top | times: 0.75 | round: 0 }}px + clamp(5.5rem, 11vw, 8.5rem));
     padding-bottom: calc({{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px + clamp(3.5rem, 7vw, 5.5rem));
   }
   @media screen and (min-width: 750px) {
     #shopify-section-{{ section.id }} .cmc {
-      padding-top: calc({{ section.settings.padding_top }}px + clamp(4.5rem, 10vw, 7.5rem));
+      padding-top: calc({{ section.settings.padding_top }}px + clamp(5.5rem, 11vw, 8.5rem));
       padding-bottom: calc({{ section.settings.padding_bottom }}px + clamp(3.5rem, 7vw, 5.5rem));
     }
   }
@@ -40,7 +45,7 @@
       </div>
       {%- if section.settings.show_stamp and section.settings.stamp_number != blank -%}
         <div class="cmc__stamp" aria-hidden="true">
-          <span>
+          <span class="cmc__stamp-inner">
             <b>{{ section.settings.stamp_number | escape }}</b>
             {{- section.settings.stamp_label | escape | newline_to_br -}}
           </span>
@@ -51,7 +56,7 @@
     <div class="cmc__grid">
       <aside class="cmc__panel">
         {%- if section.settings.panel_heading != blank -%}
-          <h3>{{ section.settings.panel_heading | escape }}</h3>
+          <h3 class="cmc__panel-title">{{ section.settings.panel_heading | escape }}</h3>
         {%- endif -%}
 
         {%- if contact_items.size > 0 -%}
@@ -78,7 +83,7 @@
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
                   {%- endcase -%}
                 </div>
-                <div>
+                <div class="cmc__item-copy">
                   {%- if block.settings.label != blank -%}
                     <b>{{ block.settings.label | escape }}</b>
                   {%- endif -%}
