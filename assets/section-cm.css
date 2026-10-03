@@ -867,6 +867,10 @@ a.cm-map__foot:hover {
   margin-top: 1.6rem;
 }
 
+.cm-pg__btn .pm.pm-a {
+  box-shadow: none;
+}
+
 .cm-pg__link {
   display: inline-flex;
   gap: 0.6rem;
