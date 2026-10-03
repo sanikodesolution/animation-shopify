@@ -150,9 +150,9 @@
             >
               {%- if block.settings.button_label_1 != blank and block.settings.button_animated_1 -%}
                 {%- liquid
-                  assign pm_style = 'dark'
+                  assign pm_style = 'brand'
                   if section.settings.hero_style == 'prep'
-                    assign pm_style = 'light'
+                    assign pm_style = 'brand'
                   endif
                   render 'pm-button', label: block.settings.button_label_1, link: block.settings.button_link_1, style: pm_style
                 -%}
@@ -170,9 +170,9 @@
               {%- endif -%}
               {%- if block.settings.button_label_2 != blank and block.settings.button_animated_2 -%}
                 {%- liquid
-                  assign pm_style_2 = 'outline'
+                  assign pm_style_2 = 'brand'
                   if section.settings.hero_style == 'prep'
-                    assign pm_style_2 = 'ink'
+                    assign pm_style_2 = 'brand'
                   endif
                   render 'pm-button', label: block.settings.button_label_2, link: block.settings.button_link_2, style: pm_style_2
                 -%}

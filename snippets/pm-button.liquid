@@ -3,17 +3,21 @@
   Accepts:
   - label: {String} Button text
   - link: {String} Button URL (renders a disabled link when blank)
-  - style: {String} 'dark' (default), 'light', 'ink' or 'outline'
+  - style: {String} 'dark'/'brand' (theme, default), 'light', 'ink' or 'outline'
   - class: {String} Extra class names
 {%- endcomment -%}
 {{ 'component-pm-button.css' | asset_url | stylesheet_tag }}
 {%- liquid
-  assign pm_class = 'pm pm-a'
+  assign pm_class = 'pm pm-a pm--brand'
   case style
     when 'light'
       assign pm_class = 'pm pm-a pm--light'
     when 'ink'
       assign pm_class = 'pm pm-a pm--ink'
+    when 'dark'
+      assign pm_class = 'pm pm-a pm--brand'
+    when 'brand'
+      assign pm_class = 'pm pm-a pm--brand'
     when 'outline'
       assign pm_class = 'pm pm-s'
   endcase

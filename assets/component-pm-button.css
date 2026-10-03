@@ -1,8 +1,10 @@
 .pm {
-  --pm-bg: #092a49;
-  --pm-text: #fff;
+  --pm-bg: #f5a623;
+  --pm-text: #111;
   --pm-accent: #f5a623;
   --pm-accent-text: #111;
+  --pm-icon-bg: #fff;
+  --pm-icon-text: #111;
 
   position: relative;
   overflow: hidden;
@@ -26,17 +28,17 @@
 .pm.pm-a {
   gap: 18px;
   padding: 8px 8px 8px 26px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 0;
   border-radius: 999px;
   color: var(--pm-text);
   background: var(--pm-bg);
-  box-shadow: 0 1.2rem 2.6rem -1.4rem rgba(9, 42, 73, 0.9);
-  transition: border-color 0.5s;
+  box-shadow: 0 1.2rem 2.6rem -1.4rem rgba(245, 166, 35, 0.65);
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
 }
 
 .pm.pm-a:hover {
-  border-color: var(--pm-accent);
   background: var(--pm-bg);
+  filter: brightness(1.04);
 }
 
 .pm-roll {
@@ -75,8 +77,8 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: var(--pm-accent);
-  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+  background: var(--pm-icon-bg);
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1), background 0.5s;
 }
 
 .pm.pm-a:hover .pm-bg {
@@ -96,8 +98,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pm-accent-text);
-  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  color: var(--pm-icon-text);
+  transition: transform 0.5s cubic-bezier(0.65, 0, 0.35, 1), color 0.5s;
 }
 
 .pm-ic svg {
@@ -120,29 +122,50 @@
   transform: none;
 }
 
+/* White button — theme icon */
 .pm.pm--light {
   --pm-bg: #fff;
   --pm-text: #092a49;
-  border-color: #fff;
-  box-shadow: 0 1.4rem 3rem -1.6rem rgba(0, 0, 0, 0.55);
+  --pm-accent-text: #111;
+  --pm-icon-bg: #f5a623;
+  --pm-icon-text: #111;
+  box-shadow: 0 1.4rem 3rem -1.6rem rgba(0, 0, 0, 0.45);
 }
 
+/* Dark navy (legacy) */
 .pm.pm--ink {
   --pm-bg: #111;
   --pm-text: #fff;
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 1.4rem 3rem -1.6rem rgba(0, 0, 0, 0.75);
+  --pm-accent-text: #111;
+  --pm-icon-bg: #f5a623;
+  --pm-icon-text: #111;
+  box-shadow: 0 1.4rem 3rem -1.6rem rgba(0, 0, 0, 0.55);
+}
+
+/* Theme brand — used on home banner */
+.pm.pm--brand {
+  --pm-bg: #f5a623;
+  --pm-text: #111;
+  --pm-accent-text: #111;
+  --pm-icon-bg: #fff;
+  --pm-icon-text: #111;
+  box-shadow: 0 1.2rem 2.6rem -1.4rem rgba(245, 166, 35, 0.65);
+}
+
+.pm.pm--brand:hover {
+  --pm-icon-bg: #fffdf8;
 }
 
 .pm.pm-s {
   justify-content: center;
   min-height: calc(4.5rem + var(--buttons-border-width, 1px) * 2);
   padding: 0 28px;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  border: 0;
   border-radius: 999px;
-  color: #fff;
-  background: transparent;
-  transition: color 0.5s cubic-bezier(0.65, 0, 0.35, 1), border-color 0.5s;
+  color: #111;
+  background: #f5a623;
+  box-shadow: 0 1.2rem 2.6rem -1.4rem rgba(245, 166, 35, 0.55);
+  transition: color 0.5s cubic-bezier(0.65, 0, 0.35, 1), background 0.5s, filter 0.5s;
 }
 
 .pm.pm-s::before {
@@ -157,8 +180,8 @@
 }
 
 .pm.pm-s:hover {
-  border-color: #fff;
   color: #092a49;
+  filter: none;
 }
 
 .pm.pm-s:hover::before {
@@ -177,6 +200,10 @@
   gap: 14px;
   min-height: calc(4.5rem + var(--buttons-border-width, 1px) * 2);
   padding: 4px 4px 4px 22px;
+}
+
+.banner--prep .banner__buttons .pm.pm-a {
+  border: 0;
 }
 
 @media screen and (min-width: 750px) {

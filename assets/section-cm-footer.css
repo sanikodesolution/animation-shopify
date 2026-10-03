@@ -135,7 +135,7 @@
 .cm-footer__promises .cm-footer__icon {
   width: 1.6rem;
   height: 1.6rem;
-  color: var(--cmf-accent, #f5a623);
+  color: #111;
 }
 
 .cm-footer__cta-actions {
@@ -165,29 +165,17 @@
   transform: translateY(-2px);
 }
 
-/* Primary CTA — theme accent (replaces old dark/black button) */
 .cm-footer__btn--light {
-  color: #111;
-  background: #fffdf8;
-  border: 2px solid #111;
-  box-shadow: 4px 4px 0 #111;
+  color: #fff;
+  background: #111;
+  box-shadow: 0 1.2rem 2.4rem -1rem rgba(0, 0, 0, 0.45);
 }
 
 .cm-footer__btn--light:hover {
-  background: #fff;
-  box-shadow: 2px 2px 0 #111;
-}
-
-.cm-footer__cta .cm-footer__btn--light {
-  background: #fffdf8;
-}
-
-.cm-footer__cta .cm-footer__btn--light:hover {
-  background: #fff;
+  box-shadow: 0 1.6rem 3rem -1rem rgba(0, 0, 0, 0.55);
 }
 
 .cm-footer__btn--light .cm-footer__icon {
-  color: #111;
   transition: transform 0.25s ease;
 }
 
@@ -196,18 +184,13 @@
 }
 
 .cm-footer__btn--ghost {
-  border: 2px solid #111;
+  border: 1px solid rgba(17, 17, 17, 0.45);
   color: #111;
-  background: rgba(255, 255, 255, 0.4);
 }
 
 .cm-footer__btn--ghost:hover {
   border-color: #111;
-  background: #fffdf8;
-}
-
-.cm-footer__btn--ghost .cm-footer__icon {
-  color: #111;
+  background: rgba(17, 17, 17, 0.08);
 }
 
 /* Columns */
@@ -274,19 +257,17 @@
   place-items: center;
   width: 4.4rem;
   height: 4.4rem;
-  border: 1px solid color-mix(in srgb, var(--cmf-accent, #f5a623) 45%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 50%;
-  color: #111;
-  background: var(--cmf-accent, #f5a623);
-  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+  color: #fff;
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .cm-footer__social-link:hover {
   border-color: var(--cmf-accent, #f5a623);
   color: #111;
-  background: #ffbb45;
+  background: var(--cmf-accent, #f5a623);
   transform: translateY(-3px);
-  filter: brightness(1.05);
 }
 
 .cm-footer__social-link svg {
@@ -372,10 +353,10 @@
   flex: none;
   width: 3.8rem;
   height: 3.8rem;
-  border: 1px solid color-mix(in srgb, var(--cmf-accent, #f5a623) 55%, transparent);
+  border: 1px solid var(--cmf-line);
   border-radius: 1.1rem;
-  color: #111;
-  background: var(--cmf-accent, #f5a623);
+  color: #ffc35c;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 /* Newsletter */
