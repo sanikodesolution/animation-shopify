@@ -152,7 +152,7 @@
                 {%- liquid
                   assign pm_style = 'brand'
                   if section.settings.hero_style == 'prep'
-                    assign pm_style = 'brand'
+                    assign pm_style = 'light'
                   endif
                   render 'pm-button', label: block.settings.button_label_1, link: block.settings.button_link_1, style: pm_style
                 -%}
@@ -170,7 +170,7 @@
               {%- endif -%}
               {%- if block.settings.button_label_2 != blank and block.settings.button_animated_2 -%}
                 {%- liquid
-                  assign pm_style_2 = 'brand'
+                  assign pm_style_2 = 'outline'
                   if section.settings.hero_style == 'prep'
                     assign pm_style_2 = 'brand'
                   endif
