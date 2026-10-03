@@ -170,11 +170,11 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 3px solid var(--gc-accent);
+  border: 3px solid var(--gc-ink);
   border-radius: 50%;
-  outline: 2px solid var(--gc-ink);
-  background: var(--gc-ink);
-  color: var(--gc-accent);
+  outline: 2px solid var(--gc-accent);
+  background: var(--gc-accent);
+  color: var(--gc-ink);
   font: 800 14px var(--gc-hd);
   font-style: normal;
 }
@@ -252,9 +252,9 @@
 }
 
 .cm-gc__chips input:checked + label {
-  border-color: var(--gc-ink);
-  background: var(--gc-ink);
-  color: #fff;
+  border-color: var(--gc-accent);
+  background: var(--gc-accent);
+  color: var(--gc-ink);
 }
 
 .cm-gc__chips input:disabled + label {
