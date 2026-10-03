@@ -30,6 +30,8 @@
 .cmc__wrap {
   max-width: 1120px;
   margin: 0 auto;
+  width: 100%;
+  min-width: 0;
 }
 
 .cmc__head {
@@ -90,7 +92,8 @@
   font-size: clamp(2.2em, 4.4vw, 3.4em);
   line-height: 1.04;
   letter-spacing: -0.01em;
-  margin: 0 0 1em;
+  /* px so gap matches preview 1rem (not scaled by heading size) */
+  margin: 0 0 16px;
   color: var(--cmc-ink);
 }
 
@@ -139,7 +142,7 @@
   font-weight: 400;
   font-size: 1.6em;
   line-height: 1.2;
-  margin: 0 0 1.5em;
+  margin: 0 0 24px; /* preview 1.5rem */
   color: #fff;
   letter-spacing: normal;
 }
@@ -470,28 +473,160 @@
   padding-left: 1.1em;
 }
 
+/* Tablet: shrink stamp before it disappears */
+@media (max-width: 990px) {
+  .cmc__stamp {
+    width: 128px;
+    height: 128px;
+    margin-right: 0;
+  }
+
+  .cmc__stamp span {
+    font-size: 0.78em;
+  }
+
+  .cmc h1.cmc__title,
+  .cmc__title {
+    font-size: clamp(2em, 4vw, 2.8em);
+  }
+}
+
+/* Stacked layout — form first, kitchen panel below */
 @media (max-width: 860px) {
+  .cmc {
+    padding: clamp(3.25em, 9vw, 5em) 1.15em clamp(3em, 7vw, 4.5em);
+  }
+
+  .cmc__head {
+    margin-bottom: 1.75em;
+  }
+
   .cmc__stamp {
     display: none;
   }
 
   .cmc__grid {
     grid-template-columns: 1fr;
+    gap: 1.25em;
+  }
+
+  .cmc__ticket {
+    order: 1;
   }
 
   .cmc__panel {
     order: 2;
   }
-}
 
-@media (max-width: 520px) {
-  .cmc__row {
-    grid-template-columns: 1fr;
+  /* Punch holes stick out and cause horizontal scroll when full-width */
+  .cmc__ticket::before,
+  .cmc__ticket::after {
+    display: none;
   }
 
-  .cmc__send {
+  .cmc__panel::after {
+    width: 180px;
+    height: 180px;
+    border-width: 28px;
+    right: -60px;
+    top: -60px;
+  }
+}
+
+/* Phone */
+@media (max-width: 520px) {
+  .cmc {
+    padding: 2.75em 1em 2.75em;
+  }
+
+  .cmc h1.cmc__title,
+  .cmc__title {
+    font-size: clamp(1.85em, 8.2vw, 2.35em);
+    margin-bottom: 12px;
+  }
+
+  .cmc__lead {
+    font-size: 1.05em;
+  }
+
+  /* Keep inputs ≥16px so iOS does not zoom on focus */
+  .cmc__field input,
+  .cmc__field textarea {
+    font-size: 16px;
+  }
+
+  .cmc__panel {
+    border-radius: 22px;
+    padding: 1.5em;
+  }
+
+  .cmc__panel h3 {
+    font-size: 1.45em;
+    margin-bottom: 1.15em;
+  }
+
+  .cmc__ico {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .cmc__ticket {
+    border-radius: 18px;
+    padding: 0 1.25em 1.5em;
+  }
+
+  .cmc__stub {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35em;
+    padding: 1.2em 0 1.05em;
+    margin-bottom: 1.15em;
+  }
+
+  .cmc__stub small {
+    text-align: left;
+  }
+
+  .cmc__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .cmc__field textarea {
+    min-height: 120px;
+  }
+
+  .cmc__foot {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75em;
+  }
+
+  .cmc__send,
+  .cmc__call {
     width: 100%;
     justify-content: center;
+  }
+
+  .cmc__note {
+    text-align: center;
+  }
+
+  .cmc__social a {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 360px) {
+  .cmc {
+    padding-left: 0.85em;
+    padding-right: 0.85em;
+  }
+
+  .cmc__item {
+    gap: 0.75em;
   }
 }
 
@@ -501,5 +636,9 @@
   .cmc__field input,
   .cmc__field textarea {
     transition: none;
+  }
+
+  .cmc__send:hover {
+    transform: none;
   }
 }

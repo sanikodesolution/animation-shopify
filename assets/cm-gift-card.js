@@ -27,6 +27,7 @@
       }
 
       this.initTilt();
+      this.initReviews();
       this.update();
     }
 
@@ -172,6 +173,168 @@
       stage.addEventListener('pointerleave', () => {
         label.style.setProperty('--ry', '0deg');
         label.style.setProperty('--rx', '0deg');
+      });
+    }
+
+    initReviews() {
+      const root = this.querySelector('[data-gc-reviews]');
+      if (!root) return;
+
+      const MAX = 3;
+      const MAX_MB = 5;
+      const OK = ['image/jpeg', 'image/png', 'image/webp'];
+      const form = root.querySelector('[data-gc-rv-form]');
+      const list = root.querySelector('[data-gc-rv-list]');
+      const empty = root.querySelector('[data-gc-rv-empty]');
+      const sum = root.querySelector('[data-gc-rv-sum]');
+      const thumbs = root.querySelector('[data-gc-rv-thumbs]');
+      const filesInput = root.querySelector('[data-gc-rv-files]');
+      const err = root.querySelector('[data-gc-rv-err]');
+      if (!form || !list || !sum) return;
+
+      let picked = [];
+      const ratings = [...list.querySelectorAll('[data-gc-rv-card]')]
+        .map((card) => parseInt(card.dataset.rating, 10))
+        .filter((n) => n >= 1 && n <= 5);
+
+      const stars = (n) => '★'.repeat(n) + '☆'.repeat(5 - n);
+
+      const drawThumbs = () => {
+        if (!thumbs) return;
+        thumbs.replaceChildren();
+        picked.forEach((item, index) => {
+          const wrap = document.createElement('div');
+          wrap.className = 'cm-gc__thumb';
+          const img = document.createElement('img');
+          img.src = item.url;
+          img.alt = `Selected photo ${index + 1}`;
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = '×';
+          button.setAttribute('aria-label', `Remove photo ${index + 1}`);
+          button.addEventListener('click', () => {
+            URL.revokeObjectURL(item.url);
+            picked.splice(index, 1);
+            drawThumbs();
+          });
+          wrap.append(img, button);
+          thumbs.append(wrap);
+        });
+      };
+
+      const renderSummary = () => {
+        if (!ratings.length) {
+          sum.textContent = 'No reviews yet';
+          return;
+        }
+        const avg = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        sum.replaceChildren();
+        const strong = document.createElement('strong');
+        strong.textContent = avg.toFixed(1);
+        const starEl = document.createElement('span');
+        starEl.className = 'cm-gc__stars';
+        starEl.setAttribute('aria-hidden', 'true');
+        starEl.textContent = stars(Math.round(avg));
+        const count = document.createElement('span');
+        count.textContent = `${ratings.length} review${ratings.length === 1 ? '' : 's'}`;
+        sum.append(strong, starEl, count);
+      };
+
+      if (filesInput) {
+        filesInput.addEventListener('change', () => {
+          if (err) err.textContent = '';
+          for (const file of filesInput.files) {
+            if (picked.length >= MAX) {
+              if (err) err.textContent = `You can add up to ${MAX} photos.`;
+              break;
+            }
+            if (!OK.includes(file.type)) {
+              if (err) err.textContent = 'Only JPG, PNG or WebP images are allowed.';
+              continue;
+            }
+            if (file.size > MAX_MB * 1048576) {
+              if (err) err.textContent = `${file.name} is larger than ${MAX_MB} MB.`;
+              continue;
+            }
+            picked.push({ file, url: URL.createObjectURL(file) });
+          }
+          filesInput.value = '';
+          drawThumbs();
+        });
+      }
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const ratingInput = form.querySelector('[data-gc-rate]:checked');
+        const nameInput = form.querySelector('[data-gc-rv-name]');
+        const textInput = form.querySelector('[data-gc-rv-text]');
+        const name = (nameInput && nameInput.value.trim()) || '';
+        const text = (textInput && textInput.value.trim()) || '';
+
+        if (!ratingInput) {
+          if (err) err.textContent = 'Choose a star rating.';
+          return;
+        }
+        if (!name) {
+          if (err) err.textContent = 'Enter your name.';
+          if (nameInput) nameInput.focus();
+          return;
+        }
+        if (text.length < 10) {
+          if (err) err.textContent = 'Write at least 10 characters in your review.';
+          if (textInput) textInput.focus();
+          return;
+        }
+
+        if (err) err.textContent = '';
+        const rating = parseInt(ratingInput.value, 10);
+        const card = document.createElement('article');
+        card.className = 'cm-gc__rv-card';
+        card.dataset.gcRvCard = '';
+        card.dataset.rating = String(rating);
+
+        const top = document.createElement('div');
+        top.className = 'cm-gc__rv-top';
+        const author = document.createElement('b');
+        author.textContent = name;
+        const time = document.createElement('time');
+        time.textContent = new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
+        top.append(author, time);
+
+        const starEl = document.createElement('div');
+        starEl.className = 'cm-gc__stars';
+        starEl.setAttribute('role', 'img');
+        starEl.setAttribute('aria-label', `${rating} out of 5 stars`);
+        starEl.textContent = stars(rating);
+
+        const paragraph = document.createElement('p');
+        paragraph.textContent = text;
+        card.append(top, starEl, paragraph);
+
+        if (picked.length) {
+          const photos = document.createElement('div');
+          photos.className = 'cm-gc__rv-photos';
+          picked.forEach((item, index) => {
+            const img = document.createElement('img');
+            img.src = item.url;
+            img.alt = `Photo ${index + 1} from ${name}`;
+            photos.append(img);
+          });
+          card.append(photos);
+        }
+
+        if (empty) empty.remove();
+        list.prepend(card);
+        ratings.push(rating);
+        renderSummary();
+        picked = [];
+        drawThumbs();
+        form.reset();
+        this.toast(root.dataset.thanks || 'Thanks! Your review is posted');
       });
     }
   }

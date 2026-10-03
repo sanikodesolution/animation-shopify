@@ -8,6 +8,7 @@
   assign facts = section.blocks | where: 'type', 'fact'
   assign steps = section.blocks | where: 'type', 'step'
   assign faqs = section.blocks | where: 'type', 'faq'
+  assign reviews = section.blocks | where: 'type', 'review'
   assign default_amount = section.settings.default_amount | plus: 0
 
   assign selected_variant = gc_product.selected_or_first_available_variant
@@ -231,6 +232,158 @@
     </section>
   {%- endif -%}
 
+  {%- liquid
+    assign review_total = reviews.size
+    assign review_sum = 0
+    for block in reviews
+      assign review_sum = review_sum | plus: block.settings.rating
+    endfor
+    if review_total > 0
+      assign review_avg = review_sum | times: 1.0 | divided_by: review_total
+    endif
+  -%}
+
+  {%- if section.settings.show_reviews -%}
+    <section
+      class="cm-gc__reviews"
+      id="GiftCardReviews-{{ section.id }}"
+      data-gc-reviews
+      data-thanks="{{ section.settings.review_thanks | escape }}"
+    >
+      <div class="cm-gc__rv-head">
+        {%- if section.settings.reviews_heading != blank -%}
+          <h2 class="cm-gc__t">{{ section.settings.reviews_heading | escape }}</h2>
+        {%- endif -%}
+        <div class="cm-gc__rv-sum" data-gc-rv-sum aria-live="polite">
+          {%- if review_total > 0 -%}
+            <strong>{{ review_avg | round: 1 }}</strong>
+            <span class="cm-gc__stars" aria-hidden="true">
+              {%- assign avg_round = review_avg | round -%}
+              {%- for i in (1..5) -%}
+                {%- if i <= avg_round -%}★{%- else -%}☆{%- endif -%}
+              {%- endfor -%}
+            </span>
+            <span>
+              {{- review_total -}}
+              {%- if review_total == 1 %} review{% else %} reviews{% endif -%}
+            </span>
+          {%- else -%}
+            {{ section.settings.reviews_empty_summary | escape }}
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="cm-gc__rv-wrap">
+        <div class="cm-gc__rv-list" data-gc-rv-list>
+          {%- if reviews.size == 0 -%}
+            <p class="cm-gc__rv-empty" data-gc-rv-empty>
+              {{- section.settings.reviews_empty_text | escape -}}
+            </p>
+          {%- endif -%}
+          {%- for block in reviews -%}
+            <article class="cm-gc__rv-card" data-gc-rv-card data-rating="{{ block.settings.rating }}" {{ block.shopify_attributes }}>
+              <div class="cm-gc__rv-top">
+                <b>{{ block.settings.author | escape }}</b>
+                {%- if block.settings.date != blank -%}
+                  <time>{{ block.settings.date | escape }}</time>
+                {%- endif -%}
+              </div>
+              <div
+                class="cm-gc__stars"
+                role="img"
+                aria-label="{{ block.settings.rating }} out of 5 stars"
+              >
+                {%- for i in (1..5) -%}
+                  {%- if i <= block.settings.rating -%}★{%- else -%}☆{%- endif -%}
+                {%- endfor -%}
+              </div>
+              {%- if block.settings.text != blank -%}
+                <p>{{ block.settings.text | escape }}</p>
+              {%- endif -%}
+              {%- if block.settings.photo_1 != blank or block.settings.photo_2 != blank or block.settings.photo_3 != blank -%}
+                <div class="cm-gc__rv-photos">
+                  {%- if block.settings.photo_1 != blank -%}
+                    {{
+                      block.settings.photo_1
+                      | image_url: width: 240
+                      | image_tag: loading: 'lazy', widths: '96, 192, 240', sizes: '96px', alt: block.settings.author
+                    }}
+                  {%- endif -%}
+                  {%- if block.settings.photo_2 != blank -%}
+                    {{
+                      block.settings.photo_2
+                      | image_url: width: 240
+                      | image_tag: loading: 'lazy', widths: '96, 192, 240', sizes: '96px', alt: block.settings.author
+                    }}
+                  {%- endif -%}
+                  {%- if block.settings.photo_3 != blank -%}
+                    {{
+                      block.settings.photo_3
+                      | image_url: width: 240
+                      | image_tag: loading: 'lazy', widths: '96, 192, 240', sizes: '96px', alt: block.settings.author
+                    }}
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </article>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.show_review_form -%}
+          <form class="cm-gc__rv-form" data-gc-rv-form novalidate>
+            <h3>{{ section.settings.review_form_heading | escape }}</h3>
+            <fieldset>
+              <legend>{{ section.settings.review_rating_label | escape }}</legend>
+              <div class="cm-gc__rate">
+                {%- assign rate_values = '5,4,3,2,1' | split: ',' -%}
+                {%- for i in rate_values -%}
+                  <input
+                    type="radio"
+                    name="gc-rate-{{ section.id }}"
+                    id="GcRate-{{ section.id }}-{{ i }}"
+                    value="{{ i }}"
+                    data-gc-rate
+                  >
+                  <label for="GcRate-{{ section.id }}-{{ i }}" title="{{ i }} stars">
+                    <span aria-hidden="true">★</span>
+                    <span class="visually-hidden">{{ i }} stars</span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </fieldset>
+            <label class="cm-gc__rv-f">
+              {{- section.settings.review_name_label | escape -}}
+              <input type="text" maxlength="40" autocomplete="name" data-gc-rv-name>
+            </label>
+            <label class="cm-gc__rv-f">
+              {{- section.settings.review_text_label | escape -}}
+              <textarea
+                maxlength="500"
+                placeholder="{{ section.settings.review_text_placeholder | escape }}"
+                data-gc-rv-text
+              ></textarea>
+            </label>
+            <label class="cm-gc__drop">
+              <span>{{ section.settings.review_photos_label | escape }}</span>
+              <small>{{ section.settings.review_photos_help | escape }}</small>
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                data-gc-rv-files
+              >
+            </label>
+            <div class="cm-gc__thumbs" data-gc-rv-thumbs></div>
+            <p class="cm-gc__rv-err" data-gc-rv-err role="alert"></p>
+            <button class="cm-gc__cta" type="submit">
+              {{- section.settings.review_button_label | escape -}}
+            </button>
+          </form>
+        {%- endif -%}
+      </div>
+    </section>
+  {%- endif -%}
+
   <div class="cm-gc__toast" data-gc-toast role="status"></div>
 </cm-gift-card>
 
@@ -263,6 +416,32 @@
       "settings": [
         { "type": "text", "id": "question", "label": "Question", "default": "Can they use it on any meal plan?" },
         { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Yes. The balance applies at checkout to any meal plan on the menu.</p>" }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text", "id": "author", "label": "Name", "default": "Jordan M." },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        { "type": "text", "id": "date", "label": "Date", "default": "Mar 12, 2026" },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review",
+          "default": "Bought this for my sister. She said the meals tasted homemade and she actually looked unstressed for once."
+        },
+        { "type": "image_picker", "id": "photo_1", "label": "Photo 1" },
+        { "type": "image_picker", "id": "photo_2", "label": "Photo 2" },
+        { "type": "image_picker", "id": "photo_3", "label": "Photo 3" }
       ]
     }
   ],
@@ -320,6 +499,46 @@
     { "type": "header", "content": "Steps and FAQ" },
     { "type": "text", "id": "how_heading", "label": "Steps heading", "default": "How a gift card works" },
     { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Gift card questions" },
+    { "type": "header", "content": "Reviews" },
+    { "type": "checkbox", "id": "show_reviews", "label": "Show reviews section", "default": true },
+    { "type": "text", "id": "reviews_heading", "label": "Reviews heading", "default": "Customer reviews" },
+    {
+      "type": "text",
+      "id": "reviews_empty_summary",
+      "label": "Empty summary",
+      "default": "No reviews yet"
+    },
+    {
+      "type": "textarea",
+      "id": "reviews_empty_text",
+      "label": "Empty list text",
+      "default": "No reviews yet. Bought a gift card or ordered a meal plan? Be the first to share how it went."
+    },
+    { "type": "checkbox", "id": "show_review_form", "label": "Show write-a-review form", "default": true },
+    { "type": "text", "id": "review_form_heading", "label": "Form heading", "default": "Write a review" },
+    { "type": "text", "id": "review_rating_label", "label": "Rating legend", "default": "Your rating" },
+    { "type": "text", "id": "review_name_label", "label": "Name label", "default": "Your name" },
+    { "type": "text", "id": "review_text_label", "label": "Review label", "default": "Your review" },
+    {
+      "type": "text",
+      "id": "review_text_placeholder",
+      "label": "Review placeholder",
+      "default": "What did you or the person you gifted think of the meals?"
+    },
+    { "type": "text", "id": "review_photos_label", "label": "Photos label", "default": "Add photos" },
+    {
+      "type": "text",
+      "id": "review_photos_help",
+      "label": "Photos help text",
+      "default": "Up to 3 images, 5 MB each (JPG, PNG, WebP)"
+    },
+    { "type": "text", "id": "review_button_label", "label": "Submit button", "default": "Post review" },
+    {
+      "type": "text",
+      "id": "review_thanks",
+      "label": "Thanks message",
+      "default": "Thanks! Your review is posted"
+    },
     { "type": "header", "content": "Colors" },
     { "type": "color", "id": "accent", "label": "Accent", "default": "#f5a623" },
     { "type": "color", "id": "ink", "label": "Ink", "default": "#14213d" },
@@ -341,7 +560,25 @@
         { "type": "step", "settings": { "title": "They choose their meals", "text": "They build their week from the menu, and we deliver it fresh." } },
         { "type": "faq", "settings": { "question": "Can they use it on any meal plan?", "answer": "<p>Yes. The balance applies at checkout to any meal plan on the menu.</p>" } },
         { "type": "faq", "settings": { "question": "How does the recipient get the card?", "answer": "<p>By email, on the date you choose. If you pick no date, it is sent right after checkout.</p>" } },
-        { "type": "faq", "settings": { "question": "Can I buy more than one?", "answer": "<p>Yes. Add as many cards as you like, in any mix of amounts.</p>" } }
+        { "type": "faq", "settings": { "question": "Can I buy more than one?", "answer": "<p>Yes. Add as many cards as you like, in any mix of amounts.</p>" } },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Jordan M.",
+            "rating": 5,
+            "date": "Mar 12, 2026",
+            "text": "Bought this for my sister. She said the meals tasted homemade and she actually looked unstressed for once."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Priya S.",
+            "rating": 5,
+            "date": "Feb 28, 2026",
+            "text": "Perfect birthday gift. The email delivery was instant and the $50 covered almost a full week of dinners."
+          }
+        }
       ]
     }
   ]

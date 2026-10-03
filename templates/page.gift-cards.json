@@ -72,6 +72,24 @@
             "question": "Can I buy more than one?",
             "answer": "<p>Yes. Add as many cards as you like, in any mix of amounts.</p>"
           }
+        },
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "author": "Jordan M.",
+            "rating": 5,
+            "date": "Mar 12, 2026",
+            "text": "Bought this for my sister. She said the meals tasted homemade and she actually looked unstressed for once."
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "author": "Priya S.",
+            "rating": 5,
+            "date": "Feb 28, 2026",
+            "text": "Perfect birthday gift. The email delivery was instant and the $50 covered almost a full week of dinners."
+          }
         }
       },
       "block_order": [
@@ -84,7 +102,9 @@
         "step_3",
         "faq_1",
         "faq_2",
-        "faq_3"
+        "faq_3",
+        "review_1",
+        "review_2"
       ],
       "settings": {
         "default_amount": 50,
@@ -105,6 +125,20 @@
         "strip_speed": 28,
         "how_heading": "How a gift card works",
         "faq_heading": "Gift card questions",
+        "show_reviews": true,
+        "reviews_heading": "Customer reviews",
+        "reviews_empty_summary": "No reviews yet",
+        "reviews_empty_text": "No reviews yet. Bought a gift card or ordered a meal plan? Be the first to share how it went.",
+        "show_review_form": true,
+        "review_form_heading": "Write a review",
+        "review_rating_label": "Your rating",
+        "review_name_label": "Your name",
+        "review_text_label": "Your review",
+        "review_text_placeholder": "What did you or the person you gifted think of the meals?",
+        "review_photos_label": "Add photos",
+        "review_photos_help": "Up to 3 images, 5 MB each (JPG, PNG, WebP)",
+        "review_button_label": "Post review",
+        "review_thanks": "Thanks! Your review is posted",
         "accent": "#f5a623",
         "ink": "#14213d",
         "paper": "#fffdf8",
