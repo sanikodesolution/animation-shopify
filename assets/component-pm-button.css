@@ -3,8 +3,8 @@
   --pm-text: #111;
   --pm-accent: #f5a623;
   --pm-accent-text: #111;
-  --pm-icon-bg: #fff;
-  --pm-icon-text: #111;
+  --pm-icon-bg: #111;
+  --pm-icon-text: #fff;
 
   position: relative;
   overflow: hidden;
@@ -147,13 +147,18 @@
   --pm-bg: #f5a623;
   --pm-text: #111;
   --pm-accent-text: #111;
-  --pm-icon-bg: #fff;
-  --pm-icon-text: #111;
+  --pm-icon-bg: #111;
+  --pm-icon-text: #fff;
   box-shadow: 0 1.2rem 2.6rem -1.4rem rgba(245, 166, 35, 0.65);
 }
 
 .pm.pm--brand:hover {
-  --pm-icon-bg: #fffdf8;
+  --pm-icon-bg: #111;
+  --pm-icon-text: #fff;
+}
+
+.pm.pm--brand:hover .pm-roll span + span {
+  color: #fff !important;
 }
 
 .pm.pm-s {
