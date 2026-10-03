@@ -204,7 +204,7 @@
           "settings": {
             "button_label": "View Menu",
             "button_link": "shopify://products/5-meal-plan",
-            "button_style_secondary": true
+            "button_style_secondary": false
           }
         }
       },

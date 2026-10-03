@@ -128,17 +128,26 @@
                   </div>
                 {%- when 'button' -%}
                   {%- if block.settings.button_label != blank -%}
-                    <a
-                      {% if block.settings.button_link == blank %}
-                        role="link" aria-disabled="true"
-                      {% else %}
-                        href="{{ block.settings.button_link }}"
-                      {% endif %}
-                      class="button{% if block.settings.button_style_secondary %} button--secondary{% else %} button--primary{% endif %}"
-                      {{ block.shopify_attributes }}
-                    >
-                      {{ block.settings.button_label | escape }}
-                    </a>
+                    <div class="image-with-text__button" {{ block.shopify_attributes }}>
+                      {%- if block.settings.button_style_secondary -%}
+                        <a
+                          {% if block.settings.button_link == blank %}
+                            role="link" aria-disabled="true"
+                          {% else %}
+                            href="{{ block.settings.button_link }}"
+                          {% endif %}
+                          class="button button--secondary"
+                        >
+                          {{- block.settings.button_label | escape -}}
+                        </a>
+                      {%- else -%}
+                        {% render 'pm-button',
+                          label: block.settings.button_label,
+                          link: block.settings.button_link,
+                          style: 'brand'
+                        %}
+                      {%- endif -%}
+                    </div>
                   {%- endif -%}
               {%- endcase -%}
             {%- endfor -%}
@@ -585,7 +594,8 @@
           "type": "checkbox",
           "id": "button_style_secondary",
           "default": false,
-          "label": "t:sections.image-with-text.blocks.button.settings.outline_button.label"
+          "label": "Use outline button",
+          "info": "Off = theme orange button. On = outline style."
         }
       ]
     }
